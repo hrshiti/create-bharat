@@ -264,11 +264,11 @@ const HomePage = () => {
 
     // Trending data
     const trendingItems = [
-        { id: 1, title: 'MUDRA Loan Scheme', category: 'Finance', trend: '+25%', color: 'bg-green-100 text-green-800' },
+        { id: 1, title: 'MUDRA Loan', category: 'Finance', trend: '+25%', color: 'bg-green-100 text-green-800' },
         { id: 2, title: 'Tech Internships', category: 'Career', trend: '+18%', color: 'bg-blue-100 text-blue-800' },
         { id: 3, title: 'Startup India', category: 'Business', trend: '+32%', color: 'bg-purple-100 text-purple-800' },
-        { id: 4, title: 'Legal Consultations', category: 'Legal', trend: '+15%', color: 'bg-orange-100 text-orange-800' },
-        { id: 5, title: 'Mentorship Programs', category: 'Learning', trend: '+28%', color: 'bg-pink-100 text-pink-800' },
+        { id: 4, title: 'Legal Help', category: 'Legal', trend: '+15%', color: 'bg-orange-100 text-orange-800' },
+        { id: 5, title: 'Mentorship', category: 'Learning', trend: '+28%', color: 'bg-pink-100 text-pink-800' },
         { id: 6, title: 'Skill Training', category: 'Education', trend: '+22%', color: 'bg-indigo-100 text-indigo-800' }
     ];
 
@@ -769,21 +769,23 @@ const HomePage = () => {
                         >
                             Trending Services
                         </motion.h2>
-                        <div className="grid grid-cols-2 gap-3">
+                        <div className="grid grid-cols-2 gap-2">
                             {trendingItems.slice(0, 4).map((item, index) => (
                             <motion.div 
                                     key={item.id}
                                 variants={fadeInUp}
                                     whileHover={{ scale: 1.02 }}
-                                    className="bg-white rounded-xl p-4 shadow-lg border border-gray-200"
+                                    className="bg-white rounded-lg p-3 shadow-md"
                                 >
-                                    <div className="flex items-center justify-between mb-2">
-                                        <h3 className="text-sm font-semibold text-gray-900">{item.title}</h3>
-                                        <span className={`px-2 py-1 rounded-full text-xs font-medium ${item.color}`}>
-                                            {item.trend}
-                                        </span>
+                                    <div className="flex flex-col space-y-1">
+                                        <h3 className="text-xs font-semibold text-gray-900 leading-tight">{item.title}</h3>
+                                        <div className="flex items-center justify-between">
+                                            <p className="text-xs text-gray-500">{item.category}</p>
+                                            <span className={`px-1.5 py-0.5 rounded text-xs font-medium ${item.color}`}>
+                                                {item.trend}
+                                            </span>
                                         </div>
-                                    <p className="text-xs text-gray-600">{item.category}</p>
+                                    </div>
                                     </motion.div>
                             ))}
                                     </div>
