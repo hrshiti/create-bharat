@@ -154,7 +154,7 @@ const LegalConsultPage = () => {
       </motion.header>
 
       {/* Main Content */}
-      <div className="px-4 pb-20 pt-6">
+      <div className="px-3 pb-20 pt-4">
         <motion.div
           initial="hidden"
           animate="visible"
@@ -164,30 +164,30 @@ const LegalConsultPage = () => {
           {/* Categories */}
           <motion.div
             variants={fadeInUp}
-            className="bg-white/90 backdrop-blur-lg rounded-2xl p-6 shadow-xl border border-white/40 mb-6"
+            className="bg-white/90 backdrop-blur-lg rounded-xl p-4 shadow-lg border border-white/40 mb-4"
           >
-            <h2 className="text-xl font-bold text-gray-800 mb-4">Legal Categories</h2>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            <h2 className="text-lg font-bold text-gray-800 mb-3">Legal Categories</h2>
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
               {legalCategories.map((category) => (
                 <motion.button
                   key={category.id}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                   onClick={() => setSelectedCategory(category.id)}
-                  className={`p-4 rounded-lg border-2 transition-all duration-300 ${
+                  className={`p-3 rounded-lg border-2 transition-all duration-300 ${
                     selectedCategory === category.id
                       ? 'border-blue-500 bg-blue-50'
                       : 'border-gray-200 bg-white hover:border-gray-300'
                   }`}
                 >
                   <div className="text-center">
-                    <div className="text-2xl mb-2">{category.icon}</div>
-                    <div className={`text-sm font-semibold ${
+                    <div className="text-lg mb-1">{category.icon}</div>
+                    <div className={`text-xs font-semibold ${
                       selectedCategory === category.id ? 'text-blue-600' : 'text-gray-600'
                     }`}>
                       {category.name}
                     </div>
-                    <div className="text-xs text-gray-500 mt-1">{category.description}</div>
+                    <div className="text-xs text-gray-500 mt-1 line-clamp-2">{category.description}</div>
                   </div>
                 </motion.button>
               ))}
@@ -197,48 +197,57 @@ const LegalConsultPage = () => {
           {/* Available Lawyers */}
           <motion.div
             variants={fadeInUp}
-            className="bg-white/90 backdrop-blur-lg rounded-2xl p-6 shadow-xl border border-white/40 mb-6"
+            className="bg-white/90 backdrop-blur-lg rounded-xl p-4 shadow-lg border border-white/40 mb-4"
           >
-            <h2 className="text-xl font-bold text-gray-800 mb-4">Available Lawyers</h2>
-            <div className="space-y-4">
+            <h2 className="text-lg font-bold text-gray-800 mb-3">Available Lawyers</h2>
+            <div className="space-y-3">
               {lawyers.map((lawyer) => (
                 <motion.div
                   key={lawyer.id}
-                  whileHover={{ scale: 1.02 }}
-                  className="flex items-center gap-4 p-4 border border-gray-200 rounded-lg hover:shadow-lg transition-all duration-300"
+                  whileHover={{ scale: 1.01 }}
+                  className="p-3 border border-gray-200 rounded-lg hover:shadow-md transition-all duration-300 bg-white"
                 >
-                  <img
-                    src={lawyer.image}
-                    alt={lawyer.name}
-                    className="w-16 h-16 rounded-full object-cover"
-                  />
-                  <div className="flex-1">
-                    <h3 className="font-bold text-gray-800">{lawyer.name}</h3>
-                    <p className="text-sm text-gray-600">{lawyer.specialization} • {lawyer.experience}</p>
-                    <div className="flex items-center gap-2 mt-1">
-                      <div className="flex items-center">
-                        <svg className="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
-                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                        </svg>
-                        <span className="text-sm text-gray-600 ml-1">{lawyer.rating}</span>
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                    {/* Lawyer Image */}
+                    <div className="flex-shrink-0">
+                      <img
+                        src={lawyer.image}
+                        alt={lawyer.name}
+                        className="w-12 h-12 rounded-full object-cover mx-auto sm:mx-0"
+                      />
+                    </div>
+                    
+                    {/* Lawyer Info */}
+                    <div className="flex-1 min-w-0">
+                      <h3 className="font-semibold text-gray-800 text-sm text-center sm:text-left">{lawyer.name}</h3>
+                      <p className="text-xs text-gray-600 text-center sm:text-left">{lawyer.specialization} • {lawyer.experience}</p>
+                      <div className="flex items-center justify-center sm:justify-start gap-2 mt-1">
+                        <div className="flex items-center">
+                          <svg className="w-3 h-3 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                          </svg>
+                          <span className="text-xs text-gray-600 ml-1">{lawyer.rating}</span>
+                        </div>
+                        <span className="text-xs text-green-600 font-medium">{lawyer.availability}</span>
                       </div>
-                      <span className="text-sm text-green-600 font-semibold">{lawyer.availability}</span>
+                      <div className="flex items-center justify-center sm:justify-start gap-1 mt-1">
+                        <span className="text-xs text-gray-500">Languages:</span>
+                        <span className="text-xs text-gray-600">{lawyer.languages.join(', ')}</span>
+                      </div>
                     </div>
-                    <div className="flex items-center gap-2 mt-2">
-                      <span className="text-sm text-gray-500">Languages:</span>
-                      <span className="text-sm text-gray-600">{lawyer.languages.join(', ')}</span>
+                    
+                    {/* Price and Book Button */}
+                    <div className="flex-shrink-0 text-center sm:text-right">
+                      <div className="text-sm font-bold text-blue-600">{lawyer.consultationFee}</div>
+                      <div className="text-xs text-gray-500">per consultation</div>
+                      <motion.button
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="mt-1 px-3 py-1.5 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors text-xs w-full sm:w-auto"
+                      >
+                        Book Now
+                      </motion.button>
                     </div>
-                  </div>
-                  <div className="text-right">
-                    <div className="text-lg font-bold text-blue-600">{lawyer.consultationFee}</div>
-                    <div className="text-xs text-gray-500">per consultation</div>
-                    <motion.button
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="mt-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm"
-                    >
-                      Book Now
-                    </motion.button>
                   </div>
                 </motion.div>
               ))}
@@ -248,54 +257,54 @@ const LegalConsultPage = () => {
           {/* Consultation Form */}
           <motion.div
             variants={fadeInUp}
-            className="bg-white/90 backdrop-blur-lg rounded-2xl p-6 shadow-xl border border-white/40"
+            className="bg-white/90 backdrop-blur-lg rounded-xl p-4 shadow-lg border border-white/40"
           >
-            <h2 className="text-xl font-bold text-gray-800 mb-4">Request Consultation</h2>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <h2 className="text-lg font-bold text-gray-800 mb-3">Request Consultation</h2>
+            <form onSubmit={handleSubmit} className="space-y-3">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Full Name *</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Full Name *</label>
                   <input
                     type="text"
                     name="name"
                     value={consultationForm.name}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Email *</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Email *</label>
                   <input
                     type="email"
                     name="email"
                     value={consultationForm.email}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
                   />
                 </div>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number *</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Phone Number *</label>
                   <input
                     type="tel"
                     name="phone"
                     value={consultationForm.phone}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Legal Category *</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Legal Category *</label>
                   <select
                     name="category"
                     value={consultationForm.category}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
                   >
                     <option value="">Select category</option>
                     {legalCategories.map((category) => (
@@ -305,24 +314,24 @@ const LegalConsultPage = () => {
                 </div>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Description *</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Description *</label>
                 <textarea
                   name="description"
                   value={consultationForm.description}
                   onChange={handleInputChange}
                   required
-                  rows={4}
+                  rows={3}
                   placeholder="Describe your legal issue..."
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Urgency Level</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Urgency Level</label>
                 <select
                   name="urgency"
                   value={consultationForm.urgency}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
                 >
                   <option value="low">Low - Can wait a few days</option>
                   <option value="medium">Medium - Within 24 hours</option>
@@ -333,7 +342,7 @@ const LegalConsultPage = () => {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 type="submit"
-                className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold py-4 px-6 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
+                className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold py-3 px-4 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 text-sm"
               >
                 Submit Request
               </motion.button>

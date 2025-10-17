@@ -680,7 +680,7 @@ const HomePage = () => {
                                 </motion.div>
                                 
                                 <motion.h3 
-                                    className="text-xs font-medium text-gray-800 text-center leading-tight"
+                                    className="text-xs font-medium text-gray-800 text-center leading-tight break-words hyphens-auto"
                                     whileHover={{ 
                                         color: "#F97316",
                                         scale: 1.05,
