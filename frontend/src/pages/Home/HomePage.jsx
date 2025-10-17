@@ -337,7 +337,7 @@ const HomePage = () => {
                                     className="block py-2 text-gray-700 hover:text-orange-500 font-medium transition-colors"
                                     onClick={() => setIsMobileMenuOpen(false)}
                                 >
-                                    Government Loans
+                                    Loans
                                 </Link>
                                 <Link 
                                     to="/internships" 
@@ -372,7 +372,7 @@ const HomePage = () => {
                                     className="block py-2 text-gray-700 hover:text-orange-500 font-medium transition-colors"
                                     onClick={() => setIsMobileMenuOpen(false)}
                                 >
-                                    App Development
+                                    Development
                                 </Link>
                                 <div className="border-t border-gray-200 pt-3 mt-3">
                                     <Link 
@@ -407,7 +407,7 @@ const HomePage = () => {
                             const banners = [
                                 {
                                     id: 1,
-                                    title: "Government Loans",
+                                    title: "Loans",
                                     subtitle: "Access financial support",
                                     image: govLoanImg,
                                     color: "from-blue-600 to-cyan-600"
@@ -497,7 +497,7 @@ const HomePage = () => {
                     >
                         {[
                             { 
-                                name: 'Government Loans', 
+                                name: 'Loans', 
                                 image: govLoanImg,
                                 path: '/loans'
                             },
@@ -522,7 +522,7 @@ const HomePage = () => {
                                 path: '/training'
                             },
                             { 
-                                name: 'App Development', 
+                                name: 'Development', 
                                 image: techImage,
                                 path: '/app-development'
                             }
@@ -544,7 +544,7 @@ const HomePage = () => {
                                     transition: { duration: 0.1 }
                                 }}
                                 onClick={(e) => handleServiceClick(e, service.path)}
-                                className=" rounded-xl bg-white shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] border-2 border-gray-300 hover:shadow-[0_35px_70px_-12px_rgba(0,0,0,0.4)] hover:border-blue-400 hover:border-4 transition-all duration-300 cursor-pointer group"
+                                className=" rounded-xl bg-white p-1 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] border-2 border-gray-300 hover:shadow-[0_35px_70px_-12px_rgba(0,0,0,0.4)] hover:border-blue-400 hover:border-4 transition-all duration-300 cursor-pointer group"
                             >
                                                             <motion.div 
                                     className="w-full object-fill h-20 mb-3 rounded-lg overflow-hidden"
@@ -651,7 +651,7 @@ const HomePage = () => {
                                 path: '/mentors'
                             },
                             { 
-                                name: 'App Development', 
+                                name: 'Development', 
                                 image: techImage,
                                 path: '/app-development'
                             }
@@ -673,7 +673,7 @@ const HomePage = () => {
                                     transition: { duration: 0.1 }
                                 }}
                                 onClick={(e) => handleServiceClick(e, service.path)}
-                                className="relative rounded-xl bg-white p-3 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] border-2 border-gray-300 hover:shadow-[0_35px_70px_-12px_rgba(0,0,0,0.4)] hover:border-blue-400 hover:border-4 transition-all duration-300 cursor-pointer group"
+                                className="relative rounded-xl bg-white p-1  shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] border-2 border-gray-300 hover:shadow-[0_35px_70px_-12px_rgba(0,0,0,0.4)] hover:border-blue-400 hover:border-4 transition-all duration-300 cursor-pointer group"
                             >
                                 <motion.div 
                                     className="w-full h-16 mb-2 rounded-lg overflow-hidden"
@@ -947,7 +947,7 @@ const HomePage = () => {
             >
                 {[
                   { 
-                                    name: 'Government Loans', 
+                                    name: 'Loans', 
                     color: 'from-blue-500 to-cyan-500', 
                                     icon: <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>,
                                     desc: 'Access government loan schemes and financial assistance programs',
@@ -987,7 +987,7 @@ const HomePage = () => {
                     path: '/training'
                   },
                                 { 
-                                    name: 'App Development', 
+                                    name: 'Development', 
                                     color: 'from-indigo-500 to-blue-500', 
                                     icon: <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>,
                                     desc: 'Custom app development solutions for your business needs',
@@ -1167,7 +1167,7 @@ const HomePage = () => {
                             <div>
                                 <h4 className="text-lg font-semibold mb-4">Services</h4>
                                 <ul className="space-y-2 text-gray-400">
-                                    <li><Link to="/loans" className="hover:text-white transition-colors">Government Loans</Link></li>
+                                    <li><Link to="/loans" className="hover:text-white transition-colors">Loans</Link></li>
                                     <li><Link to="/internships" className="hover:text-white transition-colors">Internships</Link></li>
                                     <li><Link to="/legal" className="hover:text-white transition-colors">Legal Services</Link></li>
                                     <li><Link to="/mentors" className="hover:text-white transition-colors">Mentorship</Link></li>

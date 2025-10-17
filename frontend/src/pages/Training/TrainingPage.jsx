@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { trainingCourse, modules } from '../../data/trainings';
 import logo from '../../assets/logo.png';
@@ -15,6 +15,7 @@ const HomeIcon = ({ active }) => ( <svg xmlns="http://www.w3.org/2000/svg" class
 const BriefcaseIcon = ({ active }) => ( <svg xmlns="http://www.w3.org/2000/svg" className={`h-6 w-6 ${active ? 'text-indigo-600' : 'text-gray-500'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg> );
 
 const TrainingPage = () => {
+  const navigate = useNavigate();
   const [userType, setUserType] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   
@@ -22,6 +23,17 @@ const TrainingPage = () => {
     const saved = localStorage.getItem('completedTopics');
     return saved ? JSON.parse(saved) : [];
   });
+
+  // Handle admin redirect
+  useEffect(() => {
+    if (isLoggedIn && userType === 'admin') {
+      const timer = setTimeout(() => {
+        navigate('/admin/training', { replace: true });
+      }, 1500); // Small delay to show loading screen
+      
+      return () => clearTimeout(timer);
+    }
+  }, [isLoggedIn, userType, navigate]);
 
   // Animation variants
   const fadeInUp = {
@@ -126,9 +138,25 @@ const TrainingPage = () => {
   );
 
   const renderAdminRedirect = () => {
-    // Redirect to admin training page
-    window.location.href = '/admin/training';
-    return null;
+    // Show loading state while redirecting
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-orange-50 to-orange-100 flex items-center justify-center">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="bg-white rounded-2xl shadow-xl p-8 text-center"
+        >
+          <div className="w-16 h-16 bg-gradient-to-r from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+            <span className="text-3xl">👨‍💼</span>
+          </div>
+          <h2 className="text-xl font-bold text-gray-800 mb-2">Redirecting to Admin Panel</h2>
+          <p className="text-gray-600 mb-4">Please wait while we redirect you...</p>
+          <div className="flex justify-center">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500"></div>
+          </div>
+        </motion.div>
+      </div>
+    );
   };
 
   if (!isLoggedIn) {
