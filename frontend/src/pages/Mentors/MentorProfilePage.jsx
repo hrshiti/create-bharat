@@ -269,24 +269,26 @@ const MentorProfilePage = () => {
                 <span className="font-medium text-gray-800 capitalize">{day}</span>
               </div>
               {schedule.available && (
-                <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-3">
-                  <div className="flex items-center space-x-2">
-                    <label className="text-sm text-gray-600 font-medium">From:</label>
-                    <input
-                      type="time"
-                      value={schedule.startTime}
-                      onChange={(e) => handleAvailabilityChange(day, 'startTime', e.target.value)}
-                      className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 text-sm w-32"
-                    />
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <label className="text-sm text-gray-600 font-medium">To:</label>
-                    <input
-                      type="time"
-                      value={schedule.endTime}
-                      onChange={(e) => handleAvailabilityChange(day, 'endTime', e.target.value)}
-                      className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 text-sm w-32"
-                    />
+                <div className="mt-3">
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="space-y-1">
+                      <label className="text-xs text-gray-500 font-medium">From</label>
+                      <input
+                        type="time"
+                        value={schedule.startTime}
+                        onChange={(e) => handleAvailabilityChange(day, 'startTime', e.target.value)}
+                        className="w-full px-2 py-1.5 border border-gray-300 rounded-md focus:ring-2 focus:ring-orange-500 text-sm"
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <label className="text-xs text-gray-500 font-medium">To</label>
+                      <input
+                        type="time"
+                        value={schedule.endTime}
+                        onChange={(e) => handleAvailabilityChange(day, 'endTime', e.target.value)}
+                        className="w-full px-2 py-1.5 border border-gray-300 rounded-md focus:ring-2 focus:ring-orange-500 text-sm"
+                      />
+                    </div>
                   </div>
                 </div>
               )}
