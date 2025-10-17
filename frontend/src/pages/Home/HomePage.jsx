@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import LoginModal from '../../components/common/LoginModal';
 import SignupModal from '../../components/common/SignupModal';
+import BottomNavbar from '../../components/common/BottomNavbar';
 import logo from '../../assets/logo.png';
 import techImage from '../../assets/techImage.webp';
 import mentorImage from '../../assets/mentor.png';
@@ -285,7 +286,7 @@ const HomePage = () => {
     return (
         <>
             {/* Mobile View - New Design */}
-            <div className="md:hidden min-h-screen bg-white">
+            <div className="md:hidden min-h-screen bg-white pb-20">
                 {/* Header */}
                         <motion.header 
                             initial={{ opacity: 0, y: -20 }}
@@ -791,7 +792,119 @@ const HomePage = () => {
                                     </div>
                         </motion.div>
                    </div>
+
+                   {/* Success Stories Section */}
+                   <motion.div
+                        variants={staggerContainer}
+                        initial="hidden"
+                        animate="visible"
+                        className="bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 rounded-2xl p-6 mb-6"
+                    >
+                        <motion.h2 
+                            variants={fadeInUp}
+                            className="text-xl font-bold text-gray-900 mb-4"
+                        >
+                            Success Stories
+                        </motion.h2>
+                        <div className="grid grid-cols-1 gap-4">
+                            {[
+                                { name: 'Rajesh Kumar', story: 'Got ₹5L MUDRA loan', achievement: 'Started Restaurant', image: '👨‍🍳' },
+                                { name: 'Priya Sharma', story: 'Completed Training', achievement: 'Got Job at TCS', image: '👩‍💼' },
+                                { name: 'Amit Singh', story: 'Legal Help', achievement: 'Business Registration', image: '👨‍💼' }
+                            ].map((story, index) => (
+                                <motion.div 
+                                    key={story.name}
+                                    variants={fadeInUp}
+                                    whileHover={{ scale: 1.02 }}
+                                    className="bg-white rounded-xl p-4 shadow-md flex items-center space-x-3"
+                                >
+                                    <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center text-2xl">
+                                        {story.image}
+                                    </div>
+                                    <div className="flex-1">
+                                        <h3 className="font-semibold text-gray-900">{story.name}</h3>
+                                        <p className="text-sm text-gray-600">{story.story}</p>
+                                        <p className="text-xs text-green-600 font-medium">{story.achievement}</p>
+                                    </div>
+                                </motion.div>
+                            ))}
+                        </div>
+                    </motion.div>
+
+                    {/* Quick Actions Section */}
+                    <motion.div
+                        variants={staggerContainer}
+                        initial="hidden"
+                        animate="visible"
+                        className="bg-gradient-to-br from-purple-50 via-pink-50 to-rose-50 rounded-2xl p-6 mb-6"
+                    >
+                        <motion.h2 
+                            variants={fadeInUp}
+                            className="text-xl font-bold text-gray-900 mb-4"
+                        >
+                            Quick Actions
+                        </motion.h2>
+                        <div className="grid grid-cols-2 gap-3">
+                            {[
+                                { name: 'Apply Loan', icon: '💰', color: 'from-green-500 to-emerald-500', path: '/loans' },
+                                { name: 'Find Jobs', icon: '💼', color: 'from-blue-500 to-cyan-500', path: '/internships' },
+                                { name: 'Legal Help', icon: '⚖️', color: 'from-purple-500 to-violet-500', path: '/legal' },
+                                { name: 'Get Mentor', icon: '👨‍🏫', color: 'from-orange-500 to-red-500', path: '/mentors' }
+                            ].map((action, index) => (
+                                <motion.div 
+                                    key={action.name}
+                                    variants={fadeInUp}
+                                    whileHover={{ scale: 1.05 }}
+                                    whileTap={{ scale: 0.95 }}
+                                    onClick={(e) => handleServiceClick(e, action.path)}
+                                    className="bg-white rounded-xl p-4 shadow-md text-center cursor-pointer"
+                                >
+                                    <div className={`w-12 h-12 bg-gradient-to-r ${action.color} rounded-full flex items-center justify-center mx-auto mb-2 text-2xl`}>
+                                        {action.icon}
+                                    </div>
+                                    <h3 className="text-sm font-semibold text-gray-900">{action.name}</h3>
+                                </motion.div>
+                            ))}
+                        </div>
+                    </motion.div>
+
+                    {/* Statistics Section */}
+                    <motion.div
+                        variants={staggerContainer}
+                        initial="hidden"
+                        animate="visible"
+                        className="bg-gradient-to-br from-indigo-50 via-blue-50 to-purple-50 rounded-2xl p-6 mb-6"
+                    >
+                        <motion.h2 
+                            variants={fadeInUp}
+                            className="text-xl font-bold text-gray-900 mb-4"
+                        >
+                            Our Impact
+                        </motion.h2>
+                        <div className="grid grid-cols-2 gap-4">
+                            {[
+                                { number: '10K+', label: 'Loans Approved', icon: '🏦' },
+                                { number: '5K+', label: 'Jobs Created', icon: '💼' },
+                                { number: '2K+', label: 'Legal Cases', icon: '⚖️' },
+                                { number: '1K+', label: 'Mentors', icon: '👨‍🏫' }
+                            ].map((stat, index) => (
+                                <motion.div 
+                                    key={stat.label}
+                                    variants={fadeInUp}
+                                    whileHover={{ scale: 1.02 }}
+                                    className="bg-white rounded-xl p-4 shadow-md text-center"
+                                >
+                                    <div className="text-2xl mb-2">{stat.icon}</div>
+                                    <div className="text-2xl font-bold text-gray-900">{stat.number}</div>
+                                    <div className="text-sm text-gray-600">{stat.label}</div>
+                                </motion.div>
+                            ))}
+                        </div>
+                    </motion.div>
             </div>
+
+            {/* Bottom Navigation - Mobile Only */}
+            <BottomNavbar />
 
             {/* Desktop View */}
             <div className="hidden md:block min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50">
@@ -1145,6 +1258,115 @@ const HomePage = () => {
                                     <div className="text-4xl font-bold mb-2">{stat.number}</div>
                                     <div className="text-lg opacity-90">{stat.label}</div>
             </motion.div>
+                            ))}
+                        </motion.div>
+                    </div>
+                </section>
+
+                {/* Desktop Success Stories Section */}
+                <section className="py-16 lg:py-24 bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50">
+                    <div className="max-w-7xl mx-auto px-8">
+                        <motion.div 
+                            initial="hidden"
+                            animate="visible"
+                            variants={staggerContainer}
+                            className="text-center mb-16"
+                        >
+                            <motion.h2 
+                                variants={fadeInUp}
+                                className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6"
+                            >
+                                Success Stories
+                            </motion.h2>
+                            <motion.p 
+                                variants={fadeInUp}
+                                className="text-xl text-gray-600 max-w-3xl mx-auto"
+                            >
+                                Real people, real results - see how we've helped transform lives
+                            </motion.p>
+                        </motion.div>
+
+                        <motion.div 
+                            initial="hidden"
+                            animate="visible"
+                            variants={staggerContainer}
+                            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+                        >
+                            {[
+                                { name: 'Rajesh Kumar', story: 'Got ₹5L MUDRA loan', achievement: 'Started Restaurant', image: '👨‍🍳', location: 'Mumbai' },
+                                { name: 'Priya Sharma', story: 'Completed Training', achievement: 'Got Job at TCS', image: '👩‍💼', location: 'Bangalore' },
+                                { name: 'Amit Singh', story: 'Legal Help', achievement: 'Business Registration', image: '👨‍💼', location: 'Delhi' }
+                            ].map((story, index) => (
+                                <motion.div 
+                                    key={story.name}
+                                    variants={fadeInUp}
+                                    whileHover={{ y: -10, scale: 1.02 }}
+                                    className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300"
+                                >
+                                    <div className="text-center mb-6">
+                                        <div className="w-20 h-20 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center mx-auto mb-4 text-4xl">
+                                            {story.image}
+                                        </div>
+                                        <h3 className="text-xl font-bold text-gray-900 mb-2">{story.name}</h3>
+                                        <p className="text-gray-600 mb-2">{story.location}</p>
+                                    </div>
+                                    <div className="text-center">
+                                        <p className="text-gray-700 mb-2">{story.story}</p>
+                                        <p className="text-green-600 font-semibold">{story.achievement}</p>
+                                    </div>
+                                </motion.div>
+                            ))}
+                        </motion.div>
+                    </div>
+                </section>
+
+                {/* Desktop Statistics Section */}
+                <section className="py-16 lg:py-24 bg-gradient-to-br from-indigo-50 via-blue-50 to-purple-50">
+                    <div className="max-w-7xl mx-auto px-8">
+                        <motion.div 
+                            initial="hidden"
+                            animate="visible"
+                            variants={staggerContainer}
+                            className="text-center mb-16"
+                        >
+                            <motion.h2 
+                                variants={fadeInUp}
+                                className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6"
+                            >
+                                Our Impact
+                            </motion.h2>
+                            <motion.p 
+                                variants={fadeInUp}
+                                className="text-xl text-gray-600 max-w-3xl mx-auto"
+                            >
+                                Numbers that speak for our commitment to your success
+                            </motion.p>
+                        </motion.div>
+
+                        <motion.div 
+                            initial="hidden"
+                            animate="visible"
+                            variants={staggerContainer}
+                            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
+                        >
+                            {[
+                                { number: '10K+', label: 'Loans Approved', icon: '🏦', color: 'from-green-500 to-emerald-500' },
+                                { number: '5K+', label: 'Jobs Created', icon: '💼', color: 'from-blue-500 to-cyan-500' },
+                                { number: '2K+', label: 'Legal Cases', icon: '⚖️', color: 'from-purple-500 to-violet-500' },
+                                { number: '1K+', label: 'Mentors', icon: '👨‍🏫', color: 'from-orange-500 to-red-500' }
+                            ].map((stat, index) => (
+                                <motion.div 
+                                    key={stat.label}
+                                    variants={fadeInUp}
+                                    whileHover={{ scale: 1.05 }}
+                                    className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 text-center"
+                                >
+                                    <div className={`w-16 h-16 bg-gradient-to-r ${stat.color} rounded-full flex items-center justify-center mx-auto mb-4 text-3xl`}>
+                                        {stat.icon}
+                                    </div>
+                                    <div className="text-4xl font-bold text-gray-900 mb-2">{stat.number}</div>
+                                    <div className="text-gray-600 font-medium">{stat.label}</div>
+                                </motion.div>
                             ))}
                         </motion.div>
                     </div>

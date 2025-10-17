@@ -87,7 +87,7 @@ const SignupModal = ({ isOpen, onClose, onSwitchToLogin, selectedService }) => {
                                         value={formData.firstName}
                                         onChange={handleChange}
                                         required
-                                        className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
+                                        className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300"
                                         placeholder="First name"
                                     />
                                 </div>
@@ -102,7 +102,7 @@ const SignupModal = ({ isOpen, onClose, onSwitchToLogin, selectedService }) => {
                                         value={formData.lastName}
                                         onChange={handleChange}
                                         required
-                                        className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
+                                        className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300"
                                         placeholder="Last name"
                                     />
                                 </div>
@@ -120,7 +120,7 @@ const SignupModal = ({ isOpen, onClose, onSwitchToLogin, selectedService }) => {
                                     value={formData.email}
                                     onChange={handleChange}
                                     required
-                                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
+                                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300"
                                     placeholder="Enter your email"
                                 />
                             </div>
@@ -137,7 +137,7 @@ const SignupModal = ({ isOpen, onClose, onSwitchToLogin, selectedService }) => {
                                     value={formData.password}
                                     onChange={handleChange}
                                     required
-                                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
+                                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300"
                                     placeholder="Create a password"
                                 />
                             </div>
@@ -154,7 +154,7 @@ const SignupModal = ({ isOpen, onClose, onSwitchToLogin, selectedService }) => {
                                     value={formData.confirmPassword}
                                     onChange={handleChange}
                                     required
-                                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
+                                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300"
                                     placeholder="Confirm your password"
                                 />
                             </div>
@@ -165,7 +165,7 @@ const SignupModal = ({ isOpen, onClose, onSwitchToLogin, selectedService }) => {
                                     type="checkbox"
                                     id="terms"
                                     required
-                                    className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                                    className="h-4 w-4 text-orange-600 focus:ring-orange-500 border-gray-300 rounded"
                                 />
                                 <label htmlFor="terms" className="ml-2 block text-sm text-gray-700">
                                     I agree to the Terms and Conditions
@@ -178,7 +178,7 @@ const SignupModal = ({ isOpen, onClose, onSwitchToLogin, selectedService }) => {
                                 disabled={isLoading}
                                 whileHover={{ scale: 1.02 }}
                                 whileTap={{ scale: 0.98 }}
-                                className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 px-4 rounded-xl font-medium hover:from-blue-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                                className="w-full bg-gradient-to-r from-orange-500 to-orange-600 text-white py-3 px-4 rounded-xl font-medium hover:from-orange-600 hover:to-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                             >
                                 {isLoading ? 'Creating Account...' : 'Create Account'}
                             </motion.button>
@@ -190,7 +190,7 @@ const SignupModal = ({ isOpen, onClose, onSwitchToLogin, selectedService }) => {
                                 Already have an account?{' '}
                                 <button
                                     onClick={onSwitchToLogin}
-                                    className="text-blue-600 hover:text-blue-500 font-medium"
+                                    className="text-orange-600 hover:text-orange-500 font-medium"
                                 >
                                     Sign in
                                 </button>

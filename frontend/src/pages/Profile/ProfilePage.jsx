@@ -79,7 +79,7 @@ const ProfilePage = () => {
             className="space-y-6"
         >
             {/* Profile Header */}
-            <div className="bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl p-6 text-white">
+            <div className="bg-gradient-to-r from-orange-500 to-orange-600 rounded-2xl p-6 text-white">
                 <div className="flex items-center space-x-4">
                     <motion.div
                         whileHover={{ scale: 1.05 }}
@@ -91,8 +91,8 @@ const ProfilePage = () => {
                     </motion.div>
                     <div>
                         <h2 className="text-2xl font-bold">{personalInfo.name}</h2>
-                        <p className="text-blue-100">{personalInfo.email}</p>
-                        <p className="text-blue-100">{personalInfo.phone}</p>
+                        <p className="text-orange-100">{personalInfo.email}</p>
+                        <p className="text-orange-100">{personalInfo.phone}</p>
                     </div>
                 </div>
                 <motion.button
@@ -115,7 +115,7 @@ const ProfilePage = () => {
                             type="text"
                             value={personalInfo.name}
                             disabled={!isEditing}
-                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-50"
+                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent disabled:bg-gray-50"
                         />
                     </div>
                     <div>
@@ -124,7 +124,7 @@ const ProfilePage = () => {
                             type="email"
                             value={personalInfo.email}
                             disabled={!isEditing}
-                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-50"
+                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent disabled:bg-gray-50"
                         />
                     </div>
                     <div>
@@ -133,7 +133,7 @@ const ProfilePage = () => {
                             type="tel"
                             value={personalInfo.phone}
                             disabled={!isEditing}
-                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-50"
+                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent disabled:bg-gray-50"
                         />
                     </div>
                     <div>
@@ -142,7 +142,7 @@ const ProfilePage = () => {
                             value={personalInfo.address}
                             disabled={!isEditing}
                             rows={3}
-                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-50 resize-none"
+                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent disabled:bg-gray-50 resize-none"
                         />
                     </div>
                 </div>
@@ -151,7 +151,7 @@ const ProfilePage = () => {
     );
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen bg-gray-50 pb-20">
             {/* Header */}
             <motion.div
                 initial={{ opacity: 0, y: -20 }}
@@ -183,7 +183,7 @@ const ProfilePage = () => {
                                 onClick={() => setActiveTab(tab.id)}
                                 className={`flex-1 py-3 px-4 text-sm font-medium rounded-t-lg transition-all duration-200 ${
                                     activeTab === tab.id
-                                        ? 'text-blue-600 bg-blue-50 border-b-2 border-blue-600'
+                                        ? 'text-orange-600 bg-orange-50 border-b-2 border-orange-600'
                                         : 'text-gray-600 hover:text-gray-800'
                                 }`}
                                 whileHover={{ scale: 1.02 }}

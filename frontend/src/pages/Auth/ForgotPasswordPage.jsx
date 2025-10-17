@@ -42,7 +42,7 @@ const ForgotPasswordPage = () => {
                         </p>
                         <Link 
                             to="/login" 
-                            className="inline-block w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 px-4 rounded-xl font-medium hover:from-blue-700 hover:to-purple-700 transition-all duration-300"
+                            className="inline-block w-full bg-gradient-to-r from-orange-500 to-orange-600 text-white py-3 px-4 rounded-xl font-medium hover:from-orange-600 hover:to-orange-700 transition-all duration-300"
                         >
                             Back to Login
                         </Link>
@@ -77,7 +77,7 @@ const ForgotPasswordPage = () => {
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 required
-                                className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
+                                className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300"
                                 placeholder="Enter your email"
                             />
                         </div>
@@ -87,7 +87,7 @@ const ForgotPasswordPage = () => {
                             disabled={isLoading}
                             whileHover={{ scale: 1.02 }}
                             whileTap={{ scale: 0.98 }}
-                            className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 px-4 rounded-xl font-medium hover:from-blue-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="w-full bg-gradient-to-r from-orange-500 to-orange-600 text-white py-3 px-4 rounded-xl font-medium hover:from-orange-600 hover:to-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                             {isLoading ? 'Sending...' : 'Send Reset Link'}
                         </motion.button>
@@ -96,7 +96,7 @@ const ForgotPasswordPage = () => {
                     <div className="mt-6 text-center">
                         <p className="text-gray-600">
                             Remember your password?{' '}
-                            <Link to="/login" className="text-blue-600 hover:text-blue-500 font-medium">
+                            <Link to="/login" className="text-orange-600 hover:text-orange-500 font-medium">
                                 Sign in
                             </Link>
                         </p>

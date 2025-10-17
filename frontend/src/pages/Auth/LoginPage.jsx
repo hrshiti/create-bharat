@@ -29,7 +29,7 @@ const LoginPage = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-slate-50 flex items-center justify-center p-4">
+        <div className="min-h-screen bg-gradient-to-br from-slate-50 via-orange-50/30 to-slate-50 flex items-center justify-center p-4">
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -58,7 +58,7 @@ const LoginPage = () => {
                                 value={formData.email}
                                 onChange={handleChange}
                                 required
-                                className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
+                                className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300"
                                 placeholder="Enter your email"
                             />
                         </div>
@@ -75,7 +75,7 @@ const LoginPage = () => {
                                 value={formData.password}
                                 onChange={handleChange}
                                 required
-                                className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
+                                className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300"
                                 placeholder="Enter your password"
                             />
                         </div>
@@ -86,13 +86,13 @@ const LoginPage = () => {
                                 <input
                                     type="checkbox"
                                     id="remember"
-                                    className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                                    className="h-4 w-4 text-orange-600 focus:ring-orange-500 border-gray-300 rounded"
                                 />
                                 <label htmlFor="remember" className="ml-2 block text-sm text-gray-700">
                                     Remember me
                                 </label>
                             </div>
-                            <Link to="/forgot-password" className="text-sm text-blue-600 hover:text-blue-500">
+                            <Link to="/forgot-password" className="text-sm text-orange-600 hover:text-orange-500">
                                 Forgot password?
                             </Link>
                         </div>
@@ -103,7 +103,7 @@ const LoginPage = () => {
                             disabled={isLoading}
                             whileHover={{ scale: 1.02 }}
                             whileTap={{ scale: 0.98 }}
-                            className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 px-4 rounded-xl font-medium hover:from-blue-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="w-full bg-gradient-to-r from-orange-500 to-orange-600 text-white py-3 px-4 rounded-xl font-medium hover:from-orange-600 hover:to-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                             {isLoading ? 'Signing In...' : 'Sign In'}
                         </motion.button>
@@ -113,7 +113,7 @@ const LoginPage = () => {
                     <div className="mt-6 text-center">
                         <p className="text-gray-600">
                             Don't have an account?{' '}
-                            <Link to="/signup" className="text-blue-600 hover:text-blue-500 font-medium">
+                            <Link to="/signup" className="text-orange-600 hover:text-orange-500 font-medium">
                                 Sign up
                             </Link>
                         </p>
