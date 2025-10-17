@@ -612,17 +612,15 @@ const CompanyInternshipsPage = () => {
                 </div>
             </motion.div>
 
-            {/* Tab Navigation */}
+            {/* Tab Navigation - Mobile Optimized */}
             <div className="bg-white border-b border-gray-200">
-                <div className="px-6">
-                    <div className="flex space-x-2">
+                <div className="px-2 md:px-6">
+                    <div className="flex space-x-1 md:space-x-2 overflow-x-auto scrollbar-hide">
                         {tabs.map((tab, index) => (
                             <motion.button
                                 key={tab.id}
                                 onClick={() => setActiveTab(tab.id)}
-                                className={`relative py-4 text-sm font-semibold rounded-t-2xl transition-all duration-300 ${
-                                    tab.id === 'post' ? 'px-12' : 'px-8'
-                                } ${
+                                className={`relative py-2 md:py-4 text-xs md:text-sm font-medium rounded-lg md:rounded-t-2xl transition-all duration-300 whitespace-nowrap ${
                                     activeTab === tab.id
                                         ? 'text-white'
                                         : 'text-gray-600 hover:text-gray-800'
@@ -631,7 +629,7 @@ const CompanyInternshipsPage = () => {
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: index * 0.1 }}
                                 whileHover={{ 
-                                    y: -2,
+                                    y: -1,
                                     transition: { duration: 0.2 }
                                 }}
                                 whileTap={{ scale: 0.98 }}
@@ -639,7 +637,7 @@ const CompanyInternshipsPage = () => {
                                 {/* Active Tab Background */}
                                 {activeTab === tab.id && (
                                     <motion.div
-                                        className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 rounded-t-2xl shadow-lg"
+                                        className="absolute inset-0 bg-gradient-to-r from-orange-500 to-orange-600 rounded-lg md:rounded-t-2xl shadow-md"
                                         layoutId="activeTab"
                                         initial={false}
                                         transition={{
@@ -651,12 +649,15 @@ const CompanyInternshipsPage = () => {
                                 )}
                                 
                                 {/* Tab Content */}
-                                <span className="relative z-10">{tab.name}</span>
+                                <span className="relative z-10 px-3 md:px-4 flex items-center">
+                                    <span className="mr-1 md:mr-2">{tab.icon}</span>
+                                    <span className="hidden sm:inline">{tab.name}</span>
+                                </span>
                                 
                                 {/* Subtle hover effect */}
                                 {activeTab !== tab.id && (
                                     <motion.div
-                                        className="absolute inset-0 bg-gray-100 rounded-t-2xl opacity-0"
+                                        className="absolute inset-0 bg-gray-100 rounded-lg md:rounded-t-2xl opacity-0"
                                         whileHover={{ opacity: 1 }}
                                         transition={{ duration: 0.2 }}
                                     />

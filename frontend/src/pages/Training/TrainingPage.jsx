@@ -15,6 +15,9 @@ const HomeIcon = ({ active }) => ( <svg xmlns="http://www.w3.org/2000/svg" class
 const BriefcaseIcon = ({ active }) => ( <svg xmlns="http://www.w3.org/2000/svg" className={`h-6 w-6 ${active ? 'text-indigo-600' : 'text-gray-500'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg> );
 
 const TrainingPage = () => {
+  const [userType, setUserType] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  
   const [completedTopics, setCompletedTopics] = useState(() => {
     const saved = localStorage.getItem('completedTopics');
     return saved ? JSON.parse(saved) : [];
@@ -53,6 +56,89 @@ const TrainingPage = () => {
 
   const isTopicCompleted = (topicId) => completedTopics.includes(topicId);
 
+  const handleLogin = (type) => {
+    setUserType(type);
+    setIsLoggedIn(true);
+  };
+
+  const handleLogout = () => {
+    setUserType(null);
+    setIsLoggedIn(false);
+  };
+
+  const renderLoginPage = () => (
+    <div className="min-h-screen bg-gradient-to-br from-orange-50 to-orange-100 flex items-center justify-center p-4">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="bg-white rounded-3xl shadow-2xl p-8 w-full max-w-md"
+      >
+        <div className="text-center mb-8">
+          <div className="w-16 h-16 bg-gradient-to-r from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+            <span className="text-3xl">📚</span>
+          </div>
+          <h1 className="text-2xl font-bold text-gray-800 mb-2">Training Portal</h1>
+          <p className="text-gray-600">Choose your login type to continue</p>
+        </div>
+
+        <div className="space-y-4">
+          <motion.button
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            onClick={() => handleLogin('user')}
+            className="w-full p-4 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all duration-300"
+          >
+            <div className="flex items-center justify-center">
+              <span className="text-2xl mr-3">👤</span>
+              <div className="text-left">
+                <div className="font-bold">Login as User</div>
+                <div className="text-sm opacity-90">Access training modules</div>
+              </div>
+            </div>
+          </motion.button>
+
+          <motion.button
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            onClick={() => handleLogin('admin')}
+            className="w-full p-4 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all duration-300"
+          >
+            <div className="flex items-center justify-center">
+              <span className="text-2xl mr-3">👨‍💼</span>
+              <div className="text-left">
+                <div className="font-bold">Login as Admin</div>
+                <div className="text-sm opacity-90">Manage training content</div>
+              </div>
+            </div>
+          </motion.button>
+        </div>
+
+        <div className="mt-8 text-center">
+          <Link
+            to="/"
+            className="text-orange-600 hover:text-orange-700 font-medium"
+          >
+            ← Back to Home
+          </Link>
+        </div>
+      </motion.div>
+    </div>
+  );
+
+  const renderAdminRedirect = () => {
+    // Redirect to admin training page
+    window.location.href = '/admin/training';
+    return null;
+  };
+
+  if (!isLoggedIn) {
+    return renderLoginPage();
+  }
+
+  if (userType === 'admin') {
+    return renderAdminRedirect();
+  }
+
   return (
     <div className="min-h-screen bg-white pb-20">
       {/* Top Header */}
@@ -83,20 +169,34 @@ const TrainingPage = () => {
             />
           </Link>
           
-          <motion.button 
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            className="p-2 hover:bg-white/20 rounded-lg transition-colors relative"
-          >
-            <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
-            </svg>
-            <motion.span 
-              animate={{ scale: [1, 1.3, 1] }}
-              transition={{ repeat: Infinity, duration: 2 }}
-              className="absolute top-1 right-1 h-2 w-2 bg-red-500 rounded-full"
-            />
-          </motion.button>
+          <div className="flex items-center space-x-2">
+            <motion.button 
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              className="p-2 hover:bg-white/20 rounded-lg transition-colors relative"
+            >
+              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+              </svg>
+              <motion.span 
+                animate={{ scale: [1, 1.3, 1] }}
+                transition={{ repeat: Infinity, duration: 2 }}
+                className="absolute top-1 right-1 h-2 w-2 bg-red-500 rounded-full"
+              />
+            </motion.button>
+            
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              onClick={handleLogout}
+              className="p-2 hover:bg-white/20 rounded-lg transition-colors"
+              title="Logout"
+            >
+              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+              </svg>
+            </motion.button>
+          </div>
         </div>
       </motion.header>
 

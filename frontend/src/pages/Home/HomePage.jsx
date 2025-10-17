@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import LoginModal from '../../components/common/LoginModal';
 import SignupModal from '../../components/common/SignupModal';
@@ -23,6 +23,8 @@ const SearchIcon = () => ( <svg xmlns="http://www.w3.org/2000/svg" className="h-
 const QuoteIcon = () => ( <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-indigo-300" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M10 3a1 1 0 012 0v5h3a1 1 0 010 2h-3v5a1 1 0 01-2 0V10H7a1 1 0 010-2h3V3z" clipRule="evenodd" /></svg> );
 
 const HomePage = () => {
+    const navigate = useNavigate();
+    
     // Modal state
     const [showLoginModal, setShowLoginModal] = useState(false);
     const [showSignupModal, setShowSignupModal] = useState(false);
@@ -42,6 +44,14 @@ const HomePage = () => {
     // Modal handlers
     const handleServiceClick = (e, servicePath) => {
         e.preventDefault();
+        
+        // Direct navigation for training and app development
+        if (servicePath === '/training' || servicePath === '/app-development') {
+            navigate(servicePath);
+            return;
+        }
+        
+        // For other services, show login modal
         setSelectedService(servicePath);
         // Check if it's the loans service to show admin option
         setIsAdminLogin(servicePath === '/loans');
@@ -483,7 +493,7 @@ const HomePage = () => {
                         variants={staggerContainer}
                         initial="hidden"
                         animate="visible"
-                        className="grid grid-cols-3 gap-4"
+                        className=" grid grid-cols-3 gap-4"
                     >
                         {[
                             { 
@@ -534,10 +544,10 @@ const HomePage = () => {
                                     transition: { duration: 0.1 }
                                 }}
                                 onClick={(e) => handleServiceClick(e, service.path)}
-                                className="relative rounded-xl bg-white p-4 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] border-2 border-gray-300 hover:shadow-[0_35px_70px_-12px_rgba(0,0,0,0.4)] hover:border-blue-400 hover:border-4 transition-all duration-300 cursor-pointer group"
+                                className=" rounded-xl bg-white shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] border-2 border-gray-300 hover:shadow-[0_35px_70px_-12px_rgba(0,0,0,0.4)] hover:border-blue-400 hover:border-4 transition-all duration-300 cursor-pointer group"
                             >
                                                             <motion.div 
-                                    className="w-full h-20 mb-3 rounded-lg overflow-hidden"
+                                    className="w-full object-fill h-20 mb-3 rounded-lg overflow-hidden"
                                     whileHover={{ scale: 1.1 }}
                                     transition={{ duration: 0.3 }}
                                 >
@@ -551,7 +561,7 @@ const HomePage = () => {
                                                             </motion.div>
 
                                                             <motion.h3 
-                                    className="text-xs font-medium text-gray-800 text-center leading-tight"
+                                    className="text-xs font-bold pb-2 text-gray-800 text-center leading-tight"
                                     whileHover={{ 
                                         color: "#F97316",
                                         scale: 1.05,
@@ -985,44 +995,125 @@ const HomePage = () => {
                                     path: '/app-development'
                                 }
                 ].map((service, index) => (
-                  <motion.div
-                                    key={service.name}
-                    variants={scaleIn}
-                                    whileHover={{ y: -5, scale: 1.02 }}
-                                    onClick={(e) => handleServiceClick(e, service.path)}
-                                    className="bg-white rounded-2xl shadow-lg hover:shadow-xl p-8 border border-gray-200 transition-all duration-300 group cursor-pointer"
-                                >
-                                    <div className={`w-16 h-16 bg-gradient-to-r ${service.color} rounded-2xl flex items-center justify-center mb-6 shadow-lg`}>
-                                        {service.icon}
-                                    </div>
-                                    
-                                    <h3 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-blue-600 transition-colors">
+                  <div key={service.name} className="flex flex-col">
+                    {/* Heading outside card on mobile, inside on desktop */}
+                    <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-3 md:mb-0 md:hidden text-center">
+                      {service.name}
+                    </h3>
+                    
+                    {/* Mobile Card Design - Modern Premium Style */}
+                    <motion.div
+                      variants={scaleIn}
+                      whileHover={{ y: -8, scale: 1.03 }}
+                      onClick={(e) => handleServiceClick(e, service.path)}
+                      className="md:hidden bg-white rounded-3xl shadow-2xl hover:shadow-3xl transition-all duration-500 group cursor-pointer flex flex-col h-full overflow-hidden relative border border-gray-100"
+                    >
+                      {/* Premium Image Section - Flush with edges */}
+                      <div className={`h-28 bg-gradient-to-br ${service.color} flex items-center justify-center relative overflow-hidden`}>
+                        {/* Dynamic gradient overlay */}
+                        <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-black/20"></div>
+                        
+                        {/* Premium icon container */}
+                        <div className="relative z-10 transform group-hover:scale-125 group-hover:rotate-3 transition-all duration-500">
+                          <div className="w-14 h-14 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center shadow-2xl border border-white/30">
+                            {service.icon}
+                          </div>
+                        </div>
+                        
+                        {/* Animated floating elements */}
+                        <div className="absolute top-3 right-3 w-6 h-6 bg-white/30 rounded-full animate-pulse"></div>
+                        <div className="absolute bottom-3 left-3 w-4 h-4 bg-white/20 rounded-full animate-bounce"></div>
+                        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-20 h-20 bg-white/5 rounded-full blur-xl group-hover:scale-150 transition-transform duration-700"></div>
+                        
+                        {/* Premium gradient overlay */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/5 via-transparent to-transparent"></div>
+                      </div>
+                      
+                      {/* Premium Content Section */}
+                      <div className="p-5 flex flex-col h-full bg-gradient-to-b from-white via-gray-50/20 to-white relative">
+                        {/* Subtle pattern overlay */}
+                        <div className="absolute inset-0 opacity-3 bg-gradient-to-br from-blue-500/10 to-purple-500/10"></div>
+                        
+                        <div className="relative z-10">
+                          <p className="text-sm text-gray-600 mb-4 leading-relaxed text-center line-clamp-2 font-medium">
+                            {service.desc}
+                          </p>
+
+                          <ul className="space-y-3 mb-5 flex-1">
+                            {service.features.map((feature, idx) => (
+                              <li key={idx} className="flex items-center text-sm text-gray-700 justify-center">
+                                <div className="w-4 h-4 bg-gradient-to-r from-emerald-400 to-emerald-500 rounded-full flex items-center justify-center mr-3 shadow-md">
+                                  <svg className="w-2.5 h-2.5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                  </svg>
+                                </div>
+                                <span className="font-medium text-sm">{feature}</span>
+                              </li>
+                            ))}
+                          </ul>
+
+                          <motion.button
+                            whileHover={{ scale: 1.08 }}
+                            whileTap={{ scale: 0.95 }}
+                            className="w-full py-3 bg-gradient-to-r from-blue-600 via-blue-700 to-purple-600 text-white font-bold rounded-2xl hover:shadow-xl transition-all duration-300 text-sm shadow-lg relative overflow-hidden group"
+                          >
+                            <span className="relative z-10">Learn More</span>
+                            <div className="absolute inset-0 bg-gradient-to-r from-blue-500 via-blue-600 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                          </motion.button>
+                        </div>
+                      </div>
+                    </motion.div>
+
+                    {/* Desktop Card Design */}
+                    <motion.div
+                      variants={scaleIn}
+                      whileHover={{ y: -5, scale: 1.02 }}
+                      onClick={(e) => handleServiceClick(e, service.path)}
+                      className="hidden md:flex bg-white rounded-2xl shadow-lg hover:shadow-xl border border-gray-200 transition-all duration-300 group cursor-pointer h-full overflow-hidden"
+                    >
+                      {/* Image/Icon Section - Top of card */}
+                      <div className={`h-32 bg-gradient-to-r ${service.color} flex items-center justify-center relative overflow-hidden rounded-t-2xl`}>
+                        <div className="absolute inset-0 bg-black/10"></div>
+                        <div className="relative z-10 transform group-hover:scale-110 transition-transform duration-300">
+                          {service.icon}
+                        </div>
+                        {/* Decorative elements */}
+                        <div className="absolute top-2 right-2 w-8 h-8 bg-white/20 rounded-full"></div>
+                        <div className="absolute bottom-2 left-2 w-6 h-6 bg-white/20 rounded-full"></div>
+                      </div>
+                      
+                      {/* Card content */}
+                      <div className="p-6 flex flex-col h-full">
+                        {/* Heading inside card on desktop only */}
+                        <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors">
                           {service.name}
                         </h3>
 
-                                    <p className="text-gray-600 mb-6 leading-relaxed">
+                        <p className="text-base text-gray-600 mb-4 leading-relaxed text-left line-clamp-2">
                           {service.desc}
                         </p>
 
-                                    <ul className="space-y-2 mb-6">
+                        <ul className="space-y-2 mb-6 flex-1">
                           {service.features.map((feature, idx) => (
-                                            <li key={idx} className="flex items-center text-sm text-gray-600">
-                                                <svg className="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                                                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                                </svg>
-                                                {feature}
-                                            </li>
+                            <li key={idx} className="flex items-center text-sm text-gray-600 justify-start">
+                              <svg className="w-4 h-4 text-green-500 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                              </svg>
+                              <span className="truncate">{feature}</span>
+                            </li>
                           ))}
                         </ul>
 
-                                    <motion.button
-                                        whileHover={{ scale: 1.05 }}
-                                        whileTap={{ scale: 0.95 }}
-                                        className="w-full py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl hover:shadow-lg transition-all duration-300"
-                                    >
-                                        Learn More
-                                    </motion.button>
-                  </motion.div>
+                        <motion.button
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          className="w-full py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl hover:shadow-lg transition-all duration-300 text-base"
+                        >
+                          Learn More
+                        </motion.button>
+                      </div>
+                    </motion.div>
+                  </div>
                 ))}
             </motion.div>
           </div>

@@ -34,8 +34,10 @@ import AnalyticsPage from './pages/Analytics/AnalyticsPage';
 import TermsPage from './pages/Legal/TermsPage';
 import AdminLoansPage from './pages/Admin/AdminLoansPage';
 import AdminLegalPage from './pages/Admin/AdminLegalPage';
+import AdminTrainingPage from './pages/Admin/AdminTrainingPage';
 import ProfilePage from './pages/Profile/ProfilePage';
 import CompanyInternshipsPage from './pages/Company/CompanyInternshipsPage';
+import AppDevelopmentPage from './pages/AppDevelopment/AppDevelopmentPage';
 
 function App() {
   return (
@@ -76,8 +78,10 @@ function App() {
           <Route path="/terms" element={<TermsPage />} />
           <Route path="/admin/loans" element={<AdminLoansPage />} />
           <Route path="/admin/legal" element={<AdminLegalPage />} />
+          <Route path="/admin/training" element={<AdminTrainingPage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/company/internships" element={<CompanyInternshipsPage />} />
+          <Route path="/app-development" element={<AppDevelopmentPage />} />
         </Routes>
       </div>
     </Router>
