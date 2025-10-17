@@ -544,7 +544,7 @@ const HomePage = () => {
                                     transition: { duration: 0.1 }
                                 }}
                                 onClick={(e) => handleServiceClick(e, service.path)}
-                                className=" rounded-xl bg-white p-1 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] border-2 border-gray-300 hover:shadow-[0_35px_70px_-12px_rgba(0,0,0,0.4)] hover:border-blue-400 hover:border-4 transition-all duration-300 cursor-pointer group"
+                                className=" rounded-xl bg-white p-1 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)]  hover:shadow-[0_35px_70px_-12px_rgba(0,0,0,0.4)] hover:border-blue-400 hover:border-4 transition-all duration-300 cursor-pointer group"
                             >
                                                             <motion.div 
                                     className="w-full object-fill h-20 mb-3 rounded-lg overflow-hidden"
@@ -673,7 +673,7 @@ const HomePage = () => {
                                     transition: { duration: 0.1 }
                                 }}
                                 onClick={(e) => handleServiceClick(e, service.path)}
-                                className="relative rounded-xl bg-white p-1  shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] border-2 border-gray-300 hover:shadow-[0_35px_70px_-12px_rgba(0,0,0,0.4)] hover:border-blue-400 hover:border-4 transition-all duration-300 cursor-pointer group"
+                                className="relative rounded-xl bg-white p-1  shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)]  hover:shadow-[0_35px_70px_-12px_rgba(0,0,0,0.4)] hover:border-blue-400 hover:border-4 transition-all duration-300 cursor-pointer group"
                             >
                                 <motion.div 
                                     className="w-full h-16 mb-2 rounded-lg overflow-hidden"
@@ -1006,7 +1006,7 @@ const HomePage = () => {
                       variants={scaleIn}
                       whileHover={{ y: -8, scale: 1.03 }}
                       onClick={(e) => handleServiceClick(e, service.path)}
-                      className="md:hidden bg-white rounded-3xl shadow-2xl hover:shadow-3xl transition-all duration-500 group cursor-pointer flex flex-col h-full overflow-hidden relative border border-gray-100"
+                      className="md:hidden bg-white rounded-3xl shadow-2xl hover:shadow-3xl transition-all duration-500 group cursor-pointer flex flex-col h-full overflow-hidden relative"
                     >
                       {/* Premium Image Section - Flush with edges */}
                       <div className={`h-28 bg-gradient-to-br ${service.color} flex items-center justify-center relative overflow-hidden`}>
