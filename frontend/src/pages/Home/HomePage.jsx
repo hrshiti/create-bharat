@@ -16,6 +16,11 @@ import internshipImg from '../../assets/career-center-internships-.jpg';
 import legalServicesImg from '../../assets/legal services.jpg';
 import mentorSupportImg from '../../assets/mentorsupport.jpg';
 import trainingImg from '../../assets/training.jpg';
+// Banner-specific images
+import bankBanner from '../../assets/bank-banner.png';
+import internshipBanner from '../../assets/intenrhsip-banner.jpg';
+import legalBanner from '../../assets/legal-banner.jpg';
+import mentorBanner from '../../assets/mentor-banner.webp';
 
 // --- SVG Icons ---
 const UserIcon = ({ className }) => ( <svg xmlns="http://www.w3.org/2000/svg" className={className || "h-6 w-6 text-gray-400"} viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" /></svg> );
@@ -46,8 +51,8 @@ const HomePage = () => {
     const handleServiceClick = (e, servicePath) => {
         e.preventDefault();
         
-        // Direct navigation for training and app development
-        if (servicePath === '/training' || servicePath === '/app-development') {
+        // Direct navigation for training, app development, and mentors
+        if (servicePath === '/training' || servicePath === '/app-development' || servicePath === '/mentors') {
             navigate(servicePath);
             return;
         }
@@ -410,28 +415,28 @@ const HomePage = () => {
                                     id: 1,
                                     title: "Loans",
                                     subtitle: "Access financial support",
-                                    image: govLoanImg,
+                                    image: bankBanner,
                                     color: "from-orange-600 to-cyan-600"
                                 },
                                 {
                                     id: 2,
                                     title: "Internships",
                                     subtitle: "Start your career",
-                                    image: internshipImg,
+                                    image: internshipBanner,
                                     color: "from-green-600 to-emerald-600"
                                 },
                                 {
                                     id: 3,
                                     title: "Legal Services",
                                     subtitle: "Professional support",
-                                    image: legalServicesImg,
+                                    image: legalBanner,
                                     color: "from-purple-600 to-violet-600"
                                 },
                                 {
                                     id: 4,
                                     title: "Mentorship",
                                     subtitle: "Expert guidance",
-                                    image: mentorSupportImg,
+                                    image: mentorBanner,
                                     color: "from-orange-600 to-red-600"
                                 },
                                 {
@@ -455,18 +460,11 @@ const HomePage = () => {
                                             transition={{ duration: 0.5 }}
                                         className="absolute inset-0"
                                     >
-                                        <div className={`absolute inset-0 bg-gradient-to-r ${currentBanner.color} opacity-90`}>
-                                            <img 
-                                                src={currentBanner.image} 
-                                                alt={currentBanner.title}
-                                                className="absolute inset-0 w-full h-full object-cover opacity-30"
-                                            />
-                                            <div className="absolute inset-0 backdrop-blur-sm"></div>
-                                        </div>
-                                        <div className="relative z-10 p-6 h-full flex flex-col justify-center">
-                                            <h2 className="text-xl font-bold text-white mb-1">{currentBanner.title}</h2>
-                                            <p className="text-white/90 text-sm">{currentBanner.subtitle}</p>
-                                        </div>
+                                        <img 
+                                            src={currentBanner.image} 
+                                            alt={currentBanner.title}
+                                            className="absolute inset-0 w-full h-full object-cover"
+                                        />
                                         </motion.div>
                             </AnimatePresence>
                             );

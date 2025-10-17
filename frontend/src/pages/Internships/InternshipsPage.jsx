@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { internships, internshipCategories } from '../../data/internships';
 import BottomNavbar from '../../components/common/BottomNavbar';
@@ -17,6 +17,8 @@ const ClipboardIcon = () => ( <svg xmlns="http://www.w3.org/2000/svg" className=
 const UserIcon = () => ( <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg> );
 
 const InternshipsPage = () => {
+  const navigate = useNavigate();
+  
   const trendingInternships = internships.filter(internship => internship.featured || internship.popular).slice(0, 6);
   const recommendedInternships = internships.slice(0, 8);
   const scrollContainerRef = useRef(null);
@@ -215,6 +217,12 @@ const InternshipsPage = () => {
     },
   ];
 
+  // Handle placement course click
+  const handlePlacementCourseClick = (course) => {
+    // Navigate to course details page
+    navigate(`/internships/course/${course.id}`);
+  };
+
   // Handle scroll to update active card indicator
   useEffect(() => {
     const handleTrendingScroll = () => {
@@ -242,14 +250,6 @@ const InternshipsPage = () => {
         const index = Math.round(scrollLeft / cardWidth);
         setActivePlacementIndex(index);
       }
-    };
-
-    const handlePlacementCourseClick = (course) => {
-      // Navigate to course details or enrollment page
-      console.log('Course clicked:', course);
-      // You can add navigation logic here
-      // For now, we'll show an alert
-      alert(`Enrolling in ${course.title} at ${course.company}`);
     };
 
     const trendingContainer = scrollContainerRef.current;

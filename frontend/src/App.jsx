@@ -12,6 +12,7 @@ import InternshipApplicationPage from './pages/Internships/InternshipApplication
 import SavedInternshipsPage from './pages/Internships/SavedInternshipsPage';
 import AppliedInternshipsPage from './pages/Internships/AppliedInternshipsPage';
 import InternshipProfilePage from './pages/Internships/InternshipProfilePage';
+import CourseDetailPage from './pages/Internships/CourseDetailPage';
 import TrainingPage from './pages/Training/TrainingPage';
 import ModuleDetailPage from './pages/Training/ModuleDetailPage';
 import TopicDetailPage from './pages/Training/TopicDetailPage';
@@ -27,7 +28,7 @@ import MentorDetailPage from './pages/Mentors/MentorDetailPage';
 import MentorBookingPage from './pages/Mentors/MentorBookingPage';
 import MentorDashboard from './pages/Mentors/MentorDashboard';
 import BecomeMentorPage from './pages/Mentors/BecomeMentorPage';
-import MyBookingsPage from './pages/Mentors/MyBookingsPage';
+import MentorProfilePage from './pages/Mentors/MentorProfilePage';
 import LoginPage from './pages/Auth/LoginPage';
 import SignupPage from './pages/Auth/SignupPage';
 import ForgotPasswordPage from './pages/Auth/ForgotPasswordPage';
@@ -55,6 +56,7 @@ function App() {
           <Route path="/internships/saved" element={<SavedInternshipsPage />} />
           <Route path="/internships/applied" element={<AppliedInternshipsPage />} />
           <Route path="/internships/profile" element={<InternshipProfilePage />} />
+          <Route path="/internships/course/:courseId" element={<CourseDetailPage />} />
           <Route path="/internships/:internshipId" element={<InternshipDetailPage />} />
           <Route path="/internships/:internshipId/apply" element={<InternshipApplicationPage />} />
           <Route path="/training" element={<TrainingPage />} />
@@ -72,7 +74,7 @@ function App() {
           <Route path="/mentors/:mentorId/book/:slotId" element={<MentorBookingPage />} />
           <Route path="/mentors/dashboard" element={<MentorDashboard />} />
           <Route path="/mentors/become-mentor" element={<BecomeMentorPage />} />
-          <Route path="/mentors/my-bookings" element={<MyBookingsPage />} />
+          <Route path="/mentors/profile" element={<MentorProfilePage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
