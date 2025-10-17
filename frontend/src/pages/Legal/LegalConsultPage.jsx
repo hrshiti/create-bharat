@@ -138,7 +138,7 @@ const LegalConsultPage = () => {
             className="p-2 rounded-full bg-gradient-to-r from-blue-100 to-purple-100 hover:from-blue-200 hover:to-purple-200 transition-all duration-300"
             onClick={() => navigate('/legal')}
           >
-            <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
           </motion.button>
@@ -183,7 +183,7 @@ const LegalConsultPage = () => {
                   <div className="text-center">
                     <div className="text-lg mb-1">{category.icon}</div>
                     <div className={`text-xs font-semibold ${
-                      selectedCategory === category.id ? 'text-blue-600' : 'text-gray-600'
+                      selectedCategory === category.id ? 'text-orange-600' : 'text-gray-600'
                     }`}>
                       {category.name}
                     </div>
@@ -238,12 +238,15 @@ const LegalConsultPage = () => {
                     
                     {/* Price and Book Button */}
                     <div className="flex-shrink-0 text-center sm:text-right">
-                      <div className="text-sm font-bold text-blue-600">{lawyer.consultationFee}</div>
+                      <div className="text-sm font-bold text-orange-600">{lawyer.consultationFee}</div>
                       <div className="text-xs text-gray-500">per consultation</div>
                       <motion.button
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
-                        className="mt-1 px-3 py-1.5 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors text-xs w-full sm:w-auto"
+                        onClick={() => {
+                          alert(`Booking consultation with ${lawyer.name}. Feature coming soon!`);
+                        }}
+                        className="mt-1 px-3 py-1.5 bg-orange-600 text-white rounded-md hover:bg-orange-700 transition-colors text-xs w-full sm:w-auto"
                       >
                         Book Now
                       </motion.button>

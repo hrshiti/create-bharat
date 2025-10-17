@@ -113,7 +113,7 @@ const TrainingPage = () => {
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             onClick={() => handleLogin('admin')}
-            className="w-full p-4 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all duration-300"
+            className="w-full p-4 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all duration-300"
           >
             <div className="flex items-center justify-center">
               <span className="text-2xl mr-3">👨‍💼</span>
@@ -180,7 +180,12 @@ const TrainingPage = () => {
           <motion.button 
             whileHover={{ scale: 1.1, rotate: 90 }}
             whileTap={{ scale: 0.9 }}
+            onClick={() => {
+              // Handle menu icon click
+              alert('Menu feature coming soon!');
+            }}
             className="p-2 hover:bg-white/20 rounded-lg transition-colors"
+            title="Menu"
           >
             <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
@@ -201,7 +206,12 @@ const TrainingPage = () => {
             <motion.button 
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
+              onClick={() => {
+                // Handle message icon click
+                alert('Messages feature coming soon!');
+              }}
               className="p-2 hover:bg-white/20 rounded-lg transition-colors relative"
+              title="Messages"
             >
               <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />

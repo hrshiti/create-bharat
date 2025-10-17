@@ -11,6 +11,7 @@ import InternshipDetailPage from './pages/Internships/InternshipDetailPage';
 import InternshipApplicationPage from './pages/Internships/InternshipApplicationPage';
 import SavedInternshipsPage from './pages/Internships/SavedInternshipsPage';
 import AppliedInternshipsPage from './pages/Internships/AppliedInternshipsPage';
+import InternshipProfilePage from './pages/Internships/InternshipProfilePage';
 import TrainingPage from './pages/Training/TrainingPage';
 import ModuleDetailPage from './pages/Training/ModuleDetailPage';
 import TopicDetailPage from './pages/Training/TopicDetailPage';
@@ -53,6 +54,7 @@ function App() {
           <Route path="/internships" element={<InternshipsPage />} />
           <Route path="/internships/saved" element={<SavedInternshipsPage />} />
           <Route path="/internships/applied" element={<AppliedInternshipsPage />} />
+          <Route path="/internships/profile" element={<InternshipProfilePage />} />
           <Route path="/internships/:internshipId" element={<InternshipDetailPage />} />
           <Route path="/internships/:internshipId/apply" element={<InternshipApplicationPage />} />
           <Route path="/training" element={<TrainingPage />} />

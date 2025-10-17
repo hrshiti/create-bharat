@@ -140,12 +140,12 @@ const InternshipsPage = () => {
   
   // Different background colors for trending cards
   const cardBackgrounds = [
-    'from-blue-500 to-indigo-500',
+    'from-orange-500 to-indigo-500',
     'from-purple-500 to-pink-500',
     'from-emerald-500 to-teal-500',
     'from-orange-500 to-amber-500',
     'from-rose-500 to-red-500',
-    'from-cyan-500 to-blue-500',
+    'from-cyan-500 to-orange-500',
   ];
   
   const placementCourses = [
@@ -162,7 +162,7 @@ const InternshipsPage = () => {
       rating: '4.8',
       students: '2,450 enrolled',
       icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>,
-      color: 'from-blue-500 to-cyan-500',
+      color: 'from-orange-500 to-cyan-500',
       placement: '95% placement rate'
     },
     { 
@@ -244,6 +244,14 @@ const InternshipsPage = () => {
       }
     };
 
+    const handlePlacementCourseClick = (course) => {
+      // Navigate to course details or enrollment page
+      console.log('Course clicked:', course);
+      // You can add navigation logic here
+      // For now, we'll show an alert
+      alert(`Enrolling in ${course.title} at ${course.company}`);
+    };
+
     const trendingContainer = scrollContainerRef.current;
     const recommendedContainer = recommendedScrollRef.current;
     const placementContainer = placementScrollRef.current;
@@ -285,7 +293,12 @@ const InternshipsPage = () => {
             <motion.button 
               whileHover={{ scale: 1.1, rotate: 90 }}
               whileTap={{ scale: 0.9 }}
+              onClick={() => {
+                // Handle menu icon click
+                alert('Menu feature coming soon!');
+              }}
               className="p-2 hover:bg-white/20 rounded-lg transition-colors"
+              title="Menu"
             >
             <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
@@ -328,7 +341,12 @@ const InternshipsPage = () => {
           <motion.button 
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
+            onClick={() => {
+              // Handle message icon click
+              alert('Messages feature coming soon!');
+            }}
             className="p-2 hover:bg-white/20 rounded-lg transition-colors relative"
+            title="Messages"
           >
             <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
@@ -359,7 +377,7 @@ const InternshipsPage = () => {
                 <input
                   type="text"
                   placeholder="Search internships..."
-                  className="w-80 px-4 py-3 pl-10 bg-gray-50 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-80 px-4 py-3 pl-10 bg-gray-50 border border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent"
                 />
                 <svg className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -369,14 +387,14 @@ const InternshipsPage = () => {
               {/* Filter Button */}
               <button
                 onClick={() => setIsFilterOpen(!isFilterOpen)}
-                className="flex items-center gap-2 px-4 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors font-medium"
+                className="flex items-center gap-2 px-4 py-3 bg-orange-600 text-white rounded-xl hover:bg-orange-700 transition-colors font-medium"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
                 </svg>
                 Filter
                 {getActiveFiltersCount() > 0 && (
-                  <span className="bg-white text-blue-600 text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold">
+                  <span className="bg-white text-orange-600 text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold">
                     {getActiveFiltersCount()}
                   </span>
                 )}
@@ -395,7 +413,7 @@ const InternshipsPage = () => {
             <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-200">
               <div className="flex items-center justify-between mb-8">
                 <h2 className="text-3xl font-bold text-gray-900">✨ Trending Internships</h2>
-                <button className="text-blue-600 hover:text-blue-700 font-semibold">View All</button>
+                <button className="text-orange-600 hover:text-orange-700 font-semibold">View All</button>
               </div>
               
               <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
@@ -467,7 +485,7 @@ const InternshipsPage = () => {
             <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-200">
               <div className="flex items-center justify-between mb-8">
                 <h2 className="text-3xl font-bold text-gray-900">Recommended For You</h2>
-                <button className="text-blue-600 hover:text-blue-700 font-semibold">View All</button>
+                <button className="text-orange-600 hover:text-orange-700 font-semibold">View All</button>
               </div>
               
               <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-6">
@@ -483,7 +501,7 @@ const InternshipsPage = () => {
                     <div className="flex items-start justify-between mb-4">
                       <div className="flex-1">
                         <h3 className="font-bold text-gray-900 text-lg mb-1">{internship.company}</h3>
-                        <span className="px-2 py-1 bg-blue-50 text-blue-600 text-xs font-medium rounded-full">
+                        <span className="px-2 py-1 bg-orange-50 text-orange-600 text-xs font-medium rounded-full">
                           Actively hiring
                         </span>
                       </div>
@@ -537,7 +555,7 @@ const InternshipsPage = () => {
                     </div>
 
                     <Link to={`/internships/${internship.id}`}>
-                      <button className="w-full bg-blue-600 text-white text-center py-2.5 rounded-lg font-semibold text-sm hover:bg-blue-700 transition-colors">
+                      <button className="w-full bg-orange-600 text-white text-center py-2.5 rounded-lg font-semibold text-sm hover:bg-orange-700 transition-colors">
                         View Details
                       </button>
                     </Link>
@@ -550,7 +568,7 @@ const InternshipsPage = () => {
             <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-200">
               <div className="flex items-center justify-between mb-8">
                 <h2 className="text-3xl font-bold text-gray-900">Placement Courses</h2>
-                <button className="text-blue-600 hover:text-blue-700 font-semibold">View All</button>
+                <button className="text-orange-600 hover:text-orange-700 font-semibold">View All</button>
               </div>
               
               <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-6">
@@ -566,7 +584,7 @@ const InternshipsPage = () => {
                     <div className="flex items-start justify-between mb-4">
                       <div className="flex-1">
                         <h3 className="font-bold text-gray-900 text-lg mb-1">{course.company}</h3>
-                        <span className="px-2 py-1 bg-blue-50 text-blue-600 text-xs font-medium rounded-full">
+                        <span className="px-2 py-1 bg-orange-50 text-orange-600 text-xs font-medium rounded-full">
                           Actively hiring
                         </span>
                       </div>
@@ -616,7 +634,12 @@ const InternshipsPage = () => {
                       </div>
                     </div>
 
-                    <button className="w-full bg-blue-600 text-white text-center py-2.5 rounded-lg font-semibold text-sm hover:bg-blue-700 transition-colors">
+                    <button 
+                      onClick={() => {
+                        alert(`Enrolling in ${course.title} at ${course.company}. Feature coming soon!`);
+                      }}
+                      className="w-full bg-orange-600 text-white text-center py-2.5 rounded-lg font-semibold text-sm hover:bg-orange-700 transition-colors"
+                    >
                       Enroll Now
                     </button>
                   </motion.div>
@@ -882,7 +905,7 @@ const InternshipsPage = () => {
                           {internship.company}
                         </h3>
                         <div className="flex items-center gap-2">
-                          <span className="px-2 py-1 bg-blue-50 text-blue-600 text-xs font-medium rounded-full border border-blue-200">
+                          <span className="px-2 py-1 bg-orange-50 text-orange-600 text-xs font-medium rounded-full border border-orange-200">
                             Actively hiring
                           </span>
                         </div>
@@ -1062,6 +1085,7 @@ const InternshipsPage = () => {
                   whileHover={{ scale: 1.05, y: -8, rotateY: 5 }}
                   whileTap={{ scale: 0.98 }}
                   transition={{ type: "spring", stiffness: 300 }}
+                  onClick={() => handlePlacementCourseClick(course)}
                   className="flex-shrink-0 w-80 md:w-64 bg-gray-50 rounded-xl p-4 border-2 border-gray-300 shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer snap-start"
                 >
                   {/* Company Header */}
@@ -1071,7 +1095,7 @@ const InternshipsPage = () => {
                         {course.company}
                       </h3>
                       <div className="flex items-center gap-2">
-                        <span className="px-2 py-1 bg-blue-50 text-blue-600 text-xs font-medium rounded-full border border-blue-200">
+                        <span className="px-2 py-1 bg-orange-50 text-orange-600 text-xs font-medium rounded-full border border-orange-200">
                           Actively hiring
                         </span>
                       </div>
@@ -1123,6 +1147,10 @@ const InternshipsPage = () => {
                   <motion.button 
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
+                    onClick={(e) => {
+                      e.stopPropagation(); // Prevent card click
+                      handlePlacementCourseClick(course);
+                    }}
                     className="w-full md:w-auto md:px-6 bg-indigo-600 text-white text-center py-2.5 rounded-lg font-semibold text-sm hover:bg-indigo-700 transition-colors shadow-md"
                   >
                     Enroll Now
@@ -1431,7 +1459,7 @@ const InternshipsPage = () => {
           { name: 'Search', path: '/internships', icon: <SearchIcon /> },
           { name: 'Saved', path: '/internships/saved', icon: <HeartIcon /> },
           { name: 'Applied', path: '/internships/applied', icon: <ClipboardIcon /> },
-          { name: 'Profile', path: '/profile', icon: <UserIcon /> }
+          { name: 'Profile', path: '/internships/profile', icon: <UserIcon /> }
         ]}
       />
 

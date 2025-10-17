@@ -224,7 +224,7 @@ const HomePage = () => {
             name: 'Loans',
             image: govLoanImg,
             path: '/loans',
-            color: 'from-blue-500 to-cyan-500'
+            color: 'from-orange-500 to-cyan-500'
         },
         {
             id: 'internships',
@@ -259,18 +259,18 @@ const HomePage = () => {
             name: 'Analytics',
             image: techImage,
             path: '/analytics',
-            color: 'from-indigo-500 to-blue-500'
+            color: 'from-indigo-500 to-orange-500'
         }
     ];
 
     // Trending data
     const trendingItems = [
-        { id: 1, title: 'MUDRA Loan', category: 'Finance', trend: '+25%', color: 'bg-green-100 text-green-800' },
-        { id: 2, title: 'Tech Internships', category: 'Career', trend: '+18%', color: 'bg-blue-100 text-blue-800' },
-        { id: 3, title: 'Startup India', category: 'Business', trend: '+32%', color: 'bg-purple-100 text-purple-800' },
-        { id: 4, title: 'Legal Help', category: 'Legal', trend: '+15%', color: 'bg-orange-100 text-orange-800' },
-        { id: 5, title: 'Mentorship', category: 'Learning', trend: '+28%', color: 'bg-pink-100 text-pink-800' },
-        { id: 6, title: 'Skill Training', category: 'Education', trend: '+22%', color: 'bg-indigo-100 text-indigo-800' }
+        { id: 1, title: 'MUDRA Loan', category: 'Finance', trend: '+25%', color: 'bg-green-100 text-green-800', path: '/loans' },
+        { id: 2, title: 'Tech Internships', category: 'Career', trend: '+18%', color: 'bg-orange-100 text-orange-800', path: '/internships' },
+        { id: 3, title: 'Startup India', category: 'Business', trend: '+32%', color: 'bg-purple-100 text-purple-800', path: '/loans' },
+        { id: 4, title: 'Legal Help', category: 'Legal', trend: '+15%', color: 'bg-orange-100 text-orange-800', path: '/legal' },
+        { id: 5, title: 'Mentorship', category: 'Learning', trend: '+28%', color: 'bg-pink-100 text-pink-800', path: '/mentors' },
+        { id: 6, title: 'Skill Training', category: 'Education', trend: '+22%', color: 'bg-indigo-100 text-indigo-800', path: '/training' }
     ];
 
     // Top companies data
@@ -411,7 +411,7 @@ const HomePage = () => {
                                     title: "Loans",
                                     subtitle: "Access financial support",
                                     image: govLoanImg,
-                                    color: "from-blue-600 to-cyan-600"
+                                    color: "from-orange-600 to-cyan-600"
                                 },
                                 {
                                     id: 2,
@@ -545,7 +545,7 @@ const HomePage = () => {
                                     transition: { duration: 0.1 }
                                 }}
                                 onClick={(e) => handleServiceClick(e, service.path)}
-                                className=" rounded-xl bg-white p-1 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)]  hover:shadow-[0_35px_70px_-12px_rgba(0,0,0,0.4)] hover:border-blue-400 hover:border-4 transition-all duration-300 cursor-pointer group"
+                                className=" rounded-xl bg-white p-1 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)]  hover:shadow-[0_35px_70px_-12px_rgba(0,0,0,0.4)] hover:border-orange-400 hover:border-4 transition-all duration-300 cursor-pointer group"
                             >
                                                             <motion.div 
                                     className="w-full object-fill h-20 mb-3 rounded-lg overflow-hidden"
@@ -621,6 +621,9 @@ const HomePage = () => {
                             <motion.button
                                 whileHover={{ scale: 1.1 }}
                                 whileTap={{ scale: 0.9 }}
+                                onClick={() => {
+                                    alert('Get Started feature coming soon!');
+                                }}
                                 className="px-6 py-3 bg-orange-500 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
                             >
                                 Get Started
@@ -674,7 +677,7 @@ const HomePage = () => {
                                     transition: { duration: 0.1 }
                                 }}
                                 onClick={(e) => handleServiceClick(e, service.path)}
-                                className="relative rounded-xl bg-white p-1  shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)]  hover:shadow-[0_35px_70px_-12px_rgba(0,0,0,0.4)] hover:border-blue-400 hover:border-4 transition-all duration-300 cursor-pointer group"
+                                className="relative rounded-xl bg-white p-1  shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)]  hover:shadow-[0_35px_70px_-12px_rgba(0,0,0,0.4)] hover:border-orange-400 hover:border-4 transition-all duration-300 cursor-pointer group"
                             >
                                 <motion.div 
                                     className="w-full h-16 mb-2 rounded-lg overflow-hidden"
@@ -750,6 +753,9 @@ const HomePage = () => {
                             <motion.button
                                             whileHover={{ scale: 1.1 }}
                                 whileTap={{ scale: 0.9 }}
+                                onClick={() => {
+                                    alert('Learn More feature coming soon!');
+                                }}
                                 className="px-8 py-4 border-2 border-gray-300 text-gray-700 font-semibold rounded-xl hover:border-gray-400 transition-all duration-300"
                             >
                                 Learn More
@@ -776,7 +782,9 @@ const HomePage = () => {
                                     key={item.id}
                                 variants={fadeInUp}
                                     whileHover={{ scale: 1.02 }}
-                                    className="bg-white rounded-lg p-3 shadow-md"
+                                    whileTap={{ scale: 0.98 }}
+                                    onClick={(e) => handleServiceClick(e, item.path)}
+                                    className="bg-white rounded-lg p-3 shadow-md cursor-pointer"
                                 >
                                     <div className="flex flex-col space-y-1">
                                         <h3 className="text-xs font-semibold text-gray-900 leading-tight">{item.title}</h3>
@@ -847,7 +855,7 @@ const HomePage = () => {
                         <div className="grid grid-cols-2 gap-3">
                             {[
                                 { name: 'Apply Loan', icon: '💰', color: 'from-green-500 to-emerald-500', path: '/loans' },
-                                { name: 'Find Jobs', icon: '💼', color: 'from-blue-500 to-cyan-500', path: '/internships' },
+                                { name: 'Find Jobs', icon: '💼', color: 'from-orange-500 to-cyan-500', path: '/internships' },
                                 { name: 'Legal Help', icon: '⚖️', color: 'from-purple-500 to-violet-500', path: '/legal' },
                                 { name: 'Get Mentor', icon: '👨‍🏫', color: 'from-orange-500 to-red-500', path: '/mentors' }
                             ].map((action, index) => (
@@ -873,7 +881,7 @@ const HomePage = () => {
                         variants={staggerContainer}
                         initial="hidden"
                         animate="visible"
-                        className="bg-gradient-to-br from-indigo-50 via-blue-50 to-purple-50 rounded-2xl p-6 mb-6"
+                        className="bg-gradient-to-br from-indigo-50 via-orange-50 to-purple-50 rounded-2xl p-6 mb-6"
                     >
                         <motion.h2 
                             variants={fadeInUp}
@@ -907,14 +915,14 @@ const HomePage = () => {
             <BottomNavbar />
 
             {/* Desktop View */}
-            <div className="hidden md:block min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50">
+            <div className="hidden md:block min-h-screen bg-gradient-to-br from-gray-50 via-orange-50 to-indigo-50">
                 {/* Desktop Header */}
                 <header className="bg-white shadow-lg border-b border-gray-200 sticky top-0 z-50">
                     <div className="max-w-7xl mx-auto px-8 py-6">
                         <div className="flex items-center justify-between">
                             <div className="flex items-center gap-4">
                                 <Link to="/" className="flex items-center gap-3">
-                                    <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
+                                    <div className="w-12 h-12 bg-gradient-to-br from-orange-600 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
                                         <img src={logo} alt="CreateBharat" className="w-8 h-8 object-contain" />
                                     </div>
                                     <div>
@@ -925,19 +933,29 @@ const HomePage = () => {
             </div>
 
                             <nav className="hidden lg:flex items-center space-x-8">
-                                <Link to="/" className="text-gray-700 hover:text-blue-600 font-semibold transition-colors">Home</Link>
-                                <Link to="/loans" className="text-gray-700 hover:text-blue-600 font-semibold transition-colors">Loans</Link>
-                                <Link to="/internships" className="text-gray-700 hover:text-blue-600 font-semibold transition-colors">Internships</Link>
-                                <Link to="/legal" className="text-gray-700 hover:text-blue-600 font-semibold transition-colors">Legal</Link>
-                                <Link to="/mentors" className="text-gray-700 hover:text-blue-600 font-semibold transition-colors">Mentors</Link>
-                                <Link to="/training" className="text-gray-700 hover:text-blue-600 font-semibold transition-colors">Training</Link>
+                                <Link to="/" className="text-gray-700 hover:text-orange-600 font-semibold transition-colors">Home</Link>
+                                <Link to="/loans" className="text-gray-700 hover:text-orange-600 font-semibold transition-colors">Loans</Link>
+                                <Link to="/internships" className="text-gray-700 hover:text-orange-600 font-semibold transition-colors">Internships</Link>
+                                <Link to="/legal" className="text-gray-700 hover:text-orange-600 font-semibold transition-colors">Legal</Link>
+                                <Link to="/mentors" className="text-gray-700 hover:text-orange-600 font-semibold transition-colors">Mentors</Link>
+                                <Link to="/training" className="text-gray-700 hover:text-orange-600 font-semibold transition-colors">Training</Link>
                             </nav>
                             
                             <div className="flex items-center gap-4">
-                                <button className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors">
+                                <button 
+                                    onClick={() => {
+                                        alert('Search feature coming soon!');
+                                    }}
+                                    className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
+                                >
                                     <SearchIcon />
                                 </button>
-                                <button className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors">
+                                <button 
+                                    onClick={() => {
+                                        alert('Notifications feature coming soon!');
+                                    }}
+                                    className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
+                                >
                                     <BellIcon />
                                 </button>
                                 <div className="flex items-center gap-3">
@@ -949,7 +967,7 @@ const HomePage = () => {
                                     </button>
                                     <button 
                                         onClick={() => setShowSignupModal(true)}
-                                        className="px-6 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-lg hover:shadow-lg transition-all duration-300"
+                                        className="px-6 py-2 bg-gradient-to-r from-orange-600 to-purple-600 text-white font-semibold rounded-lg hover:shadow-lg transition-all duration-300"
                                     >
                                         Sign Up
                                     </button>
@@ -960,7 +978,7 @@ const HomePage = () => {
                 </header>
 
                 {/* Desktop Hero Section */}
-                <section className="py-16 lg:py-24 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 relative overflow-hidden">
+                <section className="py-16 lg:py-24 bg-gradient-to-br from-orange-50 via-indigo-50 to-purple-50 relative overflow-hidden">
                     <div className="max-w-7xl mx-auto px-8">
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 <motion.div 
@@ -972,7 +990,7 @@ const HomePage = () => {
                                 <div>
                                     <h1 className="text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
                                         Empower Your
-                                        <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"> Dreams</span>
+                                        <span className="bg-gradient-to-r from-orange-600 to-purple-600 bg-clip-text text-transparent"> Dreams</span>
                                     </h1>
                                     <p className="text-xl text-gray-600 mb-8 leading-relaxed">
                                         Access government loans, find internships, get legal support, and connect with mentors - all in one platform designed for your success.
@@ -983,13 +1001,19 @@ const HomePage = () => {
                   <motion.button
                                         whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                                        className="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
+                                        onClick={() => {
+                                            alert('Get Started feature coming soon!');
+                                        }}
+                                        className="px-8 py-4 bg-gradient-to-r from-orange-600 to-purple-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
                                     >
                                         Get Started
                   </motion.button>
                                     <motion.button
                                         whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
+                                        onClick={() => {
+                                            alert('Learn More feature coming soon!');
+                                        }}
                                         className="px-8 py-4 border-2 border-gray-300 text-gray-700 font-semibold rounded-xl hover:border-gray-400 transition-all duration-300"
                                     >
                                         Learn More
@@ -998,7 +1022,7 @@ const HomePage = () => {
                                 
                                 <div className="flex items-center gap-8 pt-8">
                       <div className="text-center">
-                                        <div className="text-3xl font-bold text-blue-600">10K+</div>
+                                        <div className="text-3xl font-bold text-orange-600">10K+</div>
                                         <div className="text-sm text-gray-600">Active Users</div>
                       </div>
                       <div className="text-center">
@@ -1024,7 +1048,7 @@ const HomePage = () => {
                                         alt="Technology"
                                         className="w-full h-auto rounded-2xl shadow-2xl"
                                     />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-blue-600/20 to-transparent rounded-2xl"></div>
+                                    <div className="absolute inset-0 bg-gradient-to-t from-orange-600/20 to-transparent rounded-2xl"></div>
                 </div>
               </motion.div>
             </div>
@@ -1063,7 +1087,7 @@ const HomePage = () => {
                 {[
                   { 
                                     name: 'Loans', 
-                    color: 'from-blue-500 to-cyan-500', 
+                    color: 'from-orange-500 to-cyan-500', 
                                     icon: <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>,
                                     desc: 'Access government loan schemes and financial assistance programs',
                                     features: ['Low Interest Rates', 'Easy Application', 'Quick Approval'],
@@ -1103,7 +1127,7 @@ const HomePage = () => {
                   },
                                 { 
                                     name: 'Development', 
-                                    color: 'from-indigo-500 to-blue-500', 
+                                    color: 'from-indigo-500 to-orange-500', 
                                     icon: <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>,
                                     desc: 'Custom app development solutions for your business needs',
                                     features: ['Custom Apps', 'Mobile & Web', 'Full Support'],
@@ -1147,7 +1171,7 @@ const HomePage = () => {
                       {/* Premium Content Section */}
                       <div className="p-5 flex flex-col h-full bg-gradient-to-b from-white via-gray-50/20 to-white relative">
                         {/* Subtle pattern overlay */}
-                        <div className="absolute inset-0 opacity-3 bg-gradient-to-br from-blue-500/10 to-purple-500/10"></div>
+                        <div className="absolute inset-0 opacity-3 bg-gradient-to-br from-orange-500/10 to-purple-500/10"></div>
                         
                         <div className="relative z-10">
                           <p className="text-sm text-gray-600 mb-4 leading-relaxed text-center line-clamp-2 font-medium">
@@ -1170,10 +1194,13 @@ const HomePage = () => {
                           <motion.button
                             whileHover={{ scale: 1.08 }}
                             whileTap={{ scale: 0.95 }}
-                            className="w-full py-3 bg-gradient-to-r from-blue-600 via-blue-700 to-purple-600 text-white font-bold rounded-2xl hover:shadow-xl transition-all duration-300 text-sm shadow-lg relative overflow-hidden group"
+                            onClick={() => {
+                                alert('Learn More feature coming soon!');
+                            }}
+                            className="w-full py-3 bg-gradient-to-r from-orange-600 via-orange-700 to-purple-600 text-white font-bold rounded-2xl hover:shadow-xl transition-all duration-300 text-sm shadow-lg relative overflow-hidden group"
                           >
                             <span className="relative z-10">Learn More</span>
-                            <div className="absolute inset-0 bg-gradient-to-r from-blue-500 via-blue-600 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            <div className="absolute inset-0 bg-gradient-to-r from-orange-500 via-orange-600 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                           </motion.button>
                         </div>
                       </div>
@@ -1200,7 +1227,7 @@ const HomePage = () => {
                       {/* Card content */}
                       <div className="p-6 flex flex-col h-full">
                         {/* Heading inside card on desktop only */}
-                        <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors">
+                        <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-orange-600 transition-colors">
                           {service.name}
                         </h3>
 
@@ -1222,7 +1249,10 @@ const HomePage = () => {
                         <motion.button
                           whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
-                          className="w-full py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl hover:shadow-lg transition-all duration-300 text-base"
+                          onClick={() => {
+                              alert('Learn More feature coming soon!');
+                          }}
+                          className="w-full py-3 bg-gradient-to-r from-orange-600 to-purple-600 text-white font-semibold rounded-xl hover:shadow-lg transition-all duration-300 text-base"
                         >
                           Learn More
                         </motion.button>
@@ -1235,7 +1265,7 @@ const HomePage = () => {
         </section>
 
                 {/* Desktop Stats Section */}
-                <section className="py-16 lg:py-24 bg-gradient-to-r from-blue-600 to-purple-600">
+                <section className="py-16 lg:py-24 bg-gradient-to-r from-orange-600 to-purple-600">
                     <div className="max-w-7xl mx-auto px-8">
             <motion.div 
               initial="hidden"
@@ -1321,7 +1351,7 @@ const HomePage = () => {
                 </section>
 
                 {/* Desktop Statistics Section */}
-                <section className="py-16 lg:py-24 bg-gradient-to-br from-indigo-50 via-blue-50 to-purple-50">
+                <section className="py-16 lg:py-24 bg-gradient-to-br from-indigo-50 via-orange-50 to-purple-50">
                     <div className="max-w-7xl mx-auto px-8">
                         <motion.div 
                             initial="hidden"
@@ -1351,7 +1381,7 @@ const HomePage = () => {
                         >
                             {[
                                 { number: '10K+', label: 'Loans Approved', icon: '🏦', color: 'from-green-500 to-emerald-500' },
-                                { number: '5K+', label: 'Jobs Created', icon: '💼', color: 'from-blue-500 to-cyan-500' },
+                                { number: '5K+', label: 'Jobs Created', icon: '💼', color: 'from-orange-500 to-cyan-500' },
                                 { number: '2K+', label: 'Legal Cases', icon: '⚖️', color: 'from-purple-500 to-violet-500' },
                                 { number: '1K+', label: 'Mentors', icon: '👨‍🏫', color: 'from-orange-500 to-red-500' }
                             ].map((stat, index) => (
@@ -1378,7 +1408,7 @@ const HomePage = () => {
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                             <div>
                                 <div className="flex items-center gap-3 mb-4">
-                                    <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
+                                    <div className="w-10 h-10 bg-gradient-to-br from-orange-600 to-purple-600 rounded-lg flex items-center justify-center">
                                         <img src={logo} alt="CreateBharat" className="w-6 h-6 object-contain" />
                                     </div>
                                     <h3 className="text-xl font-bold">CreateBharat</h3>

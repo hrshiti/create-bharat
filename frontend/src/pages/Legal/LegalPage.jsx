@@ -77,6 +77,9 @@ const LegalPage = () => {
           <motion.button 
             whileHover={{ scale: 1.1, rotate: 90 }}
             whileTap={{ scale: 0.9 }}
+            onClick={() => {
+                alert('Menu feature coming soon!');
+            }}
             className="p-2 hover:bg-white/20 rounded-lg transition-colors"
           >
             <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
