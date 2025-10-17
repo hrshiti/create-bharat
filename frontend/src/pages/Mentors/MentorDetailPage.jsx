@@ -39,6 +39,10 @@ const MentorDetailPage = () => {
   const navigate = useNavigate();
   const [selectedSlot, setSelectedSlot] = useState('');
   const [isBooking, setIsBooking] = useState(false);
+  const [showBookingModal, setShowBookingModal] = useState(false);
+  const [selectedDate, setSelectedDate] = useState('');
+  const [selectedTime, setSelectedTime] = useState('');
+  const [bookingType, setBookingType] = useState('');
 
   // Mock mentor data
   const mentor = {
@@ -71,9 +75,41 @@ const MentorDetailPage = () => {
     { id: '90min', duration: '90-120 minutes', price: mentor.price * 3, description: 'Comprehensive consultation' }
   ];
 
+  // Available dates (next 7 days)
+  const availableDates = [
+    { date: '2024-01-15', day: 'Today', available: true },
+    { date: '2024-01-16', day: 'Tomorrow', available: true },
+    { date: '2024-01-17', day: 'Wednesday', available: true },
+    { date: '2024-01-18', day: 'Thursday', available: true },
+    { date: '2024-01-19', day: 'Friday', available: true },
+    { date: '2024-01-20', day: 'Saturday', available: false },
+    { date: '2024-01-21', day: 'Sunday', available: false }
+  ];
+
+  // Available time slots
+  const availableTimes = [
+    { time: '09:00 AM', available: true },
+    { time: '10:00 AM', available: true },
+    { time: '11:00 AM', available: false },
+    { time: '12:00 PM', available: true },
+    { time: '02:00 PM', available: true },
+    { time: '03:00 PM', available: true },
+    { time: '04:00 PM', available: false },
+    { time: '05:00 PM', available: true },
+    { time: '06:00 PM', available: true }
+  ];
+
   const handleBooking = () => {
     if (!selectedSlot) {
       alert('Please select a time slot');
+      return;
+    }
+    setShowBookingModal(true);
+  };
+
+  const handleConfirmBooking = () => {
+    if (!selectedDate || !selectedTime || !bookingType) {
+      alert('Please fill in all booking details');
       return;
     }
     setIsBooking(true);
@@ -111,7 +147,162 @@ const MentorDetailPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-slate-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-orange-50/30 to-slate-50">
+      {/* Booking Modal */}
+      {showBookingModal && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+          onClick={() => setShowBookingModal(false)}
+        >
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.9, y: 20 }}
+            transition={{ duration: 0.3 }}
+            className="bg-white rounded-2xl p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Modal Header */}
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-2xl font-bold text-gray-900">Book Consultation</h2>
+              <button
+                onClick={() => setShowBookingModal(false)}
+                className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+              >
+                <svg className="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+
+            {/* Mentor Info */}
+            <div className="flex items-center space-x-4 mb-6 p-4 bg-orange-50 rounded-xl">
+              <img
+                src={mentor.image}
+                alt={mentor.name}
+                className="w-16 h-16 rounded-full object-cover border-2 border-orange-200"
+              />
+              <div>
+                <h3 className="text-lg font-semibold text-gray-900">{mentor.name}</h3>
+                <p className="text-orange-600">{mentor.title}</p>
+                <p className="text-sm text-gray-600">Session: {timeSlots.find(s => s.id === selectedSlot)?.duration}</p>
+              </div>
+            </div>
+
+            {/* Date Selection */}
+            <div className="mb-6">
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">Select Date</h3>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                {availableDates.map((date) => (
+                  <motion.button
+                    key={date.date}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={() => setSelectedDate(date.date)}
+                    disabled={!date.available}
+                    className={`p-3 rounded-lg border-2 transition-all ${
+                      selectedDate === date.date
+                        ? 'border-orange-500 bg-orange-50 text-orange-700'
+                        : date.available
+                        ? 'border-gray-200 hover:border-orange-300 text-gray-700'
+                        : 'border-gray-100 bg-gray-50 text-gray-400 cursor-not-allowed'
+                    }`}
+                  >
+                    <div className="text-center">
+                      <div className="text-sm font-medium">{date.day}</div>
+                      <div className="text-xs text-gray-500">{date.date}</div>
+                    </div>
+                  </motion.button>
+                ))}
+              </div>
+            </div>
+
+            {/* Time Selection */}
+            <div className="mb-6">
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">Select Time</h3>
+              <div className="grid grid-cols-3 md:grid-cols-4 gap-3">
+                {availableTimes.map((timeSlot) => (
+                  <motion.button
+                    key={timeSlot.time}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={() => setSelectedTime(timeSlot.time)}
+                    disabled={!timeSlot.available}
+                    className={`p-3 rounded-lg border-2 transition-all ${
+                      selectedTime === timeSlot.time
+                        ? 'border-orange-500 bg-orange-50 text-orange-700'
+                        : timeSlot.available
+                        ? 'border-gray-200 hover:border-orange-300 text-gray-700'
+                        : 'border-gray-100 bg-gray-50 text-gray-400 cursor-not-allowed'
+                    }`}
+                  >
+                    {timeSlot.time}
+                  </motion.button>
+                ))}
+              </div>
+            </div>
+
+            {/* Booking Type */}
+            <div className="mb-6">
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">Consultation Type</h3>
+              <div className="space-y-3">
+                {[
+                  { id: 'video', name: 'Video Call', description: 'Face-to-face consultation via video', icon: '📹' },
+                  { id: 'phone', name: 'Phone Call', description: 'Audio consultation via phone', icon: '📞' },
+                  { id: 'chat', name: 'Chat Session', description: 'Text-based consultation', icon: '💬' }
+                ].map((type) => (
+                  <motion.div
+                    key={type.id}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={() => setBookingType(type.id)}
+                    className={`p-4 rounded-lg border-2 cursor-pointer transition-all ${
+                      bookingType === type.id
+                        ? 'border-orange-500 bg-orange-50'
+                        : 'border-gray-200 hover:border-orange-300'
+                    }`}
+                  >
+                    <div className="flex items-center space-x-3">
+                      <span className="text-2xl">{type.icon}</span>
+                      <div>
+                        <h4 className="font-medium text-gray-900">{type.name}</h4>
+                        <p className="text-sm text-gray-600">{type.description}</p>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex space-x-3">
+              <button
+                onClick={() => setShowBookingModal(false)}
+                className="flex-1 py-3 px-4 bg-gray-100 text-gray-700 font-medium rounded-lg hover:bg-gray-200 transition-colors"
+              >
+                Cancel
+              </button>
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={handleConfirmBooking}
+                disabled={!selectedDate || !selectedTime || !bookingType}
+                className={`flex-1 py-3 px-4 font-medium rounded-lg transition-all ${
+                  selectedDate && selectedTime && bookingType
+                    ? 'bg-orange-600 text-white hover:bg-orange-700'
+                    : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                }`}
+              >
+                Confirm Booking
+              </motion.button>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
+
       {/* Header */}
       <motion.header
         initial={{ opacity: 0, y: -20 }}
@@ -191,7 +382,7 @@ const MentorDetailPage = () => {
                   {mentor.specialties.map((specialty, index) => (
                     <span
                       key={index}
-                      className="px-4 py-2 bg-blue-50 text-blue-700 rounded-full text-sm font-medium"
+                      className="px-4 py-2 bg-orange-50 text-orange-700 rounded-full text-sm font-medium"
                     >
                       {specialty}
                     </span>
@@ -257,8 +448,8 @@ const MentorDetailPage = () => {
                       whileTap={{ scale: 0.98 }}
                       className={`p-4 rounded-lg border-2 cursor-pointer transition-all ${
                         selectedSlot === slot.id
-                          ? 'border-blue-500 bg-blue-50'
-                          : 'border-gray-200 hover:border-gray-300'
+                          ? 'border-orange-500 bg-orange-50'
+                          : 'border-gray-200 hover:border-orange-300'
                       }`}
                       onClick={() => setSelectedSlot(slot.id)}
                     >
@@ -282,11 +473,11 @@ const MentorDetailPage = () => {
                   disabled={!selectedSlot || isBooking}
                   className={`w-full py-3 px-4 rounded-lg font-medium transition-all ${
                     selectedSlot && !isBooking
-                      ? 'bg-blue-600 text-white hover:bg-blue-700'
+                      ? 'bg-orange-600 text-white hover:bg-orange-700'
                       : 'bg-gray-300 text-gray-500 cursor-not-allowed'
                   }`}
                 >
-                  {isBooking ? 'Processing...' : 'Book Session'}
+                  {isBooking ? 'Processing...' : 'Book Consultant'}
                 </motion.button>
 
                 <div className="mt-4 text-center">

@@ -35,13 +35,13 @@ const SavedInternshipsPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-orange-50 to-indigo-100">
       {/* Header */}
       <motion.header 
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="flex items-center justify-between px-4 py-4 bg-white/90 backdrop-blur-lg border-b border-gradient-to-r from-blue-200 to-purple-200 shadow-lg"
+        className="flex items-center justify-between px-4 py-4 bg-white/90 backdrop-blur-lg border-b border-gradient-to-r from-orange-200 to-purple-200 shadow-lg"
       >
         <motion.div 
           whileHover={{ scale: 1.05 }}
@@ -51,10 +51,10 @@ const SavedInternshipsPage = () => {
           <motion.button
             whileHover={{ scale: 1.1, x: -2, rotate: -5 }}
             whileTap={{ scale: 0.9 }}
-            className="p-2 rounded-full bg-gradient-to-r from-blue-100 to-purple-100 hover:from-blue-200 hover:to-purple-200 transition-all duration-300"
+            className="p-2 rounded-full bg-gradient-to-r from-orange-100 to-purple-100 hover:from-orange-200 hover:to-purple-200 transition-all duration-300"
             onClick={() => navigate('/internships')}
           >
-            <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
           </motion.button>
@@ -62,7 +62,7 @@ const SavedInternshipsPage = () => {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-2xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent"
+            className="text-2xl font-bold bg-gradient-to-r from-orange-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent"
           >
             Saved Internships
           </motion.h1>
@@ -111,7 +111,7 @@ const SavedInternshipsPage = () => {
                     <h3 className="text-lg font-bold text-gray-800 mb-2">{internship.title}</h3>
                     <p className="text-sm text-gray-600 mb-2">{internship.company}</p>
                     <div className="flex items-center gap-2 mb-3">
-                      <span className="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">
+                      <span className="px-2 py-1 bg-orange-100 text-orange-800 text-xs rounded-full">
                         {internship.type}
                       </span>
                       <span className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">
@@ -158,9 +158,7 @@ const SavedInternshipsPage = () => {
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    onClick={() => {
-                        alert('Apply Now feature coming soon!');
-                    }}
+                    onClick={() => navigate(`/internships/${internship.id}/apply`)}
                     className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
                   >
                     Apply Now
