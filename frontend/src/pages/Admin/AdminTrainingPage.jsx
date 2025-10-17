@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
@@ -62,6 +62,13 @@ const AdminTrainingPage = () => {
             ]
         }
     ]);
+
+    // Set first module as selected by default
+    useEffect(() => {
+        if (modules.length > 0 && !selectedModule) {
+            setSelectedModule(modules[0]);
+        }
+    }, [modules, selectedModule]);
 
     const handleModuleFormChange = (e) => {
         setModuleFormData({
@@ -275,32 +282,34 @@ const AdminTrainingPage = () => {
 
     const renderTopicsList = () => (
         <div className="space-y-4">
-            <div className="flex items-center justify-between mb-6">
-                <div>
-                    <h2 className="text-2xl font-bold text-gray-800">Topics in "{selectedModule?.name}"</h2>
-                    <p className="text-gray-600">{selectedModule?.topics.length} topics</p>
-                </div>
-                <div className="flex space-x-3">
-                    <motion.button
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        onClick={() => {
-                            setEditingTopic(null);
-                            setTopicFormData({ title: '', description: '', video: null, quiz: null, videoFile: null, quizFile: null });
-                            setShowTopicForm(true);
-                        }}
-                        className="px-6 py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-semibold rounded-xl hover:shadow-lg transition-all duration-300"
-                    >
-                        Create New Topic
-                    </motion.button>
-                    <motion.button
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        onClick={() => setActiveTab('modules')}
-                        className="px-6 py-3 bg-gray-100 text-gray-700 font-semibold rounded-xl hover:bg-gray-200 transition-all duration-300"
-                    >
-                        Back to Modules
-                    </motion.button>
+            <div className="mb-6">
+                <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                    <div className="flex-shrink-0">
+                        <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-1">Topics in "{selectedModule?.name}"</h2>
+                        <p className="text-gray-600 text-sm md:text-base">{selectedModule?.topics.length} topics</p>
+                    </div>
+                    <div className="flex flex-col sm:flex-row gap-3">
+                        <motion.button
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            onClick={() => {
+                                setEditingTopic(null);
+                                setTopicFormData({ title: '', description: '', video: null, quiz: null, videoFile: null, quizFile: null });
+                                setShowTopicForm(true);
+                            }}
+                            className="px-4 py-2 md:px-6 md:py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-semibold rounded-xl hover:shadow-lg transition-all duration-300 text-sm md:text-base"
+                        >
+                            Create New Topic
+                        </motion.button>
+                        <motion.button
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            onClick={() => setActiveTab('modules')}
+                            className="px-4 py-2 md:px-6 md:py-3 bg-gray-100 text-gray-700 font-semibold rounded-xl hover:bg-gray-200 transition-all duration-300 text-sm md:text-base"
+                        >
+                            Back to Modules
+                        </motion.button>
+                    </div>
                 </div>
             </div>
 
@@ -598,9 +607,8 @@ const AdminTrainingPage = () => {
                                     }}
                                 />
                             )}
-                            <span className="relative z-10 flex items-center">
-                                <span className="mr-1 md:mr-2">📚</span>
-                                <span className="hidden sm:inline">Modules</span>
+                            <span className="relative z-10">
+                                Modules
                             </span>
                         </motion.button>
 
@@ -628,9 +636,8 @@ const AdminTrainingPage = () => {
                                     }}
                                 />
                             )}
-                            <span className="relative z-10 flex items-center">
-                                <span className="mr-1 md:mr-2">🎯</span>
-                                <span className="hidden sm:inline">Topics</span>
+                            <span className="relative z-10">
+                                Topics
                             </span>
                         </motion.button>
                     </div>

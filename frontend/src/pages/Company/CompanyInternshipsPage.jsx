@@ -72,10 +72,10 @@ const CompanyInternshipsPage = () => {
     };
 
     const tabs = [
-        { id: 'dashboard', name: 'Dashboard', icon: '📊' },
-        { id: 'post', name: 'Post Job', icon: '➕' },
-        { id: 'applications', name: 'Applications', icon: '📝' },
-        { id: 'profile', name: 'Profile', icon: '👤' }
+        { id: 'dashboard', name: 'Dashboard' },
+        { id: 'post', name: 'Post Job' },
+        { id: 'applications', name: 'Applications' },
+        { id: 'profile', name: 'Profile' }
     ];
 
     const stats = [
@@ -649,9 +649,8 @@ const CompanyInternshipsPage = () => {
                                 )}
                                 
                                 {/* Tab Content */}
-                                <span className="relative z-10 px-3 md:px-4 flex items-center">
-                                    <span className="mr-1 md:mr-2">{tab.icon}</span>
-                                    <span className="hidden sm:inline">{tab.name}</span>
+                                <span className="relative z-10 px-3 md:px-4">
+                                    {tab.name}
                                 </span>
                                 
                                 {/* Subtle hover effect */}
