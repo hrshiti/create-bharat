@@ -26,6 +26,22 @@ const LoginModal = ({ isOpen, onClose, onSwitchToSignup, selectedService, isAdmi
         setTimeout(() => {
             setIsLoading(false);
             onClose();
+            
+            // Set authentication state based on login type
+            if (loginType === 'admin') {
+                localStorage.setItem('userType', 'admin');
+                localStorage.setItem('isAdmin', 'true');
+                localStorage.setItem('isLoggedIn', 'true');
+            } else if (loginType === 'company') {
+                localStorage.setItem('userType', 'company');
+                localStorage.setItem('isAdmin', 'false');
+                localStorage.setItem('isLoggedIn', 'true');
+            } else {
+                localStorage.setItem('userType', 'user');
+                localStorage.setItem('isAdmin', 'false');
+                localStorage.setItem('isLoggedIn', 'true');
+            }
+            
             // Navigate to the selected service page after successful login
             if (selectedService) {
                 if (loginType === 'admin' && selectedService === '/loans') {
@@ -37,6 +53,12 @@ const LoginModal = ({ isOpen, onClose, onSwitchToSignup, selectedService, isAdmi
                 } else if (loginType === 'admin' && selectedService === '/legal') {
                     // Navigate to legal admin dashboard
                     navigate('/admin/legal');
+                } else if (loginType === 'admin' && selectedService === '/training') {
+                    // Navigate to training admin dashboard
+                    navigate('/admin/training');
+                } else if (loginType === 'admin') {
+                    // Navigate to main admin dashboard
+                    navigate('/admin/dashboard');
                 } else {
                     navigate(selectedService);
                 }

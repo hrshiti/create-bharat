@@ -170,34 +170,30 @@ const AdminLoansPage = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-slate-50">
-            {/* Header */}
+        <div className="space-y-6">
+            {/* Page Header */}
             <motion.div
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
-                className="bg-gradient-to-r from-orange-400 to-orange-500 shadow-lg sticky top-0 z-40"
+                className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200"
             >
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-                    <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-4">
-                            <h1 className="text-2xl md:text-3xl font-bold text-white">Loan Schemes Admin</h1>
-                            <span className="hidden md:inline-block text-orange-100">Manage all loan schemes</span>
-                        </div>
-                        <div className="flex items-center space-x-4">
-                            <div className="hidden md:flex items-center space-x-2">
-                                <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
-                                    <span className="text-white text-sm font-medium">A</span>
-                                </div>
-                                <span className="text-white font-medium">Admin User</span>
-                            </div>
+                <div className="flex items-center justify-between">
+                    <div>
+                        <h1 className="text-2xl md:text-3xl font-bold text-gray-900">Loan Schemes Management</h1>
+                        <p className="text-gray-600 mt-1">Manage all loan schemes and applications</p>
+                    </div>
+                    <div className="flex items-center space-x-4">
+                        <div className="text-right">
+                            <div className="text-sm text-gray-500">Total Schemes</div>
+                            <div className="text-2xl font-bold text-orange-600">{schemes.length}</div>
                         </div>
                     </div>
                 </div>
             </motion.div>
 
             {/* Main Content */}
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <div className="space-y-6">
                 {/* Search and Create Button */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -322,7 +318,7 @@ const AdminLoansPage = () => {
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
-                        className="text-center py-12"
+                        className="text-center py-12 bg-white rounded-2xl shadow-lg border border-gray-200"
                     >
                         <div className="text-gray-500 text-lg">No schemes found</div>
                         <p className="text-gray-400 mt-2">Try adjusting your search or create a new scheme</p>

@@ -28,7 +28,7 @@ const TrainingPage = () => {
   useEffect(() => {
     if (isLoggedIn && userType === 'admin') {
       const timer = setTimeout(() => {
-        navigate('/admin/training', { replace: true });
+        navigate('/admin/dashboard', { replace: true });
       }, 1500); // Small delay to show loading screen
       
       return () => clearTimeout(timer);
@@ -71,6 +71,10 @@ const TrainingPage = () => {
   const handleLogin = (type) => {
     setUserType(type);
     setIsLoggedIn(true);
+    // Store login info in localStorage
+    localStorage.setItem('userType', type);
+    localStorage.setItem('isLoggedIn', 'true');
+    localStorage.setItem('isAdmin', type === 'admin' ? 'true' : 'false');
   };
 
   const handleLogout = () => {

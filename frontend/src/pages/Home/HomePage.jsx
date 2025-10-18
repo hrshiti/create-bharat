@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import LoginModal from '../../components/common/LoginModal';
 import SignupModal from '../../components/common/SignupModal';
 import BottomNavbar from '../../components/common/BottomNavbar';
+import MobileFirstLoginPage from '../MobileFirstLoginPage';
 import logo from '../../assets/logo.png';
 import techImage from '../../assets/techImage.webp';
 import mentorImage from '../../assets/mentor.png';
@@ -31,6 +32,10 @@ const QuoteIcon = () => ( <svg xmlns="http://www.w3.org/2000/svg" className="h-5
 const HomePage = () => {
     const navigate = useNavigate();
     
+    // Mobile detection and first visit logic
+    const [isMobile, setIsMobile] = useState(false);
+    const [showMobileLogin, setShowMobileLogin] = useState(false);
+    
     // Modal state
     const [showLoginModal, setShowLoginModal] = useState(false);
     const [showSignupModal, setShowSignupModal] = useState(false);
@@ -38,6 +43,25 @@ const HomePage = () => {
     const [isAdminLogin, setIsAdminLogin] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [currentBannerIndex, setCurrentBannerIndex] = useState(0);
+
+    // Mobile detection and first visit check
+    useEffect(() => {
+        const checkMobileAndFirstVisit = () => {
+            const isMobileDevice = window.innerWidth <= 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            setIsMobile(isMobileDevice);
+            
+            if (isMobileDevice) {
+                const hasVisited = localStorage.getItem('hasVisited');
+                if (!hasVisited) {
+                    setShowMobileLogin(true);
+                }
+            }
+        };
+
+        checkMobileAndFirstVisit();
+        window.addEventListener('resize', checkMobileAndFirstVisit);
+        return () => window.removeEventListener('resize', checkMobileAndFirstVisit);
+    }, []);
 
     // Banner cycling effect
     useEffect(() => {
@@ -50,14 +74,20 @@ const HomePage = () => {
     // Modal handlers
     const handleServiceClick = (e, servicePath) => {
         e.preventDefault();
-        
+
+        // On mobile, remove login modals and navigate directly
+        if (isMobile) {
+            navigate(servicePath);
+            return;
+        }
+
         // Direct navigation for training, app development, and mentors
         if (servicePath === '/training' || servicePath === '/app-development' || servicePath === '/mentors') {
             navigate(servicePath);
             return;
         }
-        
-        // For other services, show login modal
+
+        // For other services, show login modal (desktop only)
         setSelectedService(servicePath);
         // Check if it's the loans service to show admin option
         setIsAdminLogin(servicePath === '/loans');
@@ -287,6 +317,11 @@ const HomePage = () => {
         { id: 5, name: 'Wipro', logo: techImage, jobs: 167, rating: 4.1, location: 'Chennai' },
         { id: 6, name: 'Accenture', logo: techImage, jobs: 203, rating: 4.6, location: 'Hyderabad' }
     ];
+
+    // Show mobile login page on first visit
+    if (showMobileLogin) {
+        return <MobileFirstLoginPage />;
+    }
 
     return (
         <>
@@ -1094,7 +1129,7 @@ const HomePage = () => {
                   { 
                                     name: 'Internships', 
                                     color: 'from-green-500 to-emerald-500', 
-                    icon: '💼',
+                                    icon: <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2-2v2m8 0V6a2 2 0 012 2v6a2 2 0 01-2 2H6a2 2 0 01-2-2V8a2 2 0 012-2V6" /></svg>,
                                     desc: 'Find the perfect internship opportunities to kickstart your career',
                                     features: ['Top Companies', 'Remote Options', 'Mentorship'],
                     path: '/internships'
@@ -1110,7 +1145,7 @@ const HomePage = () => {
                   { 
                                     name: 'Mentorship', 
                     color: 'from-orange-500 to-red-500', 
-                                    icon: '👥',
+                                    icon: <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" /></svg>,
                                     desc: 'Connect with industry experts and get personalized guidance',
                                     features: ['Industry Experts', '1-on-1 Sessions', 'Career Guidance'],
                     path: '/mentors'
@@ -1118,7 +1153,7 @@ const HomePage = () => {
                   { 
                                     name: 'Training Programs', 
                     color: 'from-pink-500 to-rose-500', 
-                    icon: '🎓',
+                                    icon: <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>,
                                     desc: 'Comprehensive training programs to enhance your skills',
                     features: ['9 Modules', 'Quizzes', 'Certificate'],
                     path: '/training'
@@ -1207,53 +1242,50 @@ const HomePage = () => {
                     {/* Desktop Card Design */}
                     <motion.div
                       variants={scaleIn}
-                      whileHover={{ y: -5, scale: 1.02 }}
+                      whileHover={{ y: -8, scale: 1.03 }}
                       onClick={(e) => handleServiceClick(e, service.path)}
-                      className="hidden md:flex bg-white rounded-2xl shadow-lg hover:shadow-xl border border-gray-200 transition-all duration-300 group cursor-pointer h-full overflow-hidden"
+                      className="hidden md:flex bg-white rounded-3xl shadow-xl hover:shadow-2xl border border-gray-100 transition-all duration-500 group cursor-pointer h-full overflow-hidden relative"
                     >
-                      {/* Image/Icon Section - Top of card */}
-                      <div className={`h-32 bg-gradient-to-r ${service.color} flex items-center justify-center relative overflow-hidden rounded-t-2xl`}>
-                        <div className="absolute inset-0 bg-black/10"></div>
-                        <div className="relative z-10 transform group-hover:scale-110 transition-transform duration-300">
-                          {service.icon}
+                      {/* Premium Content Section */}
+                      <div className="p-8 flex flex-col h-full bg-gradient-to-b from-white via-gray-50/30 to-white relative">
+                        {/* Subtle pattern overlay */}
+                        <div className="absolute inset-0 opacity-5 bg-gradient-to-br from-orange-500/20 to-purple-500/20"></div>
+                        
+                        <div className="relative z-10">
+                          {/* Heading with enhanced styling */}
+                          <h3 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-orange-600 transition-colors duration-300">
+                            {service.name}
+                          </h3>
+
+                          <p className="text-lg text-gray-600 mb-6 leading-relaxed text-left line-clamp-3 font-medium">
+                            {service.desc}
+                          </p>
+
+                          <ul className="space-y-3 mb-8 flex-1">
+                            {service.features.map((feature, idx) => (
+                              <li key={idx} className="flex items-center text-base text-gray-700 justify-start">
+                                <div className="w-5 h-5 bg-gradient-to-r from-emerald-400 to-emerald-500 rounded-full flex items-center justify-center mr-3 shadow-md">
+                                  <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                  </svg>
+                                </div>
+                                <span className="font-semibold">{feature}</span>
+                              </li>
+                            ))}
+                          </ul>
+
+                          <motion.button
+                            whileHover={{ scale: 1.08 }}
+                            whileTap={{ scale: 0.95 }}
+                            onClick={() => {
+                                alert('Learn More feature coming soon!');
+                            }}
+                            className="w-full py-4 bg-gradient-to-r from-orange-600 via-orange-700 to-purple-600 text-white font-bold rounded-2xl hover:shadow-xl transition-all duration-300 text-lg shadow-lg relative overflow-hidden group"
+                          >
+                            <span className="relative z-10">Learn More</span>
+                            <div className="absolute inset-0 bg-gradient-to-r from-orange-500 via-orange-600 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                          </motion.button>
                         </div>
-                        {/* Decorative elements */}
-                        <div className="absolute top-2 right-2 w-8 h-8 bg-white/20 rounded-full"></div>
-                        <div className="absolute bottom-2 left-2 w-6 h-6 bg-white/20 rounded-full"></div>
-                      </div>
-                      
-                      {/* Card content */}
-                      <div className="p-6 flex flex-col h-full">
-                        {/* Heading inside card on desktop only */}
-                        <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-orange-600 transition-colors">
-                          {service.name}
-                        </h3>
-
-                        <p className="text-base text-gray-600 mb-4 leading-relaxed text-left line-clamp-2">
-                          {service.desc}
-                        </p>
-
-                        <ul className="space-y-2 mb-6 flex-1">
-                          {service.features.map((feature, idx) => (
-                            <li key={idx} className="flex items-center text-sm text-gray-600 justify-start">
-                              <svg className="w-4 h-4 text-green-500 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                              </svg>
-                              <span className="truncate">{feature}</span>
-                            </li>
-                          ))}
-                        </ul>
-
-                        <motion.button
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
-                          onClick={() => {
-                              alert('Learn More feature coming soon!');
-                          }}
-                          className="w-full py-3 bg-gradient-to-r from-orange-600 to-purple-600 text-white font-semibold rounded-xl hover:shadow-lg transition-all duration-300 text-base"
-                        >
-                          Learn More
-                        </motion.button>
                       </div>
                     </motion.div>
                   </div>
@@ -1444,7 +1476,20 @@ const HomePage = () => {
                                     <li><Link to="/terms" className="hover:text-white transition-colors">Terms of Service</Link></li>
                                     <li><Link to="/faq" className="hover:text-white transition-colors">FAQ</Link></li>
                                 </ul>
-      </div>
+                                
+                                {/* Admin Access Button - Mobile Friendly */}
+                                <div className="mt-6 pt-4 border-t border-gray-800">
+                                    <button
+                                        onClick={() => navigate('/admin/login')}
+                                        className="w-full bg-gradient-to-r from-orange-500 to-orange-600 text-white py-2 px-4 rounded-lg font-medium hover:from-orange-600 hover:to-orange-700 transition-all duration-300 text-sm"
+                                    >
+                                        👨‍💼 Admin Access
+                                    </button>
+                                    <p className="text-xs text-gray-500 mt-2 text-center">
+                                        For administrators only
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                         
                         <div className="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
@@ -1454,22 +1499,26 @@ const HomePage = () => {
                 </footer>
             </div>
 
-            {/* Login Modal */}
-            <LoginModal 
-                isOpen={showLoginModal}
-                onClose={handleCloseLoginModal}
-                onSwitchToSignup={handleSwitchToSignup}
-                selectedService={selectedService}
-                isAdminLogin={isAdminLogin}
-            />
+            {/* Login Modal - Desktop Only */}
+            {!isMobile && (
+                <LoginModal 
+                    isOpen={showLoginModal}
+                    onClose={handleCloseLoginModal}
+                    onSwitchToSignup={handleSwitchToSignup}
+                    selectedService={selectedService}
+                    isAdminLogin={isAdminLogin}
+                />
+            )}
 
-            {/* Signup Modal */}
-            <SignupModal 
-                isOpen={showSignupModal}
-                onClose={handleCloseSignupModal}
-                onSwitchToLogin={handleSwitchToLogin}
-                selectedService={selectedService}
-            />
+            {/* Signup Modal - Desktop Only */}
+            {!isMobile && (
+                <SignupModal 
+                    isOpen={showSignupModal}
+                    onClose={handleCloseSignupModal}
+                    onSwitchToLogin={handleSwitchToLogin}
+                    selectedService={selectedService}
+                />
+            )}
 
     </>
   );

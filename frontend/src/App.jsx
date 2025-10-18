@@ -34,12 +34,17 @@ import SignupPage from './pages/Auth/SignupPage';
 import ForgotPasswordPage from './pages/Auth/ForgotPasswordPage';
 import AnalyticsPage from './pages/Analytics/AnalyticsPage';
 import TermsPage from './pages/Legal/TermsPage';
+import AdminLayout from './components/admin/AdminLayout';
+import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminLoansPage from './pages/Admin/AdminLoansPage';
 import AdminLegalPage from './pages/Admin/AdminLegalPage';
+import AdminLoginPage from './pages/admin/AdminLoginPage';
+import AdminUsersPage from './pages/admin/AdminUsersPage';
 import AdminTrainingPage from './pages/Admin/AdminTrainingPage';
 import ProfilePage from './pages/Profile/ProfilePage';
 import CompanyInternshipsPage from './pages/Company/CompanyInternshipsPage';
 import AppDevelopmentPage from './pages/AppDevelopment/AppDevelopmentPage';
+import MobileFirstLoginPage from './pages/MobileFirstLoginPage';
 
 function App() {
   return (
@@ -80,9 +85,15 @@ function App() {
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
           <Route path="/analytics" element={<AnalyticsPage />} />
           <Route path="/terms" element={<TermsPage />} />
-          <Route path="/admin/loans" element={<AdminLoansPage />} />
-          <Route path="/admin/legal" element={<AdminLegalPage />} />
-          <Route path="/admin/training" element={<AdminTrainingPage />} />
+          <Route path="/mobile-login" element={<MobileFirstLoginPage />} />
+          <Route path="/admin/login" element={<AdminLoginPage />} />
+          <Route path="/admin" element={<AdminLayout />}>
+            <Route path="dashboard" element={<AdminDashboard />} />
+            <Route path="loans" element={<AdminLoansPage />} />
+            <Route path="legal" element={<AdminLegalPage />} />
+            <Route path="training" element={<AdminTrainingPage />} />
+            <Route path="users" element={<AdminUsersPage />} />
+          </Route>
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/company/internships" element={<CompanyInternshipsPage />} />
           <Route path="/app-development" element={<AppDevelopmentPage />} />

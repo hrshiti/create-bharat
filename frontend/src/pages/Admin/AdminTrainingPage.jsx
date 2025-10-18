@@ -558,34 +558,35 @@ const AdminTrainingPage = () => {
     );
 
     return (
-        <div className="min-h-screen bg-gray-50">
-            {/* Header */}
-            <div className="bg-white shadow-sm border-b border-gray-200">
-                <div className="px-4 py-4">
-                    <div className="flex items-center justify-between">
-                        <div className="flex items-center">
-                            <div className="w-10 h-10 bg-gradient-to-r from-orange-500 to-orange-600 rounded-xl flex items-center justify-center mr-3">
-                                <span className="text-xl">📚</span>
-                            </div>
-                            <div>
-                                <h1 className="text-xl font-bold text-gray-800">Training Admin</h1>
-                                <p className="text-sm text-gray-600">Manage modules and topics</p>
-                            </div>
+        <div className="space-y-6">
+            {/* Page Header */}
+            <motion.div
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200"
+            >
+                <div className="flex items-center justify-between">
+                    <div>
+                        <h1 className="text-2xl md:text-3xl font-bold text-gray-900">Training Management</h1>
+                        <p className="text-gray-600 mt-1">Manage training modules and topics</p>
+                    </div>
+                    <div className="flex items-center space-x-4">
+                        <div className="text-right">
+                            <div className="text-sm text-gray-500">Total Modules</div>
+                            <div className="text-2xl font-bold text-orange-600">{modules.length}</div>
                         </div>
-                        <Link
-                            to="/"
-                            className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
-                        >
-                            Back to Home
-                        </Link>
                     </div>
                 </div>
-            </div>
+            </motion.div>
 
-            {/* Tab Navigation */}
-            <div className="bg-white border-b border-gray-200">
-                <div className="px-2 md:px-6">
-                    <div className="flex space-x-1 md:space-x-2 overflow-x-auto scrollbar-hide">
+            {/* Main Content */}
+            <div className="bg-white rounded-2xl shadow-lg border border-gray-200">
+
+                {/* Tab Navigation */}
+                <div className="border-b border-gray-200">
+                    <div className="px-2 md:px-6">
+                        <div className="flex space-x-1 md:space-x-2 overflow-x-auto scrollbar-hide">
                         <motion.button
                             onClick={() => setActiveTab('modules')}
                             className={`relative py-2 md:py-4 text-xs md:text-sm font-medium rounded-lg md:rounded-t-2xl transition-all duration-300 whitespace-nowrap px-3 md:px-4 ${
@@ -644,10 +645,11 @@ const AdminTrainingPage = () => {
                 </div>
             </div>
 
-            {/* Content */}
-            <div className="p-4">
-                {activeTab === 'modules' && renderModulesList()}
-                {activeTab === 'topics' && selectedModule && renderTopicsList()}
+                {/* Content */}
+                <div className="p-4">
+                    {activeTab === 'modules' && renderModulesList()}
+                    {activeTab === 'topics' && selectedModule && renderTopicsList()}
+                </div>
             </div>
 
             {/* Forms */}
