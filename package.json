@@ -1,0 +1,13 @@
+{
+  "name": "createbharat",
+  "version": "1.0.0",
+  "description": "CreateBharat - Empowering dreams through comprehensive career and business solutions",
+  "scripts": {
+    "build": "cd frontend && npm run build",
+    "dev": "cd frontend && npm run dev",
+    "start": "cd frontend && npm run preview"
+  },
+  "keywords": ["react", "vite", "career", "loans", "internships", "legal", "mentors"],
+  "author": "CreateBharat Team",
+  "license": "MIT"
+}
