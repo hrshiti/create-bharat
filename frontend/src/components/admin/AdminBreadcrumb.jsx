@@ -6,6 +6,7 @@ import { FaChevronRight, FaHome } from 'react-icons/fa';
 const AdminBreadcrumb = () => {
     const location = useLocation();
 
+    
     const getBreadcrumbs = () => {
         const pathSegments = location.pathname.split('/').filter(segment => segment);
         const breadcrumbs = [];
