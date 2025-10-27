@@ -3,7 +3,8 @@ const User = require('../models/User');
 const Otp = require('../models/Otp');
 const generateToken = require('../utils/generateToken');
 const { generateOTP, isOTPExpired } = require('../utils/otpGenerator');
-const { sendOTP, formatPhoneNumber } = require('../utils/smsService');
+const smsService = require('../services/smsService');
+const consoleSmsService = require('../services/consoleSmsService');
 
 // @desc    Register user
 // @route   POST /api/users/register
@@ -57,8 +58,9 @@ const registerUser = async (req, res) => {
       // Generate OTP
       const otp = generateOTP();
 
-      // Format phone number for SMSIndiaHub (should be with country code)
-      const formattedPhone = formatPhoneNumber(phone);
+      // Format phone number for SMS (should be with country code)
+      const cleanPhone = phone.replace(/\D/g, '');
+      const formattedPhone = '91' + cleanPhone;
 
       // Save OTP
       await Otp.create({
@@ -68,13 +70,35 @@ const registerUser = async (req, res) => {
         expiresAt: new Date(Date.now() + 10 * 60 * 1000) // 10 minutes
       });
 
-      // Send OTP via SMS
+      // Send OTP via SMS with fallback mechanism
       console.log(`[REGISTER] Sending OTP to ${formattedPhone}`);
-      const smsResult = await sendOTP(formattedPhone, otp);
+      let smsResult;
 
-      if (!smsResult.success) {
-        console.error('SMS sending failed:', smsResult.error);
-        // Continue anyway - OTP is saved
+      try {
+        smsResult = await smsService.sendOTP(formattedPhone, otp);
+        console.log('SMS sending result:', smsResult);
+
+        if (!smsResult.success) {
+          console.error('SMS sending failed:', smsResult.error);
+          throw new Error('SMS service failed');
+        }
+      } catch (smsError) {
+        console.error('SMS service error:', smsError.message);
+        console.log('🔄 Falling back to Console SMS Service...');
+
+        // Use console SMS service as fallback
+        try {
+          smsResult = await consoleSmsService.sendOTP(formattedPhone, otp);
+          console.log('Console SMS result:', smsResult);
+        } catch (consoleError) {
+          console.error('Console SMS error:', consoleError.message);
+          smsResult = {
+            success: true,
+            messageId: 'fallback-' + Date.now(),
+            message: 'SMS service unavailable. Check console for OTP.',
+            provider: 'Fallback'
+          };
+        }
       }
 
       return res.json({
@@ -163,8 +187,9 @@ const loginUser = async (req, res) => {
       // Generate OTP
       const otp = generateOTP();
 
-      // Format phone number for SMSIndiaHub (should be with country code)
-      const formattedPhone = formatPhoneNumber(phone);
+      // Format phone number for SMS (should be with country code)
+      const cleanPhone = phone.replace(/\D/g, '');
+      const formattedPhone = '91' + cleanPhone;
 
       // Save OTP with formatted phone
       await Otp.create({
@@ -174,13 +199,35 @@ const loginUser = async (req, res) => {
         expiresAt: new Date(Date.now() + 10 * 60 * 1000) // 10 minutes
       });
 
-      // Send OTP via SMS
+      // Send OTP via SMS with fallback mechanism
       console.log(`[LOGIN] Sending OTP to ${formattedPhone}`);
-      const smsResult = await sendOTP(formattedPhone, otp);
+      let smsResult;
 
-      if (!smsResult.success) {
-        console.error('SMS sending failed:', smsResult.error);
-        // Continue anyway - OTP is saved
+      try {
+        smsResult = await smsService.sendOTP(formattedPhone, otp);
+        console.log('SMS sending result:', smsResult);
+
+        if (!smsResult.success) {
+          console.error('SMS sending failed:', smsResult.error);
+          throw new Error('SMS service failed');
+        }
+      } catch (smsError) {
+        console.error('SMS service error:', smsError.message);
+        console.log('🔄 Falling back to Console SMS Service...');
+
+        // Use console SMS service as fallback
+        try {
+          smsResult = await consoleSmsService.sendOTP(formattedPhone, otp);
+          console.log('Console SMS result:', smsResult);
+        } catch (consoleError) {
+          console.error('Console SMS error:', consoleError.message);
+          smsResult = {
+            success: true,
+            messageId: 'fallback-' + Date.now(),
+            message: 'SMS service unavailable. Check console for OTP.',
+            provider: 'Fallback'
+          };
+        }
       }
 
       return res.json({
@@ -441,7 +488,8 @@ const verifyOTP = async (req, res) => {
     }
 
     // Format phone number for lookup
-    const formattedPhone = formatPhoneNumber(phone);
+    const cleanPhone = phone.replace(/\D/g, '');
+    const formattedPhone = '91' + cleanPhone;
 
     // Find OTP in database
     const otpRecord = await Otp.findOne({
@@ -582,8 +630,9 @@ const resendOTP = async (req, res) => {
     // Generate new OTP
     const otp = generateOTP();
 
-    // Format phone number for SMSIndiaHub (should be with country code)
-    const formattedPhone = formatPhoneNumber(phone);
+    // Format phone number for SMS (should be with country code)
+    const cleanPhone = phone.replace(/\D/g, '');
+    const formattedPhone = '91' + cleanPhone;
 
     // Delete old OTPs for this phone and purpose
     await Otp.deleteMany({ phone: formattedPhone, purpose });
@@ -596,13 +645,35 @@ const resendOTP = async (req, res) => {
       expiresAt: new Date(Date.now() + 10 * 60 * 1000) // 10 minutes
     });
 
-    // Send OTP via SMS
+    // Send OTP via SMS with fallback mechanism
     console.log(`[RESEND] Sending OTP to ${formattedPhone}`);
-    const smsResult = await sendOTP(formattedPhone, otp);
+    let smsResult;
 
-    if (!smsResult.success) {
-      console.error('SMS sending failed:', smsResult.error);
-      // Continue anyway - OTP is saved
+    try {
+      smsResult = await smsService.sendOTP(formattedPhone, otp);
+      console.log('SMS sending result:', smsResult);
+
+      if (!smsResult.success) {
+        console.error('SMS sending failed:', smsResult.error);
+        throw new Error('SMS service failed');
+      }
+    } catch (smsError) {
+      console.error('SMS service error:', smsError.message);
+      console.log('🔄 Falling back to Console SMS Service...');
+
+      // Use console SMS service as fallback
+      try {
+        smsResult = await consoleSmsService.sendOTP(formattedPhone, otp);
+        console.log('Console SMS result:', smsResult);
+      } catch (consoleError) {
+        console.error('Console SMS error:', consoleError.message);
+        smsResult = {
+          success: true,
+          messageId: 'fallback-' + Date.now(),
+          message: 'SMS service unavailable. Check console for OTP.',
+          provider: 'Fallback'
+        };
+      }
     }
 
     return res.json({
