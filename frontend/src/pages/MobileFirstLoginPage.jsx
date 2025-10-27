@@ -31,15 +31,15 @@ const MobileFirstLoginPage = () => {
 
         setTimeout(() => {
             if (loginType === 'admin') {
-                localStorage.setItem('userType', 'admin');
-                localStorage.setItem('isAdmin', 'true');
-                localStorage.setItem('isLoggedIn', 'true');
+                    localStorage.setItem('userType', 'admin');
+                    localStorage.setItem('isAdmin', 'true');
+                    localStorage.setItem('isLoggedIn', 'true');
                 localStorage.setItem('adminEmail', `${phone}@createbharat.com`);
-                localStorage.setItem('hasVisited', 'true');
-                
-                setIsLoading(false);
-                navigate('/admin/dashboard', { replace: true });
-            } else {
+                    localStorage.setItem('hasVisited', 'true');
+                    
+                    setIsLoading(false);
+                    navigate('/admin/dashboard', { replace: true });
+                } else {
                 const existingUser = localStorage.getItem('userData');
                 let userData;
                 
@@ -59,14 +59,14 @@ const MobileFirstLoginPage = () => {
                     login(userData);
                 }
                 
-                localStorage.setItem('userType', 'user');
-                localStorage.setItem('isAdmin', 'false');
-                localStorage.setItem('isLoggedIn', 'true');
+                    localStorage.setItem('userType', 'user');
+                    localStorage.setItem('isAdmin', 'false');
+                    localStorage.setItem('isLoggedIn', 'true');
                 localStorage.setItem('userPhone', phone);
-                localStorage.setItem('hasVisited', 'true');
-                
-                setIsLoading(false);
-                navigate('/', { replace: true });
+                    localStorage.setItem('hasVisited', 'true');
+                    
+                    setIsLoading(false);
+                    navigate('/', { replace: true });
             }
         }, 1000);
     };
@@ -106,30 +106,30 @@ const MobileFirstLoginPage = () => {
 
                 {/* Login Type Selection - Only show in phone step */}
                 {step === 'phone' && (
-                    <div className="mb-6">
-                        <div className="flex bg-gray-100 rounded-xl p-1">
-                            <button
-                                type="button"
-                                onClick={() => setLoginType('user')}
-                                className={`flex-1 py-2 px-4 rounded-lg text-sm font-medium transition-all duration-200 ${
-                                    loginType === 'user'
-                                        ? 'bg-white text-orange-600 shadow-sm'
-                                        : 'text-gray-600 hover:text-gray-800'
-                                }`}
-                            >
-                                👤 User Login
-                            </button>
-                            <button
-                                type="button"
-                                onClick={() => setLoginType('admin')}
-                                className={`flex-1 py-2 px-4 rounded-lg text-sm font-medium transition-all duration-200 ${
-                                    loginType === 'admin'
-                                        ? 'bg-white text-orange-600 shadow-sm'
-                                        : 'text-gray-600 hover:text-gray-800'
-                                }`}
-                            >
-                                👨‍💼 Admin Login
-                            </button>
+                <div className="mb-6">
+                    <div className="flex bg-gray-100 rounded-xl p-1">
+                        <button
+                            type="button"
+                            onClick={() => setLoginType('user')}
+                            className={`flex-1 py-2 px-4 rounded-lg text-sm font-medium transition-all duration-200 ${
+                                loginType === 'user'
+                                    ? 'bg-white text-orange-600 shadow-sm'
+                                    : 'text-gray-600 hover:text-gray-800'
+                            }`}
+                        >
+                            👤 User Login
+                        </button>
+                        <button
+                            type="button"
+                            onClick={() => setLoginType('admin')}
+                            className={`flex-1 py-2 px-4 rounded-lg text-sm font-medium transition-all duration-200 ${
+                                loginType === 'admin'
+                                    ? 'bg-white text-orange-600 shadow-sm'
+                                    : 'text-gray-600 hover:text-gray-800'
+                            }`}
+                        >
+                            👨‍💼 Admin Login
+                        </button>
                         </div>
                     </div>
                 )}
@@ -137,27 +137,27 @@ const MobileFirstLoginPage = () => {
                 {/* Phone Number Form */}
                 {step === 'phone' ? (
                     <form onSubmit={handleSendOTP} className="space-y-4">
-                        <div>
+                    <div>
                             <label className="block text-sm font-medium text-gray-700 mb-2">
                                 Phone Number
-                            </label>
+                        </label>
                             <div className="flex items-center">
                                 <span className="px-4 py-3 bg-gray-100 border-2 border-r-0 border-gray-300 rounded-l-xl text-sm font-medium text-gray-700">
                                     +91
                                 </span>
-                                <input
+                            <input
                                     type="tel"
                                     name="phone"
                                     value={phone}
                                     onChange={(e) => setPhone(e.target.value)}
-                                    required
+                                required
                                     maxLength="10"
                                     pattern="[0-9]{10}"
                                     className="flex-1 px-4 py-3 border-2 border-gray-300 rounded-r-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent text-lg tracking-wider"
                                     placeholder="9876543210"
-                                />
-                            </div>
+                            />
                         </div>
+                    </div>
 
                         <motion.button
                             type="submit"
@@ -182,10 +182,10 @@ const MobileFirstLoginPage = () => {
                 ) : (
                     /* OTP Verification Form */
                     <form onSubmit={handleVerifyOTP} className="space-y-4">
-                        <div>
+                    <div>
                             <label className="block text-sm font-medium text-gray-700 mb-2">
                                 Enter OTP
-                            </label>
+                        </label>
                             <input
                                 type="text"
                                 name="otp"
@@ -200,16 +200,16 @@ const MobileFirstLoginPage = () => {
                             <p className="mt-2 text-xs text-gray-500 text-center">
                                 OTP sent to +91 {phone}
                             </p>
-                        </div>
+                    </div>
 
-                        <motion.button
-                            type="submit"
+                    <motion.button
+                        type="submit"
                             disabled={isLoading || otp.length !== 6}
-                            whileHover={{ scale: 1.02 }}
-                            whileTap={{ scale: 0.98 }}
-                            className="w-full bg-gradient-to-r from-orange-500 to-orange-600 text-white py-3 rounded-lg font-semibold hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
-                        >
-                            {isLoading ? (
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        className="w-full bg-gradient-to-r from-orange-500 to-orange-600 text-white py-3 rounded-lg font-semibold hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                        {isLoading ? (
                                 <span className="flex items-center justify-center">
                                     <svg className="animate-spin h-5 w-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
@@ -219,8 +219,8 @@ const MobileFirstLoginPage = () => {
                                 </span>
                             ) : (
                                 `Verify as ${loginType === 'admin' ? 'Admin' : 'User'}`
-                            )}
-                        </motion.button>
+                        )}
+                    </motion.button>
 
                         <motion.button
                             type="button"
@@ -231,19 +231,19 @@ const MobileFirstLoginPage = () => {
                         >
                             ← Change Phone Number
                         </motion.button>
-                    </form>
+                </form>
                 )}
 
                 {/* Skip Login Option */}
                 {step === 'phone' && (
-                    <div className="mt-4 text-center">
-                        <button
-                            onClick={handleSkipLogin}
-                            className="text-gray-500 hover:text-gray-700 text-sm font-medium"
-                        >
-                            Continue as Guest
-                        </button>
-                    </div>
+                <div className="mt-4 text-center">
+                    <button
+                        onClick={handleSkipLogin}
+                        className="text-gray-500 hover:text-gray-700 text-sm font-medium"
+                    >
+                        Continue as Guest
+                    </button>
+                </div>
                 )}
             </motion.div>
         </div>

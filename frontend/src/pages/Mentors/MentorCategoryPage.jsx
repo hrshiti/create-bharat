@@ -1,18 +1,13 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-
-const ArrowLeftIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-  </svg>
-);
+import { FaArrowLeft } from 'react-icons/fa';
 
 const MentorCategoryPage = () => {
   const navigate = useNavigate();
   const [loginType, setLoginType] = useState('user');
   const [phone, setPhone] = useState('');
-  const [otp, setOtp] = useState('');
+  const [otp, setOtp] = useState(['', '', '', '']);
   const [step, setStep] = useState('phone');
   const [isLoading, setIsLoading] = useState(false);
 
@@ -29,6 +24,8 @@ const MentorCategoryPage = () => {
 
   const handleVerifyOTP = (e) => {
     e.preventDefault();
+    const otpValue = otp.join('');
+    
     setIsLoading(true);
     
     setTimeout(() => {
@@ -46,34 +43,72 @@ const MentorCategoryPage = () => {
     }, 1000);
   };
 
-  const handleBack = () => {
-    setStep('phone');
-    setOtp('');
+  const handleOtpChange = (index, value) => {
+    if (!value || /^[0-9]$/.test(value)) {
+      const newOtp = [...otp];
+      newOtp[index] = value;
+      setOtp(newOtp);
+      
+      if (value && index < 3) {
+        document.getElementById(`otp-${index + 1}`)?.focus();
+      }
+    }
+  };
+
+  const handleOtpKeyDown = (index, e) => {
+    if (e.key === 'Backspace' && !otp[index] && index > 0) {
+      document.getElementById(`otp-${index - 1}`)?.focus();
+    }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-orange-900 to-slate-900 flex items-center justify-center p-4">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
+    <div className="min-h-screen w-full bg-white flex flex-col">
+      {/* Back Button */}
+      <Link to="/" className="absolute top-6 left-6 p-2 hover:bg-gray-100 rounded-full transition-colors">
+        <FaArrowLeft className="text-gray-600" />
+      </Link>
+
+      {step === 'otp' && (
+        <button
+          onClick={() => {
+            setStep('phone');
+            setOtp(['', '', '', '']);
+          }}
+          className="absolute top-6 left-16 p-2 hover:bg-gray-100 rounded-full transition-colors"
+        >
+          <FaArrowLeft className="text-gray-600" />
+        </button>
+      )}
+
+      {/* Content */}
+      <div className="flex-1 flex flex-col items-center justify-center px-6 py-12 md:py-16">
+        {step === 'phone' ? (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="w-full max-w-sm"
-      >
-        <div className="bg-white rounded-3xl shadow-2xl p-8">
-          <div className="text-center mb-8">
-            <div className="w-20 h-20 bg-gradient-to-r from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
-              <span className="text-4xl">🎓</span>
+            className="w-full max-w-md"
+          >
+            {/* Illustration */}
+            <div className="flex justify-center mb-8">
+              <div className="relative">
+                <div className="w-32 h-32 bg-orange-100 rounded-full flex items-center justify-center">
+                  <div className="w-20 h-20 bg-orange-500 rounded-full flex items-center justify-center">
+                    <span className="text-4xl">🎓</span>
+                  </div>
             </div>
-            <h1 className="text-3xl font-bold text-gray-800 mb-2">
-              {step === 'phone' ? 'Welcome Back' : 'Verify OTP'}
-            </h1>
-            <p className="text-gray-600 text-sm">
-              {step === 'phone' ? 'Sign in to access mentorship' : 'Enter the 6-digit code'}
-            </p>
           </div>
+        </div>
 
-          {/* Login Type Selection */}
-          {step === 'phone' && (
+            {/* Title */}
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 text-center mb-2">
+              OTP Verification
+            </h1>
+            <p className="text-gray-600 text-center mb-8">
+              Enter your phone number to send one time Password.
+            </p>
+
+            {/* Login Type Selection */}
             <div className="mb-6">
               <div className="flex bg-gray-100 rounded-xl p-1">
                 <button
@@ -98,96 +133,83 @@ const MentorCategoryPage = () => {
                 >
                   🎓 Mentor
                 </button>
-              </div>
-            </div>
-          )}
+                      </div>
+                    </div>
 
-          <form onSubmit={step === 'phone' ? handleSendOTP : handleVerifyOTP} className="space-y-6">
-            {step === 'phone' ? (
+            {/* Form */}
+            <form onSubmit={handleSendOTP} className="space-y-6">
               <div>
                 <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
                   Phone Number
                 </label>
-                <div className="flex items-center">
-                  <span className="px-4 py-3 bg-gray-100 border-2 border-r-0 border-gray-300 rounded-l-xl text-sm font-medium text-gray-700">
-                    +91
-                  </span>
-                  <input
-                    type="tel"
-                    id="phone"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                    required
-                    maxLength="10"
-                    pattern="[0-9]{10}"
-                    className="flex-1 px-4 py-3 border-2 border-gray-300 rounded-r-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300 text-lg tracking-wider"
-                    placeholder="9876543210"
-                  />
-                </div>
-              </div>
-            ) : (
-              <div>
-                <label htmlFor="otp" className="block text-sm font-medium text-gray-700 mb-2">
-                  Enter OTP
-                </label>
                 <input
-                  type="text"
-                  id="otp"
-                  value={otp}
-                  onChange={(e) => setOtp(e.target.value)}
+                  type="tel"
+                  id="phone"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
                   required
-                  maxLength="6"
-                  pattern="[0-9]{6}"
-                  className="w-full px-4 py-4 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300 text-2xl tracking-[0.5em] text-center font-semibold"
-                  placeholder="000000"
+                  maxLength="10"
+                  pattern="[0-9]{10}"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all duration-300"
+                  placeholder="9876543210"
                 />
-                <p className="mt-2 text-xs text-gray-500 text-center">
-                  OTP sent to +91 {phone}
-                </p>
               </div>
-            )}
 
-            <motion.button
-              type="submit"
-              disabled={isLoading || (step === 'phone' ? phone.length !== 10 : otp.length !== 6)}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className="w-full bg-gradient-to-r from-orange-500 to-orange-600 text-white py-4 px-4 rounded-xl font-semibold hover:from-orange-600 hover:to-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
-            >
-              {isLoading ? (
-                <span className="flex items-center justify-center">
-                  <svg className="animate-spin h-5 w-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                  </svg>
-                  {step === 'phone' ? 'Sending OTP...' : 'Verifying...'}
-                </span>
-              ) : (
-                step === 'phone' ? 'Send OTP' : 'Verify & Login'
-              )}
-            </motion.button>
-
-            {step === 'otp' && (
               <motion.button
-                type="button"
-                onClick={handleBack}
+                type="submit"
+                disabled={isLoading || phone.length !== 10}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="w-full text-gray-600 hover:text-gray-800 text-sm font-medium"
+                className="w-full bg-orange-500 text-white py-4 rounded-lg font-semibold hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                ← Change Phone Number
+                {isLoading ? 'Sending...' : 'Continue'}
               </motion.button>
-            )}
-          </form>
+            </form>
+                  </motion.div>
+        ) : (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="w-full max-w-md"
+          >
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 text-center mb-2">
+              Verification Code
+            </h1>
+            <p className="text-gray-600 text-center mb-10">
+              We have sent the verification code to your phone number.
+            </p>
 
-          <div className="mt-6 text-center">
-            <Link to="/" className="text-gray-600 hover:text-orange-500 text-sm font-medium flex items-center justify-center">
-              <ArrowLeftIcon />
-              <span className="ml-2">Back to Home</span>
-            </Link>
-          </div>
-        </div>
-      </motion.div>
+            <form onSubmit={handleVerifyOTP} className="space-y-8">
+              <div className="flex justify-center gap-3">
+                {otp.map((digit, index) => (
+                  <input
+                    key={index}
+                    id={`otp-${index}`}
+                    type="text"
+                    maxLength="1"
+                    value={digit}
+                    onChange={(e) => handleOtpChange(index, e.target.value)}
+                    onKeyDown={(e) => handleOtpKeyDown(index, e)}
+                    className="w-16 h-16 md:w-20 md:h-20 text-center text-2xl md:text-3xl font-bold border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all duration-300"
+                    autoFocus={index === 0}
+                  />
+                ))}
+              </div>
+
+              <motion.button
+                type="submit"
+                disabled={isLoading || otp.some(d => !d)}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="w-full bg-orange-500 text-white py-4 rounded-lg font-semibold hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {isLoading ? 'Verifying...' : 'Confirm'}
+              </motion.button>
+            </form>
+          </motion.div>
+        )}
+      </div>
     </div>
   );
 };
