@@ -13,7 +13,30 @@ const UserIcon = ({ active }) => ( <svg xmlns="http://www.w3.org/2000/svg" class
 
 const SavedInternshipsPage = () => {
   const navigate = useNavigate();
-  const [savedInternships] = useState(internships.slice(0, 6)); // Mock saved internships
+  const [savedInternships, setSavedInternships] = useState(internships.slice(0, 6)); // Mock saved internships
+  const [savedIds, setSavedIds] = useState(new Set(internships.slice(0, 6).map(i => i.id)));
+
+  const toggleSave = (internshipId) => {
+    setSavedIds(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(internshipId)) {
+        newSet.delete(internshipId);
+      } else {
+        newSet.add(internshipId);
+      }
+      return newSet;
+    });
+    
+    // Update saved internships list
+    setSavedInternships(prev => {
+      if (savedIds.has(internshipId)) {
+        return prev.filter(i => i.id !== internshipId);
+      } else {
+        const internship = internships.find(i => i.id === internshipId);
+        return internship ? [...prev, internship] : prev;
+      }
+    });
+  };
 
   const fadeInUp = {
     hidden: { opacity: 0, y: 20 },
@@ -106,7 +129,8 @@ const SavedInternshipsPage = () => {
                 whileHover={{ scale: 1.02 }}
                 className="bg-white/90 backdrop-blur-lg rounded-2xl p-6 shadow-xl border border-white/40 hover:shadow-2xl transition-all duration-300"
               >
-                <div className="flex items-start justify-between mb-4">
+                {/* Heart Icon - Inside the card with animation */}
+                <div className="flex items-start justify-between mb-4 relative">
                   <div className="flex-1">
                     <h3 className="text-lg font-bold text-gray-800 mb-2">{internship.title}</h3>
                     <p className="text-sm text-gray-600 mb-2">{internship.company}</p>
@@ -120,13 +144,29 @@ const SavedInternshipsPage = () => {
                     </div>
                   </div>
                   <motion.button
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                    className="p-2 text-red-500 hover:bg-red-50 rounded-full transition-colors"
+                    whileHover={{ scale: 1.3, rotate: 10 }}
+                    whileTap={{ scale: 0.8 }}
+                    onClick={() => toggleSave(internship.id)}
+                    className="relative p-2 rounded-full transition-colors z-10"
                   >
-                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" />
-                    </svg>
+                    {savedIds.has(internship.id) ? (
+                      <motion.div
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        transition={{ type: "spring", stiffness: 300, damping: 15 }}
+                        className="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center"
+                      >
+                        <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" />
+                        </svg>
+                      </motion.div>
+                    ) : (
+                      <div className="w-8 h-8 border-2 border-gray-300 rounded-full flex items-center justify-center hover:border-red-500 transition-colors">
+                        <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                        </svg>
+                      </div>
+                    )}
                   </motion.button>
                 </div>
 

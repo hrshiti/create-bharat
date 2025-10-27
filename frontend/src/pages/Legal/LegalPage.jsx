@@ -131,44 +131,46 @@ const LegalPage = () => {
                   whileHover={{ y: -5, scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   transition={{ type: "spring", stiffness: 300 }}
-                  className="bg-gray-50 rounded-xl p-4 shadow-lg hover:shadow-xl border-2 border-gray-300 hover:border-gray-400 transition-all duration-300 cursor-pointer h-full"
+                  className="bg-gray-50 rounded-xl p-4 shadow-lg hover:shadow-xl border-2 border-gray-300 hover:border-gray-400 transition-all duration-300 cursor-pointer h-full flex flex-col"
                 >
-                  {/* Service Number */}
-                  <div className="flex items-center justify-between mb-3">
-                    <motion.div 
-                      whileHover={{ rotate: 360, scale: 1.1 }}
-                      transition={{ duration: 0.5 }}
-                      className={`w-10 h-10 bg-gradient-to-r ${service.color} rounded-lg flex items-center justify-center text-white font-bold text-sm shadow-md`}
-                    >
-                      {service.id}
-                    </motion.div>
+                  {/* Service Icon */}
+                  <div className="flex items-center justify-center mb-3">
                     <motion.div
                       whileHover={{ scale: 1.2, rotate: 10 }}
                       transition={{ duration: 0.3 }}
-                      className="text-2xl"
+                      className="text-3xl"
                     >
                       {service.icon}
                     </motion.div>
                   </div>
 
                   {/* Service Name */}
-                  <h3 className="text-base font-semibold text-gray-900 group-hover:text-blue-600 transition-colors mb-2">
+                  <h3 className="text-base font-semibold text-gray-900 group-hover:text-blue-600 transition-colors mb-3 text-center">
                     {service.name}
                   </h3>
 
-                  {/* Arrow */}
-                  <div className="flex items-center text-blue-600 font-medium text-xs group-hover:gap-2 gap-1 transition-all">
-                    <span>Get Started</span>
-                    <motion.svg 
-                      animate={{ x: [0, 5, 0] }}
-                      transition={{ repeat: Infinity, duration: 1.5 }}
-                      className="w-3 h-3" 
-                      fill="none" 
-                      stroke="currentColor" 
-                      viewBox="0 0 24 24"
+                  {/* Spacer */}
+                  <div className="flex-1"></div>
+
+                  {/* Get Started Button */}
+                  <div className="flex items-center justify-center">
+                    <motion.button
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="w-full px-4 py-2 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-lg font-medium text-sm hover:from-orange-600 hover:to-orange-700 transition-all flex items-center justify-center gap-2"
                     >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                    </motion.svg>
+                      Get Started
+                      <motion.svg 
+                        animate={{ x: [0, 5, 0] }}
+                        transition={{ repeat: Infinity, duration: 1.5 }}
+                        className="w-3 h-3" 
+                        fill="none" 
+                        stroke="currentColor" 
+                        viewBox="0 0 24 24"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                      </motion.svg>
+                    </motion.button>
                   </div>
                 </motion.div>
               </Link>
@@ -176,12 +178,12 @@ const LegalPage = () => {
           ))}
         </motion.div>
 
-        {/* Bottom Info */}
+        {/* Bottom Info - Desktop Only */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.8 }}
-          className="text-center mt-12"
+          className="hidden md:block text-center mt-12"
         >
           <div className="bg-blue-50 rounded-xl p-6 max-w-2xl mx-auto">
             <h3 className="text-lg font-semibold text-blue-900 mb-2">Why Choose Our Legal Services?</h3>

@@ -199,7 +199,7 @@ const InternshipApplicationPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 md:bg-gradient-to-br md:from-gray-50 md:via-blue-50 md:to-indigo-50">
+    <div className="min-h-screen bg-gray-50 md:bg-gradient-to-br md:from-gray-50 md:via-blue-50 md:to-indigo-50 overflow-y-auto pb-20">
       {/* Mobile Header */}
       <motion.header 
         initial={{ opacity: 0, y: -20 }}

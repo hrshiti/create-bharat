@@ -258,30 +258,30 @@ const LoanDetailPage = () => {
                   
                   {/* Key Features */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                    <div className="bg-blue-50 rounded-lg p-4">
-                      <h4 className="font-semibold text-blue-900 mb-2">💰 Loan Amount</h4>
-                      <p className="text-sm text-blue-700">Up to ₹50 Lakhs for eligible businesses</p>
+                    <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                      <h4 className="font-semibold text-gray-900 mb-2">💰 Loan Amount</h4>
+                      <p className="text-sm text-gray-600">Up to ₹50 Lakhs for eligible businesses</p>
                     </div>
-                    <div className="bg-green-50 rounded-lg p-4">
-                      <h4 className="font-semibold text-green-900 mb-2">📈 Interest Rate</h4>
-                      <p className="text-sm text-green-700">Starting from 8.5% per annum</p>
+                    <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                      <h4 className="font-semibold text-gray-900 mb-2">📈 Interest Rate</h4>
+                      <p className="text-sm text-gray-600">Starting from 8.5% per annum</p>
                     </div>
-                    <div className="bg-purple-50 rounded-lg p-4">
-                      <h4 className="font-semibold text-purple-900 mb-2">⏰ Repayment</h4>
-                      <p className="text-sm text-purple-700">Flexible tenure up to 7 years</p>
+                    <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                      <h4 className="font-semibold text-gray-900 mb-2">⏰ Repayment</h4>
+                      <p className="text-sm text-gray-600">Flexible tenure up to 7 years</p>
                     </div>
-                    <div className="bg-orange-50 rounded-lg p-4">
-                      <h4 className="font-semibold text-orange-900 mb-2">📋 Processing</h4>
-                      <p className="text-sm text-orange-700">Quick approval within 15 days</p>
+                    <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                      <h4 className="font-semibold text-gray-900 mb-2">📋 Processing</h4>
+                      <p className="text-sm text-gray-600">Quick approval within 15 days</p>
                     </div>
                   </div>
             
             {/* Know More Button */}
             <motion.button
-              whileHover={{ scale: 1.05, x: 5, boxShadow: "0 10px 25px rgba(59, 130, 246, 0.3)" }}
-              whileTap={{ scale: 0.95 }}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
               onClick={() => setShowMoreInfo(!showMoreInfo)}
-              className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-3 rounded-full font-medium hover:from-blue-600 hover:to-purple-700 transition-all duration-300 flex items-center gap-2 shadow-lg"
+              className="bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors flex items-center gap-2"
             >
               {showMoreInfo ? 'Show Less' : 'Know More'}
               <motion.svg
@@ -314,24 +314,21 @@ const LoanDetailPage = () => {
               className="pt-4 space-y-4"
             >
               <motion.div
-                whileHover={{ x: 5 }}
-                className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-4 border-l-4 border-blue-500 w-full"
+                className="bg-gray-50 rounded-xl p-4 border border-gray-200 w-full"
               >
                 <p className="text-gray-700 leading-relaxed text-sm w-full">
                   The loan scheme is mandatory for eligible business operators who are involved in manufacturing, processing, storage, distribution, or sale of products and services. The distinction between basic registration and full license depends on the business size, annual turnover, and nature of operations.
                 </p>
               </motion.div>
               <motion.div
-                whileHover={{ x: 5 }}
-                className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-4 border-l-4 border-green-500 w-full"
+                className="bg-gray-50 rounded-xl p-4 border border-gray-200 w-full"
               >
                 <p className="text-gray-700 leading-relaxed text-sm w-full">
                   Each approved loan comes with a unique 14-digit registration number that includes the state code and producer's permit details. This system enhances accountability and maintains the quality of financial products and services provided to beneficiaries.
                 </p>
               </motion.div>
               <motion.div
-                whileHover={{ x: 5 }}
-                className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl p-4 border-l-4 border-purple-500 w-full"
+                className="bg-gray-50 rounded-xl p-4 border border-gray-200 w-full"
               >
                 <p className="text-gray-700 leading-relaxed text-sm w-full">
                   The loan scheme is regulated under the Government of India's financial assistance regulations, ensuring transparency and proper implementation of the program across all states and union territories.

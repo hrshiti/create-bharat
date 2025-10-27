@@ -43,6 +43,8 @@ const HomePage = () => {
     const [isAdminLogin, setIsAdminLogin] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [currentBannerIndex, setCurrentBannerIndex] = useState(0);
+    const [touchStart, setTouchStart] = useState(null);
+    const [touchEnd, setTouchEnd] = useState(null);
 
     // Mobile detection and first visit check
     useEffect(() => {
@@ -67,9 +69,36 @@ const HomePage = () => {
     useEffect(() => {
         const interval = setInterval(() => {
             setCurrentBannerIndex((prevIndex) => (prevIndex + 1) % 5);
-        }, 3000);
+        }, 5000);
         return () => clearInterval(interval);
     }, []);
+
+    // Touch handlers for swipeable banner
+    const minSwipeDistance = 50;
+    
+    const onTouchStart = (e) => {
+        setTouchEnd(null);
+        setTouchStart(e.targetTouches[0].clientX);
+    };
+    
+    const onTouchMove = (e) => {
+        setTouchEnd(e.targetTouches[0].clientX);
+    };
+    
+    const onTouchEnd = () => {
+        if (!touchStart || !touchEnd) return;
+        
+        const distance = touchStart - touchEnd;
+        const isLeftSwipe = distance > minSwipeDistance;
+        const isRightSwipe = distance < -minSwipeDistance;
+        
+        if (isLeftSwipe) {
+            setCurrentBannerIndex((prev) => (prev + 1) % 5);
+        }
+        if (isRightSwipe) {
+            setCurrentBannerIndex((prev) => (prev - 1 + 5) % 5);
+        }
+    };
 
     // Modal handlers
     const handleServiceClick = (e, servicePath) => {
@@ -359,13 +388,24 @@ const HomePage = () => {
                 <AnimatePresence>
                     {isMobileMenuOpen && (
                         <motion.div 
-                            initial={{ opacity: 0, height: 0 }}
-                            animate={{ opacity: 1, height: "auto" }}
-                            exit={{ opacity: 0, height: 0 }}
-                            transition={{ duration: 0.3 }}
-                            className="bg-white shadow-lg border-b border-gray-200"
+                            initial={{ opacity: 0, x: -300 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            exit={{ opacity: 0, x: -300 }}
+                            transition={{ duration: 0.3, ease: "easeOut" }}
+                            className="fixed inset-y-0 left-0 w-64 bg-white shadow-2xl border-r border-gray-200 z-50 overflow-y-auto"
+                            onClick={(e) => e.stopPropagation()}
                         >
-                            <div className="px-4 py-4 space-y-3">
+                            <div className="p-6">
+                                {/* Close button */}
+                                <button
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                    className="mb-6 p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                                >
+                                    <svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
+                                </button>
+                                <div className="space-y-3">
                                 <Link 
                                     to="/" 
                                     className="block py-2 text-gray-700 hover:text-orange-500 font-medium transition-colors"
@@ -432,9 +472,21 @@ const HomePage = () => {
                                     </Link>
                                 </div>
                             </div>
+                        </div>
                         </motion.div>
                     )}
                 </AnimatePresence>
+                
+                {/* Overlay for mobile menu */}
+                {isMobileMenuOpen && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 bg-black/50 z-40"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                    />
+                )}
 
                 {/* Auto-Scrolling Banner */}
                 <motion.section
@@ -494,6 +546,9 @@ const HomePage = () => {
                                             exit={{ opacity: 0, x: -100 }}
                                             transition={{ duration: 0.5 }}
                                         className="absolute inset-0"
+                                        onTouchStart={onTouchStart}
+                                        onTouchMove={onTouchMove}
+                                        onTouchEnd={onTouchEnd}
                                     >
                                         <img 
                                             src={currentBanner.image} 
@@ -904,40 +959,6 @@ const HomePage = () => {
                                         {action.icon}
                                     </div>
                                     <h3 className="text-sm font-semibold text-gray-900">{action.name}</h3>
-                                </motion.div>
-                            ))}
-                        </div>
-                    </motion.div>
-
-                    {/* Statistics Section */}
-                    <motion.div
-                        variants={staggerContainer}
-                        initial="hidden"
-                        animate="visible"
-                        className="bg-gradient-to-br from-indigo-50 via-orange-50 to-purple-50 rounded-2xl p-6 mb-6"
-                    >
-                        <motion.h2 
-                            variants={fadeInUp}
-                            className="text-xl font-bold text-gray-900 mb-4"
-                        >
-                            Our Impact
-                        </motion.h2>
-                        <div className="grid grid-cols-2 gap-4">
-                            {[
-                                { number: '10K+', label: 'Loans Approved', icon: '🏦' },
-                                { number: '5K+', label: 'Jobs Created', icon: '💼' },
-                                { number: '2K+', label: 'Legal Cases', icon: '⚖️' },
-                                { number: '1K+', label: 'Mentors', icon: '👨‍🏫' }
-                            ].map((stat, index) => (
-                                <motion.div 
-                                    key={stat.label}
-                                    variants={fadeInUp}
-                                    whileHover={{ scale: 1.02 }}
-                                    className="bg-white rounded-xl p-4 shadow-md text-center"
-                                >
-                                    <div className="text-2xl mb-2">{stat.icon}</div>
-                                    <div className="text-2xl font-bold text-gray-900">{stat.number}</div>
-                                    <div className="text-sm text-gray-600">{stat.label}</div>
                                 </motion.div>
                             ))}
                         </div>
@@ -1374,58 +1395,6 @@ const HomePage = () => {
                                         <p className="text-gray-700 mb-2">{story.story}</p>
                                         <p className="text-green-600 font-semibold">{story.achievement}</p>
                                     </div>
-                                </motion.div>
-                            ))}
-                        </motion.div>
-                    </div>
-                </section>
-
-                {/* Desktop Statistics Section */}
-                <section className="py-16 lg:py-24 bg-gradient-to-br from-indigo-50 via-orange-50 to-purple-50">
-                    <div className="max-w-7xl mx-auto px-8">
-                        <motion.div 
-                            initial="hidden"
-                            animate="visible"
-                            variants={staggerContainer}
-                            className="text-center mb-16"
-                        >
-                            <motion.h2 
-                                variants={fadeInUp}
-                                className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6"
-                            >
-                                Our Impact
-                            </motion.h2>
-                            <motion.p 
-                                variants={fadeInUp}
-                                className="text-xl text-gray-600 max-w-3xl mx-auto"
-                            >
-                                Numbers that speak for our commitment to your success
-                            </motion.p>
-                        </motion.div>
-
-                        <motion.div 
-                            initial="hidden"
-                            animate="visible"
-                            variants={staggerContainer}
-                            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
-                        >
-                            {[
-                                { number: '10K+', label: 'Loans Approved', icon: '🏦', color: 'from-green-500 to-emerald-500' },
-                                { number: '5K+', label: 'Jobs Created', icon: '💼', color: 'from-orange-500 to-cyan-500' },
-                                { number: '2K+', label: 'Legal Cases', icon: '⚖️', color: 'from-purple-500 to-violet-500' },
-                                { number: '1K+', label: 'Mentors', icon: '👨‍🏫', color: 'from-orange-500 to-red-500' }
-                            ].map((stat, index) => (
-                                <motion.div 
-                                    key={stat.label}
-                                    variants={fadeInUp}
-                                    whileHover={{ scale: 1.05 }}
-                                    className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 text-center"
-                                >
-                                    <div className={`w-16 h-16 bg-gradient-to-r ${stat.color} rounded-full flex items-center justify-center mx-auto mb-4 text-3xl`}>
-                                        {stat.icon}
-                                    </div>
-                                    <div className="text-4xl font-bold text-gray-900 mb-2">{stat.number}</div>
-                                    <div className="text-gray-600 font-medium">{stat.label}</div>
                                 </motion.div>
                             ))}
                         </motion.div>

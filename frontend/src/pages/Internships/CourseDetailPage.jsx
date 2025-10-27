@@ -227,13 +227,13 @@ const CourseDetailPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-orange-50 to-indigo-100 pb-20">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-orange-50 to-indigo-100 pb-20 overflow-y-auto">
       {/* Header */}
       <motion.header 
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="flex items-center justify-between px-4 py-4 bg-white/90 backdrop-blur-lg border-b border-gradient-to-r from-orange-200 to-purple-200 shadow-lg"
+        className="sticky top-0 z-40 flex items-center justify-between px-4 py-4 bg-white/90 backdrop-blur-lg border-b border-gradient-to-r from-orange-200 to-purple-200 shadow-lg"
       >
         <motion.div 
           whileHover={{ scale: 1.05 }}

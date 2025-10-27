@@ -16,24 +16,12 @@ const BriefcaseIcon = ({ active }) => ( <svg xmlns="http://www.w3.org/2000/svg" 
 
 const TrainingPage = () => {
   const navigate = useNavigate();
-  const [userType, setUserType] = useState(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   
   const [completedTopics, setCompletedTopics] = useState(() => {
     const saved = localStorage.getItem('completedTopics');
     return saved ? JSON.parse(saved) : [];
   });
 
-  // Handle admin redirect
-  useEffect(() => {
-    if (isLoggedIn && userType === 'admin') {
-      const timer = setTimeout(() => {
-        navigate('/admin/dashboard', { replace: true });
-      }, 1500); // Small delay to show loading screen
-      
-      return () => clearTimeout(timer);
-    }
-  }, [isLoggedIn, userType, navigate]);
 
   // Animation variants
   const fadeInUp = {
@@ -68,108 +56,6 @@ const TrainingPage = () => {
 
   const isTopicCompleted = (topicId) => completedTopics.includes(topicId);
 
-  const handleLogin = (type) => {
-    setUserType(type);
-    setIsLoggedIn(true);
-    // Store login info in localStorage
-    localStorage.setItem('userType', type);
-    localStorage.setItem('isLoggedIn', 'true');
-    localStorage.setItem('isAdmin', type === 'admin' ? 'true' : 'false');
-  };
-
-  const handleLogout = () => {
-    setUserType(null);
-    setIsLoggedIn(false);
-  };
-
-  const renderLoginPage = () => (
-    <div className="min-h-screen bg-gradient-to-br from-orange-50 to-orange-100 flex items-center justify-center p-4">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="bg-white rounded-3xl shadow-2xl p-8 w-full max-w-md"
-      >
-        <div className="text-center mb-8">
-          <div className="w-16 h-16 bg-gradient-to-r from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
-            <span className="text-3xl">📚</span>
-          </div>
-          <h1 className="text-2xl font-bold text-gray-800 mb-2">Training Portal</h1>
-          <p className="text-gray-600">Choose your login type to continue</p>
-        </div>
-
-        <div className="space-y-4">
-          <motion.button
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            onClick={() => handleLogin('user')}
-            className="w-full p-4 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all duration-300"
-          >
-            <div className="flex items-center justify-center">
-              <span className="text-2xl mr-3">👤</span>
-              <div className="text-left">
-                <div className="font-bold">Login as User</div>
-                <div className="text-sm opacity-90">Access training modules</div>
-              </div>
-            </div>
-          </motion.button>
-
-          <motion.button
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            onClick={() => handleLogin('admin')}
-            className="w-full p-4 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all duration-300"
-          >
-            <div className="flex items-center justify-center">
-              <span className="text-2xl mr-3">👨‍💼</span>
-              <div className="text-left">
-                <div className="font-bold">Login as Admin</div>
-                <div className="text-sm opacity-90">Manage training content</div>
-              </div>
-            </div>
-          </motion.button>
-        </div>
-
-        <div className="mt-8 text-center">
-          <Link
-            to="/"
-            className="text-orange-600 hover:text-orange-700 font-medium"
-          >
-            ← Back to Home
-          </Link>
-        </div>
-      </motion.div>
-    </div>
-  );
-
-  const renderAdminRedirect = () => {
-    // Show loading state while redirecting
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-orange-50 to-orange-100 flex items-center justify-center">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="bg-white rounded-2xl shadow-xl p-8 text-center"
-        >
-          <div className="w-16 h-16 bg-gradient-to-r from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
-            <span className="text-3xl">👨‍💼</span>
-          </div>
-          <h2 className="text-xl font-bold text-gray-800 mb-2">Redirecting to Admin Panel</h2>
-          <p className="text-gray-600 mb-4">Please wait while we redirect you...</p>
-          <div className="flex justify-center">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500"></div>
-          </div>
-        </motion.div>
-      </div>
-    );
-  };
-
-  if (!isLoggedIn) {
-    return renderLoginPage();
-  }
-
-  if (userType === 'admin') {
-    return renderAdminRedirect();
-  }
 
   return (
     <div className="min-h-screen bg-white pb-20">
