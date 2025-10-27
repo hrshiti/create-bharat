@@ -33,8 +33,16 @@ const Navbar = () => {
     { name: 'Training', path: '/training' },
   ];
 
-  // Don't render navbar on homepage or admin routes
-  if (location.pathname === '/' || location.pathname.startsWith('/admin')) {
+  // Don't render navbar on homepage, admin routes, company routes, internship login, or mentor category/profile pages
+  if (
+    location.pathname === '/' || 
+    location.pathname.startsWith('/admin') || 
+    location.pathname === '/company/internships' ||
+    location.pathname === '/company/login' ||
+    location.pathname === '/internships/login' ||
+    location.pathname === '/mentors' ||
+    location.pathname === '/mentors/profile'
+  ) {
     return null;
   }
 

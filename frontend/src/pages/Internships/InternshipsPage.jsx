@@ -30,6 +30,7 @@ const InternshipsPage = () => {
   
   // Filter states
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [filters, setFilters] = useState({
     location: '',
     domain: '',
@@ -293,11 +294,8 @@ const InternshipsPage = () => {
             <motion.button 
               whileHover={{ scale: 1.1, rotate: 90 }}
               whileTap={{ scale: 0.9 }}
-              onClick={() => {
-                // Handle menu icon click
-                alert('Menu feature coming soon!');
-              }}
-              className="p-2 hover:bg-white/20 rounded-lg transition-colors"
+              onClick={() => setIsMobileMenuOpen(true)}
+              className="p-2 hover:bg-white/20 rounded-lg transition-colors cursor-pointer"
               title="Menu"
             >
             <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -568,7 +566,12 @@ const InternshipsPage = () => {
             <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-200">
               <div className="flex items-center justify-between mb-8">
                 <h2 className="text-3xl font-bold text-gray-900">Placement Courses</h2>
-                <button className="text-orange-600 hover:text-orange-700 font-semibold">View All</button>
+                <button 
+                  onClick={() => alert('View All Placement Courses - This will show all available placement courses!')}
+                  className="text-orange-600 hover:text-orange-700 font-semibold cursor-pointer"
+                >
+                  View All
+                </button>
               </div>
               
               <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-6">
@@ -1040,8 +1043,8 @@ const InternshipsPage = () => {
             <motion.button 
               whileHover={{ scale: 1.05, x: 5 }}
               whileTap={{ scale: 0.95 }}
-              onClick={() => {/* Could navigate to a dedicated placement courses page */}}
-              className="text-sm font-semibold text-indigo-600 hover:text-indigo-700"
+              onClick={() => alert('View All Placement Courses - This will show all available placement courses!')}
+              className="text-sm font-semibold text-indigo-600 hover:text-indigo-700 cursor-pointer"
             >
               View All
             </motion.button>
@@ -1438,6 +1441,59 @@ const InternshipsPage = () => {
             </motion.button>
           </div>
         </div>
+        </motion.div>
+      )}
+
+      {/* Mobile Menu */}
+      {isMobileMenuOpen && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 bg-black/50 z-50 flex items-start justify-end"
+          onClick={() => setIsMobileMenuOpen(false)}
+        >
+          <motion.div
+            initial={{ x: '100%' }}
+            animate={{ x: 0 }}
+            exit={{ x: '100%' }}
+            transition={{ type: 'spring', damping: 20, stiffness: 300 }}
+            onClick={(e) => e.stopPropagation()}
+            className="bg-white w-80 h-full shadow-2xl p-6"
+          >
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-2xl font-bold text-gray-900">Menu</h2>
+              <button
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="p-2 hover:bg-gray-100 rounded-full"
+              >
+                <svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            
+            <div className="space-y-2">
+              <Link to="/" className="block px-4 py-3 hover:bg-gray-100 rounded-lg transition-colors">
+                <span className="font-medium text-gray-900">Home</span>
+              </Link>
+              <Link to="/loans" className="block px-4 py-3 hover:bg-gray-100 rounded-lg transition-colors">
+                <span className="font-medium text-gray-900">Loans</span>
+              </Link>
+              <Link to="/mentors" className="block px-4 py-3 hover:bg-gray-100 rounded-lg transition-colors">
+                <span className="font-medium text-gray-900">Mentors</span>
+              </Link>
+              <Link to="/legal" className="block px-4 py-3 hover:bg-gray-100 rounded-lg transition-colors">
+                <span className="font-medium text-gray-900">Legal Services</span>
+              </Link>
+              <Link to="/training" className="block px-4 py-3 hover:bg-gray-100 rounded-lg transition-colors">
+                <span className="font-medium text-gray-900">Training</span>
+              </Link>
+              <Link to="/profile" className="block px-4 py-3 hover:bg-gray-100 rounded-lg transition-colors">
+                <span className="font-medium text-gray-900">Profile</span>
+              </Link>
+            </div>
+          </motion.div>
         </motion.div>
       )}
 

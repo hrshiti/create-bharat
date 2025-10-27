@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
+import { useUser } from '../../contexts/UserContext';
 import BottomNavbar from '../../components/common/BottomNavbar';
 
 // Bottom Nav Icons
@@ -19,6 +20,37 @@ const ProfilePage = () => {
     const location = useLocation();
     const [activeTab, setActiveTab] = useState('personal');
     const [isEditing, setIsEditing] = useState(false);
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        phone: '',
+        address: ''
+    });
+    const [userLoading, setUserLoading] = useState(true);
+    
+    // Load user data from localStorage when component mounts
+    useEffect(() => {
+        const loadUserData = () => {
+            try {
+                const userData = localStorage.getItem('userData');
+                if (userData) {
+                    const parsedUser = JSON.parse(userData);
+                    setFormData({
+                        name: parsedUser.name || '',
+                        email: parsedUser.email || '',
+                        phone: parsedUser.phone || '',
+                        address: parsedUser.address || ''
+                    });
+                }
+            } catch (error) {
+                console.error('Error loading user data:', error);
+            } finally {
+                setUserLoading(false);
+            }
+        };
+        
+        loadUserData();
+    }, []);
 
     // Determine which page we're coming from to show appropriate bottom navbar
     const getBottomNavbarTabs = () => {
@@ -62,11 +94,58 @@ const ProfilePage = () => {
         { id: 'personal', name: 'Personal', icon: <UserIcon /> }
     ];
 
+    const handleInputChange = (field, value) => {
+        setFormData(prev => ({
+            ...prev,
+            [field]: value
+        }));
+    };
+
+    const handleSaveChanges = () => {
+        if (isEditing) {
+            // Save changes to localStorage
+            try {
+                const existingUser = localStorage.getItem('userData');
+                if (existingUser) {
+                    const parsedUser = JSON.parse(existingUser);
+                    const updatedUser = {
+                        ...parsedUser,
+                        name: formData.name,
+                        phone: formData.phone,
+                        address: formData.address,
+                        // Split name into first and last name if needed
+                        firstName: formData.name.split(' ')[0] || '',
+                        lastName: formData.name.split(' ').slice(1).join(' ') || ''
+                    };
+                    localStorage.setItem('userData', JSON.stringify(updatedUser));
+                    alert('Profile updated successfully!');
+                }
+            } catch (error) {
+                console.error('Error saving user data:', error);
+                alert('Error saving profile. Please try again.');
+            }
+        }
+        setIsEditing(!isEditing);
+    };
+    
+    const handleLogout = () => {
+        // Clear all user data
+        localStorage.removeItem('userData');
+        localStorage.removeItem('isLoggedIn');
+        localStorage.removeItem('userEmail');
+        localStorage.removeItem('userType');
+        localStorage.removeItem('isAdmin');
+        
+        // Redirect to home page
+        window.location.href = '/';
+    };
+
+    // Personal info from form data
     const personalInfo = {
-        name: 'John Doe',
-        email: 'john.doe@example.com',
-        phone: '+91 98765 43210',
-        address: '123 Main Street, Mumbai, Maharashtra, India - 400001'
+        name: formData.name || '',
+        email: formData.email || '',
+        phone: formData.phone || '',
+        address: formData.address || ''
     };
 
     const renderPersonalInfo = () => (
@@ -90,19 +169,29 @@ const ProfilePage = () => {
                         </svg>
                     </motion.div>
                     <div>
-                        <h2 className="text-2xl font-bold">{personalInfo.name}</h2>
-                        <p className="text-orange-100">{personalInfo.email}</p>
-                        <p className="text-orange-100">{personalInfo.phone}</p>
+                        <h2 className="text-2xl font-bold">{formData.name || 'User'}</h2>
+                        <p className="text-orange-100">{formData.email || 'No email'}</p>
+                        <p className="text-orange-100">{formData.phone || 'No phone number'}</p>
                     </div>
                 </div>
-                <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={() => setIsEditing(!isEditing)}
-                    className="mt-4 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-lg text-white font-medium"
-                >
-                    {isEditing ? 'Save Changes' : 'Edit Profile'}
-                </motion.button>
+                <div className="mt-4 flex gap-3">
+                    <motion.button
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={handleSaveChanges}
+                        className="flex-1 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-lg text-white font-medium"
+                    >
+                        {isEditing ? 'Save Changes' : 'Edit Profile'}
+                    </motion.button>
+                    <motion.button
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={handleLogout}
+                        className="flex-1 bg-red-500/20 backdrop-blur-sm px-4 py-2 rounded-lg text-white font-medium"
+                    >
+                        Logout
+                    </motion.button>
+                </div>
             </div>
 
             {/* Personal Details */}
@@ -113,7 +202,8 @@ const ProfilePage = () => {
                         <label className="block text-sm font-medium text-gray-600 mb-1">Full Name</label>
                         <input
                             type="text"
-                            value={personalInfo.name}
+                            value={formData.name}
+                            onChange={(e) => handleInputChange('name', e.target.value)}
                             disabled={!isEditing}
                             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent disabled:bg-gray-50"
                         />
@@ -122,8 +212,8 @@ const ProfilePage = () => {
                         <label className="block text-sm font-medium text-gray-600 mb-1">Email</label>
                         <input
                             type="email"
-                            value={personalInfo.email}
-                            disabled={!isEditing}
+                            value={formData.email}
+                            disabled={true}
                             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent disabled:bg-gray-50"
                         />
                     </div>
@@ -131,7 +221,8 @@ const ProfilePage = () => {
                         <label className="block text-sm font-medium text-gray-600 mb-1">Phone Number</label>
                         <input
                             type="tel"
-                            value={personalInfo.phone}
+                            value={formData.phone}
+                            onChange={(e) => handleInputChange('phone', e.target.value)}
                             disabled={!isEditing}
                             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent disabled:bg-gray-50"
                         />
@@ -139,7 +230,8 @@ const ProfilePage = () => {
                     <div>
                         <label className="block text-sm font-medium text-gray-600 mb-1">Address</label>
                         <textarea
-                            value={personalInfo.address}
+                            value={formData.address}
+                            onChange={(e) => handleInputChange('address', e.target.value)}
                             disabled={!isEditing}
                             rows={3}
                             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent disabled:bg-gray-50 resize-none"
@@ -149,6 +241,46 @@ const ProfilePage = () => {
             </div>
         </motion.div>
     );
+
+    // Show loading
+    if (userLoading) {
+        return (
+            <div className="min-h-screen bg-gray-50 pb-20 flex items-center justify-center">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-600"></div>
+            </div>
+        );
+    }
+
+    // Check if user is logged in
+    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    const userData = localStorage.getItem('userData');
+    
+    if (!isLoggedIn || !userData) {
+        return (
+            <div className="min-h-screen bg-gray-50 pb-20">
+                <div className="bg-white shadow-sm border-b border-gray-200 mb-8">
+                    <div className="px-4 py-4">
+                        <h1 className="text-2xl font-bold text-gray-800">Profile</h1>
+                    </div>
+                </div>
+                <div className="p-4">
+                    <div className="bg-yellow-50 border border-yellow-200 rounded-2xl p-8 text-center">
+                        <svg className="w-16 h-16 mx-auto mb-4 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                        </svg>
+                        <h2 className="text-xl font-bold text-gray-800 mb-2">Please Login</h2>
+                        <p className="text-gray-600 mb-4">You need to login to view your profile</p>
+                        <Link
+                            to="/login"
+                            className="inline-block bg-orange-500 text-white px-6 py-2 rounded-lg hover:bg-orange-600 transition-colors"
+                        >
+                            Go to Login
+                        </Link>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="min-h-screen bg-gray-50 pb-20">

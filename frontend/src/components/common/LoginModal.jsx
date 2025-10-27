@@ -10,6 +10,19 @@ const LoginModal = ({ isOpen, onClose, onSwitchToSignup, selectedService, isAdmi
     const [isLoading, setIsLoading] = useState(false);
     const [loginType, setLoginType] = useState('user'); // 'user', 'admin', or 'company'
     const navigate = useNavigate();
+    
+    // Manual login function to save user data
+    const login = (userData) => {
+        try {
+            localStorage.setItem('userData', JSON.stringify(userData));
+            localStorage.setItem('isLoggedIn', 'true');
+            localStorage.setItem('userEmail', userData.email);
+            return true;
+        } catch (error) {
+            console.error('Error saving user data:', error);
+            return false;
+        }
+    };
 
     const handleChange = (e) => {
         setFormData({
@@ -37,9 +50,37 @@ const LoginModal = ({ isOpen, onClose, onSwitchToSignup, selectedService, isAdmi
                 localStorage.setItem('isAdmin', 'false');
                 localStorage.setItem('isLoggedIn', 'true');
             } else {
+                // User login - save user data
+                const existingUser = localStorage.getItem('userData');
+                
+                if (!existingUser && login) {
+                    // Create new user data
+                    const userData = {
+                        name: formData.email.split('@')[0],
+                        firstName: formData.email.split('@')[0],
+                        lastName: '',
+                        email: formData.email,
+                        phone: '',
+                        address: ''
+                    };
+                    login(userData);
+                } else if (!existingUser) {
+                    // Fallback: save manually if login function isn't available
+                    const userData = {
+                        name: formData.email.split('@')[0],
+                        firstName: formData.email.split('@')[0],
+                        lastName: '',
+                        email: formData.email,
+                        phone: '',
+                        address: ''
+                    };
+                    localStorage.setItem('userData', JSON.stringify(userData));
+                }
+                
                 localStorage.setItem('userType', 'user');
                 localStorage.setItem('isAdmin', 'false');
                 localStorage.setItem('isLoggedIn', 'true');
+                localStorage.setItem('userEmail', formData.email);
             }
             
             // Navigate to the selected service page after successful login

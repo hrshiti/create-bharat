@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FaUser, FaLock, FaEye, FaEyeSlash, FaArrowLeft } from 'react-icons/fa';
+import { useUser } from '../contexts/UserContext';
 import logo from '../assets/logo.png';
 
 const MobileFirstLoginPage = () => {
@@ -14,6 +15,7 @@ const MobileFirstLoginPage = () => {
     const [error, setError] = useState('');
     const [loginType, setLoginType] = useState('user'); // 'user' or 'admin'
     const navigate = useNavigate();
+    const { login } = useUser();
 
     const handleChange = (e) => {
         setFormData({
@@ -48,6 +50,28 @@ const MobileFirstLoginPage = () => {
             } else {
                 // User login validation (simplified for demo)
                 if (formData.email && formData.password) {
+                    // Check if user already has account data
+                    const existingUser = localStorage.getItem('userData');
+                    let userData;
+                    
+                    if (existingUser) {
+                        // User already has account data
+                        userData = JSON.parse(existingUser);
+                        localStorage.setItem('isLoggedIn', 'true');
+                        localStorage.setItem('userEmail', formData.email);
+                    } else {
+                        // Create new user data from login
+                        userData = {
+                            name: formData.email.split('@')[0],
+                            firstName: formData.email.split('@')[0],
+                            lastName: '',
+                            email: formData.email,
+                            phone: '',
+                            address: ''
+                        };
+                        login(userData);
+                    }
+                    
                     localStorage.setItem('userType', 'user');
                     localStorage.setItem('isAdmin', 'false');
                     localStorage.setItem('isLoggedIn', 'true');

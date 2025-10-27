@@ -310,6 +310,63 @@ const AdminDashboard = () => {
                 </motion.div>
             </div>
 
+            {/* Mentor Bookings Section */}
+            <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.4 }}
+                className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200"
+            >
+                <div className="flex items-center justify-between mb-6">
+                    <h3 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+                        <FaUsers className="text-orange-600" />
+                        Mentor Bookings Overview
+                    </h3>
+                    <button className="text-orange-600 hover:text-orange-700 font-semibold">
+                        View All
+                    </button>
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                    {[
+                        { label: 'Total Bookings', value: '124', color: 'blue' },
+                        { label: 'Pending', value: '32', color: 'yellow' },
+                        { label: 'Active', value: '45', color: 'green' },
+                        { label: 'Completed', value: '47', color: 'purple' }
+                    ].map((stat, idx) => (
+                        <div key={idx} className={`bg-${stat.color}-50 rounded-xl p-4 border border-${stat.color}-100`}>
+                            <div className="text-2xl font-bold mb-1">{stat.value}</div>
+                            <div className="text-sm text-gray-600">{stat.label}</div>
+                        </div>
+                    ))}
+                </div>
+                
+                <div className="space-y-3">
+                    {[
+                        { mentor: 'Dr. Sarah Johnson', student: 'John Doe', date: '2024-01-20', status: 'pending', amount: '₹300' },
+                        { mentor: 'Prof. Michael Chen', student: 'Jane Smith', date: '2024-01-19', status: 'active', amount: '₹450' },
+                        { mentor: 'Dr. Emily Rodriguez', student: 'Mike Johnson', date: '2024-01-18', status: 'completed', amount: '₹300' }
+                    ].map((booking, idx) => (
+                        <div key={idx} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg border border-gray-200">
+                            <div className="flex-1">
+                                <div className="font-semibold text-gray-900">{booking.mentor}</div>
+                                <div className="text-sm text-gray-600">{booking.student} • {booking.date}</div>
+                            </div>
+                            <div className="flex items-center gap-4">
+                                <div className="text-sm text-gray-600">{booking.amount}</div>
+                                <span className={`px-3 py-1 rounded-full text-xs font-medium ${
+                                    booking.status === 'pending' ? 'bg-yellow-100 text-yellow-700' :
+                                    booking.status === 'active' ? 'bg-green-100 text-green-700' :
+                                    'bg-blue-100 text-blue-700'
+                                }`}>
+                                    {booking.status}
+                                </span>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </motion.div>
+
             {/* Charts Section */}
             <motion.div
                 initial={{ opacity: 0, y: 20 }}

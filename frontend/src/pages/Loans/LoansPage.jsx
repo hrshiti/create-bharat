@@ -159,10 +159,11 @@ const LoansPage = () => {
             Government Loans
           </motion.h1>
         </motion.div>
-        <motion.div 
+        <motion.button 
           whileHover={{ scale: 1.1, rotate: 5 }}
           whileTap={{ scale: 0.9 }}
-          className="relative p-2 rounded-full bg-white/20 hover:bg-white/30 transition-all duration-300"
+          onClick={() => alert('Notifications - This feature will show your loan updates and notifications!')}
+          className="relative p-2 rounded-full bg-white/20 hover:bg-white/30 transition-all duration-300 cursor-pointer"
         >
           <BellIcon />
           <motion.span 
@@ -170,7 +171,7 @@ const LoansPage = () => {
             transition={{ repeat: Infinity, duration: 2 }}
             className="absolute top-1 right-1 block h-2 w-2 rounded-full bg-red-500"
           />
-        </motion.div>
+        </motion.button>
       </motion.header>
 
       {/* Main Content - Enhanced Grid Layout */}

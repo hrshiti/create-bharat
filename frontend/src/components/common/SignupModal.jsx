@@ -12,6 +12,21 @@ const SignupModal = ({ isOpen, onClose, onSwitchToLogin, selectedService }) => {
     });
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
+    
+    // Function to save user data
+    const saveUserData = (userData) => {
+        try {
+            localStorage.setItem('userData', JSON.stringify(userData));
+            localStorage.setItem('isLoggedIn', 'true');
+            localStorage.setItem('userEmail', userData.email);
+            localStorage.setItem('userType', 'user');
+            localStorage.setItem('isAdmin', 'false');
+            return true;
+        } catch (error) {
+            console.error('Error saving user data:', error);
+            return false;
+        }
+    };
 
     const handleChange = (e) => {
         setFormData({
@@ -22,15 +37,38 @@ const SignupModal = ({ isOpen, onClose, onSwitchToLogin, selectedService }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        
+        // Validate passwords match
+        if (formData.password !== formData.confirmPassword) {
+            alert('Passwords do not match!');
+            return;
+        }
+        
         setIsLoading(true);
         
         // Simulate API call
         setTimeout(() => {
+            // Create user data
+            const userData = {
+                name: `${formData.firstName} ${formData.lastName}`,
+                firstName: formData.firstName,
+                lastName: formData.lastName,
+                email: formData.email,
+                phone: '',
+                address: ''
+            };
+            
+            // Save user data
+            saveUserData(userData);
+            
             setIsLoading(false);
             onClose();
+            
             // Navigate to the selected service page after successful signup
             if (selectedService) {
                 navigate(selectedService);
+            } else {
+                navigate('/');
             }
         }, 1000);
     };

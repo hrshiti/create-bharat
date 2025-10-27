@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { useUser } from '../../contexts/UserContext';
 
 const LoginPage = () => {
     const [formData, setFormData] = useState({
@@ -9,6 +10,7 @@ const LoginPage = () => {
     });
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
+    const { login } = useUser();
 
     const handleChange = (e) => {
         setFormData({
@@ -23,6 +25,29 @@ const LoginPage = () => {
         
         // Simulate API call
         setTimeout(() => {
+            // Fetch user data from localStorage or API
+            // For demo purposes, we'll use localStorage to check if user exists
+            const existingUser = localStorage.getItem('userData');
+            
+            if (existingUser) {
+                // User already has account data
+                const userData = JSON.parse(existingUser);
+                // Just set logged in status
+                localStorage.setItem('isLoggedIn', 'true');
+                localStorage.setItem('userEmail', formData.email);
+            } else {
+                // Create new user data from login
+                const userData = {
+                    name: formData.email.split('@')[0], // Use email username as name
+                    firstName: formData.email.split('@')[0],
+                    lastName: '',
+                    email: formData.email,
+                    phone: '', // Can be added later
+                    address: '' // Can be added later
+                };
+                login(userData);
+            }
+            
             setIsLoading(false);
             navigate('/');
         }, 1000);

@@ -50,7 +50,7 @@ const MentorCategoryPage = () => {
       }, 1500);
 
       return () => clearTimeout(timer);
-    }
+  }
   }, [isLoggedIn, userType, navigate]);
 
   // Render login page
@@ -71,37 +71,27 @@ const MentorCategoryPage = () => {
             <p className="text-gray-600">Choose how you'd like to access the platform</p>
           </div>
 
-          <div className="space-y-4">
-            <motion.button
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              onClick={() => handleLogin('user')}
-              className="w-full p-4 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center space-x-3"
-            >
-              <span className="text-2xl">👤</span>
-              <span>Login as User</span>
-            </motion.button>
+                    <div className="space-y-4">
+                        <motion.button
+                            whileHover={{ scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
+                            onClick={() => handleLogin('user')}
+                            className="w-full p-4 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center space-x-3"
+                        >
+                            <span className="text-2xl">👤</span>
+                            <span>Login as User</span>
+                        </motion.button>
 
-            <motion.button
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              onClick={() => handleLogin('mentor')}
-              className="w-full p-4 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center space-x-3"
-            >
-              <span className="text-2xl">🎓</span>
-              <span>Login as Mentor</span>
-            </motion.button>
-
-            <motion.button
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              onClick={() => handleLogin('admin')}
-              className="w-full p-4 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center space-x-3"
-            >
-              <span className="text-2xl">👨‍💼</span>
-              <span>Login as Admin</span>
-            </motion.button>
-          </div>
+                        <motion.button
+                            whileHover={{ scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
+                            onClick={() => handleLogin('mentor')}
+                            className="w-full p-4 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center space-x-3"
+                        >
+                            <span className="text-2xl">🎓</span>
+                            <span>Login as Mentor</span>
+                        </motion.button>
+                    </div>
 
           <div className="mt-6 text-center">
             <p className="text-sm text-gray-500">

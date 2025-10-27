@@ -1,11 +1,13 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { UserProvider } from './contexts/UserContext';
 import Navbar from './components/common/Navbar';
 import HomePage from './pages/Home/HomePage';
 import LoansPage from './pages/Loans/LoansPage';
 import LoanApplicationPage from './pages/Loans/LoanApplicationPage';
 import LoanStatusPage from './pages/Loans/LoanStatusPage';
 import LoanDetailPage from './pages/Loans/LoanDetailPage';
+import InternshipLoginPage from './pages/Internships/InternshipLoginPage';
 import InternshipsPage from './pages/Internships/InternshipsPage';
 import InternshipDetailPage from './pages/Internships/InternshipDetailPage';
 import InternshipApplicationPage from './pages/Internships/InternshipApplicationPage';
@@ -43,21 +45,28 @@ import AdminUsersPage from './pages/Admin/AdminUsersPage';
 import AdminTrainingPage from './pages/Admin/AdminTrainingPage';
 import ProfilePage from './pages/Profile/ProfilePage';
 import CompanyInternshipsPage from './pages/Company/CompanyInternshipsPage';
+import CompanyLoginPage from './pages/Company/CompanyLoginPage';
 import AppDevelopmentPage from './pages/AppDevelopment/AppDevelopmentPage';
 import MobileFirstLoginPage from './pages/MobileFirstLoginPage';
 
 function App() {
   return (
-    <Router>
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-slate-50">
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/loans" element={<LoansPage />} />
-          <Route path="/loans/apply" element={<LoanApplicationPage />} />
-          <Route path="/loans/status" element={<LoanStatusPage />} />
-          <Route path="/loans/:schemeId" element={<LoanDetailPage />} />
-          <Route path="/internships" element={<InternshipsPage />} />
+    <UserProvider>
+      <Router>
+        <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-slate-50">
+          <Routes>
+            <Route path="/internships/login" element={<InternshipLoginPage />} />
+            <Route path="/company/internships" element={<CompanyInternshipsPage />} />
+            <Route path="/*" element={
+              <>
+                <Navbar />
+                <Routes>
+                  <Route path="/" element={<HomePage />} />
+                  <Route path="/loans" element={<LoansPage />} />
+                  <Route path="/loans/apply" element={<LoanApplicationPage />} />
+                  <Route path="/loans/status" element={<LoanStatusPage />} />
+                  <Route path="/loans/:schemeId" element={<LoanDetailPage />} />
+                  <Route path="/internships" element={<InternshipsPage />} />
           <Route path="/internships/saved" element={<SavedInternshipsPage />} />
           <Route path="/internships/applied" element={<AppliedInternshipsPage />} />
           <Route path="/internships/profile" element={<InternshipProfilePage />} />
@@ -95,11 +104,15 @@ function App() {
             <Route path="users" element={<AdminUsersPage />} />
           </Route>
           <Route path="/profile" element={<ProfilePage />} />
-          <Route path="/company/internships" element={<CompanyInternshipsPage />} />
+          <Route path="/company/login" element={<CompanyLoginPage />} />
           <Route path="/app-development" element={<AppDevelopmentPage />} />
-        </Routes>
-      </div>
+          </Routes>
+        </>
+      } />
+      </Routes>
+    </div>
     </Router>
+  </UserProvider>
   );
 }
 

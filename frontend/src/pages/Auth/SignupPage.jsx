@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { useUser } from '../../contexts/UserContext';
 
 const SignupPage = () => {
     const [formData, setFormData] = useState({
@@ -12,6 +13,7 @@ const SignupPage = () => {
     });
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
+    const { login } = useUser();
 
     const handleChange = (e) => {
         setFormData({
@@ -22,10 +24,30 @@ const SignupPage = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        
+        // Validate passwords match
+        if (formData.password !== formData.confirmPassword) {
+            alert('Passwords do not match!');
+            return;
+        }
+        
         setIsLoading(true);
         
         // Simulate API call
         setTimeout(() => {
+            // Create user data object
+            const userData = {
+                name: `${formData.firstName} ${formData.lastName}`,
+                firstName: formData.firstName,
+                lastName: formData.lastName,
+                email: formData.email,
+                phone: '', // Can be added later
+                address: '' // Can be added later
+            };
+            
+            // Save to localStorage and context
+            login(userData);
+            
             setIsLoading(false);
             navigate('/');
         }, 1000);

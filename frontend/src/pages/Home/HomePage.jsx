@@ -381,7 +381,7 @@ const HomePage = () => {
                                     Loans
                                 </Link>
                                 <Link 
-                                    to="/internships" 
+                                    to="/internships/login" 
                                     className="block py-2 text-gray-700 hover:text-orange-500 font-medium transition-colors"
                                     onClick={() => setIsMobileMenuOpen(false)}
                                 >
@@ -538,7 +538,7 @@ const HomePage = () => {
                             { 
                                 name: 'Internships', 
                                 image: internshipImg,
-                                path: '/internships'
+                                path: '/internships/login'
                             },
                             { 
                                 name: 'Legal Services', 
@@ -968,7 +968,7 @@ const HomePage = () => {
                             <nav className="hidden lg:flex items-center space-x-8">
                                 <Link to="/" className="text-gray-700 hover:text-orange-600 font-semibold transition-colors">Home</Link>
                                 <Link to="/loans" className="text-gray-700 hover:text-orange-600 font-semibold transition-colors">Loans</Link>
-                                <Link to="/internships" className="text-gray-700 hover:text-orange-600 font-semibold transition-colors">Internships</Link>
+                                <Link to="/internships/login" className="text-gray-700 hover:text-orange-600 font-semibold transition-colors">Internships</Link>
                                 <Link to="/legal" className="text-gray-700 hover:text-orange-600 font-semibold transition-colors">Legal</Link>
                                 <Link to="/mentors" className="text-gray-700 hover:text-orange-600 font-semibold transition-colors">Mentors</Link>
                                 <Link to="/training" className="text-gray-700 hover:text-orange-600 font-semibold transition-colors">Training</Link>
@@ -1132,7 +1132,7 @@ const HomePage = () => {
                                     icon: <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2-2v2m8 0V6a2 2 0 012 2v6a2 2 0 01-2 2H6a2 2 0 01-2-2V8a2 2 0 012-2V6" /></svg>,
                                     desc: 'Find the perfect internship opportunities to kickstart your career',
                                     features: ['Top Companies', 'Remote Options', 'Mentorship'],
-                    path: '/internships'
+                    path: '/internships/login'
                   },
                   { 
                                     name: 'Legal Services', 
@@ -1452,7 +1452,7 @@ const HomePage = () => {
                                 <h4 className="text-lg font-semibold mb-4">Services</h4>
                                 <ul className="space-y-2 text-gray-400">
                                     <li><Link to="/loans" className="hover:text-white transition-colors">Loans</Link></li>
-                                    <li><Link to="/internships" className="hover:text-white transition-colors">Internships</Link></li>
+                                    <li><Link to="/internships/login" className="hover:text-white transition-colors">Internships</Link></li>
                                     <li><Link to="/legal" className="hover:text-white transition-colors">Legal Services</Link></li>
                                     <li><Link to="/mentors" className="hover:text-white transition-colors">Mentorship</Link></li>
                                 </ul>
