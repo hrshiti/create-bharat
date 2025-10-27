@@ -1,89 +1,72 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { FaUser, FaLock, FaEye, FaEyeSlash, FaArrowLeft } from 'react-icons/fa';
 import { useUser } from '../contexts/UserContext';
 import logo from '../assets/logo.png';
 
 const MobileFirstLoginPage = () => {
-    const [formData, setFormData] = useState({
-        email: '',
-        password: ''
-    });
-    const [showPassword, setShowPassword] = useState(false);
+    const [phone, setPhone] = useState('');
+    const [otp, setOtp] = useState('');
+    const [step, setStep] = useState('phone'); // 'phone' or 'otp'
     const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState('');
     const [loginType, setLoginType] = useState('user'); // 'user' or 'admin'
     const navigate = useNavigate();
     const { login } = useUser();
 
-    const handleChange = (e) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value
-        });
-        setError(''); // Clear error when user types
-    };
-
-    const handleSubmit = (e) => {
+    const handleSendOTP = (e) => {
         e.preventDefault();
         setIsLoading(true);
-        setError('');
+        
+        // Simulate sending OTP
+        setTimeout(() => {
+            setIsLoading(false);
+            setStep('otp');
+            alert(`OTP sent to ${phone}`);
+        }, 2000);
+    };
 
-        // Simulate login validation
+    const handleVerifyOTP = (e) => {
+        e.preventDefault();
+        setIsLoading(true);
+
         setTimeout(() => {
             if (loginType === 'admin') {
-                // Admin login validation
-                if (formData.email === 'admin@createbharat.com' && formData.password === 'admin123') {
-                    localStorage.setItem('userType', 'admin');
-                    localStorage.setItem('isAdmin', 'true');
-                    localStorage.setItem('isLoggedIn', 'true');
-                    localStorage.setItem('adminEmail', formData.email);
-                    localStorage.setItem('hasVisited', 'true');
-                    
-                    setIsLoading(false);
-                    navigate('/admin/dashboard', { replace: true });
-                } else {
-                    setError('Invalid admin credentials. Please try again.');
-                    setIsLoading(false);
-                }
+                localStorage.setItem('userType', 'admin');
+                localStorage.setItem('isAdmin', 'true');
+                localStorage.setItem('isLoggedIn', 'true');
+                localStorage.setItem('adminEmail', `${phone}@createbharat.com`);
+                localStorage.setItem('hasVisited', 'true');
+                
+                setIsLoading(false);
+                navigate('/admin/dashboard', { replace: true });
             } else {
-                // User login validation (simplified for demo)
-                if (formData.email && formData.password) {
-                    // Check if user already has account data
-                    const existingUser = localStorage.getItem('userData');
-                    let userData;
-                    
-                    if (existingUser) {
-                        // User already has account data
-                        userData = JSON.parse(existingUser);
-                        localStorage.setItem('isLoggedIn', 'true');
-                        localStorage.setItem('userEmail', formData.email);
-                    } else {
-                        // Create new user data from login
-                        userData = {
-                            name: formData.email.split('@')[0],
-                            firstName: formData.email.split('@')[0],
-                            lastName: '',
-                            email: formData.email,
-                            phone: '',
-                            address: ''
-                        };
-                        login(userData);
-                    }
-                    
-                    localStorage.setItem('userType', 'user');
-                    localStorage.setItem('isAdmin', 'false');
+                const existingUser = localStorage.getItem('userData');
+                let userData;
+                
+                if (existingUser) {
+                    userData = JSON.parse(existingUser);
                     localStorage.setItem('isLoggedIn', 'true');
-                    localStorage.setItem('userEmail', formData.email);
-                    localStorage.setItem('hasVisited', 'true');
-                    
-                    setIsLoading(false);
-                    navigate('/', { replace: true });
+                    localStorage.setItem('userPhone', phone);
                 } else {
-                    setError('Please enter valid credentials.');
-                    setIsLoading(false);
+                    userData = {
+                        name: `User${phone.slice(-4)}`,
+                        firstName: 'User',
+                        lastName: '',
+                        email: `${phone}@createbharat.com`,
+                        phone: phone,
+                        address: ''
+                    };
+                    login(userData);
                 }
+                
+                localStorage.setItem('userType', 'user');
+                localStorage.setItem('isAdmin', 'false');
+                localStorage.setItem('isLoggedIn', 'true');
+                localStorage.setItem('userPhone', phone);
+                localStorage.setItem('hasVisited', 'true');
+                
+                setIsLoading(false);
+                navigate('/', { replace: true });
             }
         }, 1000);
     };
@@ -95,159 +78,173 @@ const MobileFirstLoginPage = () => {
         navigate('/', { replace: true });
     };
 
+    const handleBack = () => {
+        setStep('phone');
+        setOtp('');
+    };
+
     return (
-        <div className="min-h-screen bg-gradient-to-br from-orange-50 via-blue-50/30 to-slate-50 flex items-center justify-center p-4">
+        <div className="min-h-screen bg-gradient-to-br from-slate-900 via-orange-900 to-slate-900 flex items-center justify-center p-4">
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
-                className="bg-white rounded-3xl shadow-2xl p-6 w-full max-w-sm"
+                className="bg-white rounded-3xl shadow-2xl p-8 w-full max-w-sm"
             >
                 {/* Header */}
                 <div className="text-center mb-6">
-                    <div className="w-16 h-16 bg-gradient-to-r from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                        <img src={logo} alt="CreateBharat" className="w-10 h-10 object-contain" />
+                    <div className="w-20 h-20 bg-gradient-to-r from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <img src={logo} alt="CreateBharat" className="w-12 h-12 object-contain" />
                     </div>
-                    <h1 className="text-2xl font-bold text-gray-800 mb-2">Welcome to CreateBharat</h1>
-                    <p className="text-gray-600 text-sm">Sign in to access all features</p>
+                    <h1 className="text-2xl font-bold text-gray-800 mb-2">
+                        {step === 'phone' ? 'Welcome to CreateBharat' : 'Verify OTP'}
+                    </h1>
+                    <p className="text-gray-600 text-sm">
+                        {step === 'phone' ? 'Sign in with your phone number' : 'Enter the 6-digit code'}
+                    </p>
                 </div>
 
-                {/* Login Type Selection */}
-                <div className="mb-6">
-                    <div className="flex bg-gray-100 rounded-xl p-1">
-                        <button
-                            type="button"
-                            onClick={() => setLoginType('user')}
-                            className={`flex-1 py-2 px-4 rounded-lg text-sm font-medium transition-all duration-200 ${
-                                loginType === 'user'
-                                    ? 'bg-white text-orange-600 shadow-sm'
-                                    : 'text-gray-600 hover:text-gray-800'
-                            }`}
-                        >
-                            👤 User Login
-                        </button>
-                        <button
-                            type="button"
-                            onClick={() => setLoginType('admin')}
-                            className={`flex-1 py-2 px-4 rounded-lg text-sm font-medium transition-all duration-200 ${
-                                loginType === 'admin'
-                                    ? 'bg-white text-orange-600 shadow-sm'
-                                    : 'text-gray-600 hover:text-gray-800'
-                            }`}
-                        >
-                            👨‍💼 Admin Login
-                        </button>
-                    </div>
-                </div>
-
-                {/* Demo Credentials */}
-                {loginType === 'admin' && (
-                    <div className="bg-blue-50 border border-blue-200 rounded-xl p-3 mb-4">
-                        <h3 className="text-xs font-semibold text-blue-900 mb-1">Admin Demo:</h3>
-                        <div className="text-xs text-blue-800">
-                            <div><strong>Email:</strong> admin@createbharat.com</div>
-                            <div><strong>Password:</strong> admin123</div>
+                {/* Login Type Selection - Only show in phone step */}
+                {step === 'phone' && (
+                    <div className="mb-6">
+                        <div className="flex bg-gray-100 rounded-xl p-1">
+                            <button
+                                type="button"
+                                onClick={() => setLoginType('user')}
+                                className={`flex-1 py-2 px-4 rounded-lg text-sm font-medium transition-all duration-200 ${
+                                    loginType === 'user'
+                                        ? 'bg-white text-orange-600 shadow-sm'
+                                        : 'text-gray-600 hover:text-gray-800'
+                                }`}
+                            >
+                                👤 User Login
+                            </button>
+                            <button
+                                type="button"
+                                onClick={() => setLoginType('admin')}
+                                className={`flex-1 py-2 px-4 rounded-lg text-sm font-medium transition-all duration-200 ${
+                                    loginType === 'admin'
+                                        ? 'bg-white text-orange-600 shadow-sm'
+                                        : 'text-gray-600 hover:text-gray-800'
+                                }`}
+                            >
+                                👨‍💼 Admin Login
+                            </button>
                         </div>
                     </div>
                 )}
 
-                {/* Login Form */}
-                <form onSubmit={handleSubmit} className="space-y-4">
-                    {/* Email Field */}
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
-                            Email Address
-                        </label>
-                        <div className="relative">
-                            <FaUser className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-                            <input
-                                type="email"
-                                name="email"
-                                value={formData.email}
-                                onChange={handleChange}
-                                required
-                                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent text-sm"
-                                placeholder="Enter your email"
-                            />
-                        </div>
-                    </div>
-
-                    {/* Password Field */}
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
-                            Password
-                        </label>
-                        <div className="relative">
-                            <FaLock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-                            <input
-                                type={showPassword ? 'text' : 'password'}
-                                name="password"
-                                value={formData.password}
-                                onChange={handleChange}
-                                required
-                                className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent text-sm"
-                                placeholder="Enter your password"
-                            />
-                            <button
-                                type="button"
-                                onClick={() => setShowPassword(!showPassword)}
-                                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
-                            >
-                                {showPassword ? <FaEyeSlash className="w-4 h-4" /> : <FaEye className="w-4 h-4" />}
-                            </button>
-                        </div>
-                    </div>
-
-                    {/* Error Message */}
-                    {error && (
-                        <motion.div
-                            initial={{ opacity: 0, y: -10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            className="bg-red-50 border border-red-200 rounded-lg p-3"
-                        >
-                            <p className="text-red-800 text-sm">{error}</p>
-                        </motion.div>
-                    )}
-
-                    {/* Submit Button */}
-                    <motion.button
-                        type="submit"
-                        disabled={isLoading}
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                        className="w-full bg-gradient-to-r from-orange-500 to-orange-600 text-white py-3 rounded-lg font-semibold hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
-                    >
-                        {isLoading ? (
-                            <div className="flex items-center justify-center">
-                                <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
-                                Signing in...
+                {/* Phone Number Form */}
+                {step === 'phone' ? (
+                    <form onSubmit={handleSendOTP} className="space-y-4">
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-2">
+                                Phone Number
+                            </label>
+                            <div className="flex items-center">
+                                <span className="px-4 py-3 bg-gray-100 border-2 border-r-0 border-gray-300 rounded-l-xl text-sm font-medium text-gray-700">
+                                    +91
+                                </span>
+                                <input
+                                    type="tel"
+                                    name="phone"
+                                    value={phone}
+                                    onChange={(e) => setPhone(e.target.value)}
+                                    required
+                                    maxLength="10"
+                                    pattern="[0-9]{10}"
+                                    className="flex-1 px-4 py-3 border-2 border-gray-300 rounded-r-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent text-lg tracking-wider"
+                                    placeholder="9876543210"
+                                />
                             </div>
-                        ) : (
-                            `Sign In as ${loginType === 'admin' ? 'Admin' : 'User'}`
-                        )}
-                    </motion.button>
-                </form>
+                        </div>
+
+                        <motion.button
+                            type="submit"
+                            disabled={isLoading || phone.length !== 10}
+                            whileHover={{ scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
+                            className="w-full bg-gradient-to-r from-orange-500 to-orange-600 text-white py-3 rounded-lg font-semibold hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                            {isLoading ? (
+                                <span className="flex items-center justify-center">
+                                    <svg className="animate-spin h-5 w-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                    </svg>
+                                    Sending OTP...
+                                </span>
+                            ) : (
+                                'Send OTP'
+                            )}
+                        </motion.button>
+                    </form>
+                ) : (
+                    /* OTP Verification Form */
+                    <form onSubmit={handleVerifyOTP} className="space-y-4">
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-2">
+                                Enter OTP
+                            </label>
+                            <input
+                                type="text"
+                                name="otp"
+                                value={otp}
+                                onChange={(e) => setOtp(e.target.value)}
+                                required
+                                maxLength="6"
+                                pattern="[0-9]{6}"
+                                className="w-full px-4 py-4 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent text-2xl tracking-[0.5em] text-center font-semibold"
+                                placeholder="000000"
+                            />
+                            <p className="mt-2 text-xs text-gray-500 text-center">
+                                OTP sent to +91 {phone}
+                            </p>
+                        </div>
+
+                        <motion.button
+                            type="submit"
+                            disabled={isLoading || otp.length !== 6}
+                            whileHover={{ scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
+                            className="w-full bg-gradient-to-r from-orange-500 to-orange-600 text-white py-3 rounded-lg font-semibold hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                            {isLoading ? (
+                                <span className="flex items-center justify-center">
+                                    <svg className="animate-spin h-5 w-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                    </svg>
+                                    Verifying...
+                                </span>
+                            ) : (
+                                `Verify as ${loginType === 'admin' ? 'Admin' : 'User'}`
+                            )}
+                        </motion.button>
+
+                        <motion.button
+                            type="button"
+                            onClick={handleBack}
+                            whileHover={{ scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
+                            className="w-full text-gray-600 hover:text-gray-800 text-sm font-medium"
+                        >
+                            ← Change Phone Number
+                        </motion.button>
+                    </form>
+                )}
 
                 {/* Skip Login Option */}
-                <div className="mt-4 text-center">
-                    <button
-                        onClick={handleSkipLogin}
-                        className="text-gray-500 hover:text-gray-700 text-sm font-medium"
-                    >
-                        Continue as Guest
-                    </button>
-                </div>
-
-                {/* Back Button */}
-                <div className="mt-4 text-center">
-                    <button
-                        onClick={() => navigate('/')}
-                        className="text-gray-600 hover:text-gray-800 text-sm font-medium flex items-center justify-center mx-auto"
-                    >
-                        <FaArrowLeft className="w-3 h-3 mr-1" />
-                        Back to Homepage
-                    </button>
-                </div>
+                {step === 'phone' && (
+                    <div className="mt-4 text-center">
+                        <button
+                            onClick={handleSkipLogin}
+                            className="text-gray-500 hover:text-gray-700 text-sm font-medium"
+                        >
+                            Continue as Guest
+                        </button>
+                    </div>
+                )}
             </motion.div>
         </div>
     );

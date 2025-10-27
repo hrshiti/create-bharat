@@ -351,47 +351,32 @@ const LoanDetailPage = () => {
             <motion.div
               key={checklist.id}
               variants={scaleIn}
-              whileHover={{ scale: 1.03, y: -5, rotateY: 5 }}
+              whileHover={{ scale: 1.02, y: -2 }}
               whileTap={{ scale: 0.98 }}
-              className="relative group"
+              className="group"
             >
-              {/* Animated Border */}
-              <motion.div
-                className="absolute -inset-1 bg-gradient-to-r from-orange-400 via-red-500 to-pink-500 rounded-2xl blur-sm opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"
-                animate={{
-                  background: [
-                    "linear-gradient(45deg, #f97316, #ef4444, #ec4899)",
-                    "linear-gradient(45deg, #ec4899, #f97316, #ef4444)",
-                    "linear-gradient(45deg, #ef4444, #ec4899, #f97316)"
-                  ]
-                }}
-                transition={{ duration: 3, repeat: Infinity }}
-              />
-              
-                      <div className="relative bg-white/90 backdrop-blur-lg rounded-xl p-4 md:p-5 shadow-lg border border-white/20">
+              <div className="bg-white rounded-xl p-5 shadow-md border border-gray-200 hover:border-blue-300 hover:shadow-lg transition-all duration-300">
                 <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-3">
-                    <motion.div
-                      whileHover={{ rotate: 360, scale: 1.1 }}
-                      transition={{ duration: 0.6 }}
-                              className="w-8 h-8 md:w-10 md:h-10 bg-gradient-to-br from-red-500 to-pink-600 rounded-lg flex items-center justify-center shadow-md"
-                    >
-                              <span className="text-white text-xs md:text-sm font-bold">PDF</span>
-                    </motion.div>
-                    <div>
-                              <h3 className="font-bold text-gray-900 text-xs md:text-sm mb-1">{checklist.title}</h3>
-                              <p className="text-xs md:text-sm text-gray-600">{checklist.description}</p>
+                  <div className="flex items-center gap-3 flex-1">
+                    <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center shadow-sm">
+                      <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                      </svg>
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-semibold text-gray-900 mb-1">{checklist.title}</h3>
+                      <p className="text-sm text-gray-600">{checklist.description}</p>
                     </div>
                   </div>
-                  <motion.div
-                    whileHover={{ scale: 1.2, rotate: 10 }}
+                  <motion.button
+                    whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
-                            className="w-8 h-8 md:w-10 md:h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center cursor-pointer shadow-md"
+                    className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white hover:bg-blue-700 transition-colors shadow-md"
                   >
-                            <svg className="w-4 h-4 md:w-5 md:h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                     </svg>
-                  </motion.div>
+                  </motion.button>
                 </div>
               </div>
             </motion.div>
@@ -468,23 +453,10 @@ const LoanDetailPage = () => {
                 </motion.h3>
                 
                 <motion.div 
-                  whileHover={{ scale: 1.03, y: -5, rotateY: 2 }}
+                  whileHover={{ scale: 1.02 }}
                   className="relative group"
                 >
-                  {/* Animated Border */}
-                  <motion.div
-                    className="absolute -inset-2 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 rounded-3xl blur-lg opacity-60 group-hover:opacity-100 transition duration-1000"
-                    animate={{
-                      background: [
-                        "linear-gradient(45deg, #a855f7, #ec4899, #ef4444)",
-                        "linear-gradient(45deg, #ec4899, #ef4444, #a855f7)",
-                        "linear-gradient(45deg, #ef4444, #a855f7, #ec4899)"
-                      ]
-                    }}
-                    transition={{ duration: 4, repeat: Infinity }}
-                  />
-                  
-                  <div className="relative bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl overflow-hidden shadow-2xl">
+                  <div className="relative bg-gray-800 rounded-2xl overflow-hidden shadow-lg">
                     <div className="aspect-video md:aspect-[16/9] flex items-center justify-center relative">
                       {loan.videoUrl ? (
                         <iframe
@@ -506,15 +478,11 @@ const LoanDetailPage = () => {
                               rotate: { duration: 2, repeat: Infinity, ease: "linear" },
                               scale: { duration: 2, repeat: Infinity, ease: "easeInOut" }
                             }}
-                            className="w-20 h-20 border-4 border-white/30 border-t-white rounded-full mb-6"
+                            className="w-16 h-16 border-4 border-white/30 border-t-white rounded-full mb-4"
                           />
-                          <motion.p 
-                            animate={{ opacity: [0.7, 1, 0.7] }}
-                            transition={{ duration: 2, repeat: Infinity }}
-                            className="text-xl font-bold mb-3"
-                          >
+                          <p className="text-lg font-semibold mb-2">
                             Video Coming Soon
-                          </motion.p>
+                          </p>
                           <p className="text-xs text-center px-6 text-white/60 w-full">
                             We're working on adding an informative video for this loan scheme.
                           </p>
@@ -868,15 +836,13 @@ const LoanDetailPage = () => {
                   </div>
                 )}
               </div>
-              <div className="p-6 bg-gradient-to-r from-purple-600 to-pink-600">
-                <motion.p 
-                  animate={{ opacity: [0.8, 1, 0.8] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                  className="text-white font-medium text-center flex items-center justify-center gap-2"
-                >
-                  <span className="text-xl">📹</span>
+              <div className="p-6 bg-gray-700">
+                <p className="text-white font-medium text-center flex items-center justify-center gap-2">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
                   Complete Guide to {loan.name}
-                </motion.p>
+                </p>
               </div>
             </div>
           </motion.div>

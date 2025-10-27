@@ -1,8 +1,18 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const AppDevelopmentPage = () => {
+    const navigate = useNavigate();
+    
+    // Login form state
+    const [loginType, setLoginType] = useState('client');
+    const [formData, setFormData] = useState({
+        email: '',
+        password: ''
+    });
+    
+    // App development state
     const [userType, setUserType] = useState(null);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [showProjectForm, setShowProjectForm] = useState(false);
@@ -18,6 +28,26 @@ const AppDevelopmentPage = () => {
         phone: '',
         company: ''
     });
+
+    const handleChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value
+        });
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        
+        // Save login information
+        localStorage.setItem('userType', loginType);
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('userEmail', formData.email);
+        
+        // Update state and show the appropriate page
+        setUserType(loginType);
+        setIsLoggedIn(true);
+    };
 
     const handleProjectFormChange = (e) => {
         setProjectFormData({
@@ -44,11 +74,6 @@ const AppDevelopmentPage = () => {
         });
     };
 
-    const handleLogin = (type) => {
-        setUserType(type);
-        setIsLoggedIn(true);
-    };
-
     const handleLogout = () => {
         setUserType(null);
         setIsLoggedIn(false);
@@ -56,74 +81,98 @@ const AppDevelopmentPage = () => {
     };
 
     const renderLoginPage = () => (
-        <div className="min-h-screen bg-gradient-to-br from-orange-50 to-orange-100 flex items-center justify-center p-4">
+        <div className="min-h-screen bg-gradient-to-br from-slate-50 via-orange-50/30 to-slate-50 flex items-center justify-center p-4">
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="bg-white rounded-3xl shadow-2xl p-8 w-full max-w-md"
+                transition={{ duration: 0.6 }}
+                className="w-full max-w-md"
             >
-                <div className="text-center mb-8">
-                    <div className="w-16 h-16 bg-gradient-to-r from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                        <span className="text-3xl">📱</span>
+                <div className="bg-white rounded-2xl shadow-2xl border-2 border-gray-200 p-8">
+                    <div className="text-center mb-8">
+                        <div className="w-16 h-16 bg-gradient-to-r from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                            <span className="text-3xl">📱</span>
+                        </div>
+                        <h1 className="text-3xl font-bold text-gray-800 mb-2">Welcome Back</h1>
+                        <p className="text-gray-600">Sign in to access app development</p>
                     </div>
-                    <h1 className="text-2xl font-bold text-gray-800 mb-2">App Development</h1>
-                    <p className="text-gray-600">Choose your login type to continue</p>
-                </div>
 
-                <div className="space-y-4">
-                    <motion.button
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                        onClick={() => handleLogin('client')}
-                        className="w-full p-4 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all duration-300"
-                    >
-                        <div className="flex items-center justify-center">
-                            <span className="text-2xl mr-3">👤</span>
-                            <div className="text-left">
-                                <div className="font-bold">Login as Client</div>
-                                <div className="text-sm opacity-90">Submit your app project</div>
-                            </div>
+                    {/* Login Type Selection */}
+                    <div className="mb-6">
+                        <div className="flex bg-gray-100 rounded-xl p-1">
+                            <button
+                                type="button"
+                                onClick={() => setLoginType('client')}
+                                className={`flex-1 py-2 px-3 rounded-lg text-sm font-medium transition-all duration-200 ${
+                                    loginType === 'client'
+                                        ? 'bg-white text-orange-600 shadow-sm'
+                                        : 'text-gray-600 hover:text-gray-800'
+                                }`}
+                            >
+                                👤 Client
+                            </button>
+                            <button
+                                type="button"
+                                onClick={() => setLoginType('admin')}
+                                className={`flex-1 py-2 px-3 rounded-lg text-sm font-medium transition-all duration-200 ${
+                                    loginType === 'admin'
+                                        ? 'bg-white text-blue-600 shadow-sm'
+                                        : 'text-gray-600 hover:text-gray-800'
+                                }`}
+                            >
+                                👨‍💼 Admin
+                            </button>
                         </div>
-                    </motion.button>
+                    </div>
 
-                    <motion.button
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                        onClick={() => handleLogin('admin')}
-                        className="w-full p-4 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all duration-300"
-                    >
-                        <div className="flex items-center justify-center">
-                            <span className="text-2xl mr-3">👨‍💼</span>
-                            <div className="text-left">
-                                <div className="font-bold">Login as Admin</div>
-                                <div className="text-sm opacity-90">Manage projects</div>
-                            </div>
+                    <form onSubmit={handleSubmit} className="space-y-6">
+                        <div>
+                            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                                Email Address
+                            </label>
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                value={formData.email}
+                                onChange={handleChange}
+                                required
+                                className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300"
+                                placeholder="Enter your email"
+                            />
                         </div>
-                    </motion.button>
 
-                    <motion.button
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                        onClick={() => handleLogin('appzeto')}
-                        className="w-full p-4 bg-gradient-to-r from-purple-500 to-purple-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all duration-300"
-                    >
-                        <div className="flex items-center justify-center">
-                            <span className="text-2xl mr-3">👨‍💻</span>
-                            <div className="text-left">
-                                <div className="font-bold">Login as Appzeto</div>
-                                <div className="text-sm opacity-90">Development team</div>
-                            </div>
+                        <div>
+                            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+                                Password
+                            </label>
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                value={formData.password}
+                                onChange={handleChange}
+                                required
+                                className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300"
+                                placeholder="Enter your password"
+                            />
                         </div>
-                    </motion.button>
-                </div>
 
-                <div className="mt-8 text-center">
-                    <Link
-                        to="/"
-                        className="text-orange-600 hover:text-orange-700 font-medium"
-                    >
-                        ← Back to Home
-                    </Link>
+                        <motion.button
+                            type="submit"
+                            whileHover={{ scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
+                            className="w-full bg-gradient-to-r from-orange-500 to-orange-600 text-white py-3 px-4 rounded-xl font-medium hover:from-orange-600 hover:to-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 transition-all duration-300"
+                        >
+                            Sign In
+                        </motion.button>
+                    </form>
+
+                    <div className="mt-6 text-center">
+                        <Link to="/" className="text-gray-600 hover:text-orange-500 text-sm font-medium">
+                            ← Back to Home
+                        </Link>
+                    </div>
                 </div>
             </motion.div>
         </div>
@@ -586,10 +635,23 @@ const AppDevelopmentPage = () => {
         </div>
     );
 
+    // Check if user is logged in from localStorage and set state if needed
+    const loggedInUserType = localStorage.getItem('userType');
+    const localStorageLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+
+    // Initialize state from localStorage if available
+    if (localStorageLoggedIn && !isLoggedIn && loggedInUserType) {
+        setUserType(loggedInUserType);
+        setIsLoggedIn(true);
+        return null; // Prevent flash of login page
+    }
+
+    // Show login page if not logged in
     if (!isLoggedIn) {
         return renderLoginPage();
     }
 
+    // Render appropriate page based on user type
     switch (userType) {
         case 'client':
             return renderClientPage();

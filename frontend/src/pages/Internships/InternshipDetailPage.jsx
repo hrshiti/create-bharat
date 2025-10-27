@@ -51,13 +51,13 @@ const InternshipDetailPage = () => {
   };
 
   return (
-    <div className="h-screen bg-gray-50 flex flex-col overflow-hidden md:bg-gradient-to-br md:from-gray-50 md:via-blue-50 md:to-indigo-50">
+    <div className="min-h-screen bg-gray-50 pb-32 md:bg-gradient-to-br md:from-gray-50 md:via-blue-50 md:to-indigo-50">
       {/* Mobile Header */}
       <motion.header 
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="md:hidden bg-white px-4 py-3 flex justify-between items-center border-b border-gray-200"
+        className="sticky top-0 z-40 md:hidden bg-white px-4 py-3 flex justify-between items-center border-b border-gray-200"
       >
         <h1 className="text-sm font-medium text-gray-800">Applying to {internship.title} internship</h1>
         <button 
@@ -104,7 +104,7 @@ const InternshipDetailPage = () => {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 overflow-y-auto bg-white px-4 py-4 md:px-8 md:py-8">
+      <div className="bg-white px-4 py-4 md:px-8 md:py-8">
         {/* Desktop Layout */}
         <div className="hidden md:block max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">

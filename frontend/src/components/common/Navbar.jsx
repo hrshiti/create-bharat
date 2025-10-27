@@ -137,17 +137,6 @@ const Navbar = () => {
               <FaSearch className="h-5 w-5" />
             </button>
 
-            {/* Notifications */}
-            <button
-              className={`relative p-3 rounded-2xl ${
-                scrolled
-                  ? 'text-gray-600 hover:text-orange-600 hover:bg-gray-50 hover:shadow-md'
-                  : 'text-white/90 hover:text-white hover:bg-white/10 hover:backdrop-blur-sm'
-              }`}
-            >
-              <FaBell className="h-5 w-5" />
-              <div className="absolute -top-1 -right-1 w-3 h-3 bg-gradient-to-r from-red-500 to-pink-500 rounded-full shadow-lg" />
-            </button>
 
             {/* User Profile */}
             <div

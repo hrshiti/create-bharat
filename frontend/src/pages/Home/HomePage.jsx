@@ -65,13 +65,14 @@ const HomePage = () => {
         return () => window.removeEventListener('resize', checkMobileAndFirstVisit);
     }, []);
 
-    // Banner cycling effect
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setCurrentBannerIndex((prevIndex) => (prevIndex + 1) % 5);
-        }, 5000);
-        return () => clearInterval(interval);
-    }, []);
+    // Banner navigation functions
+    const goToNextBanner = () => {
+        setCurrentBannerIndex((prev) => (prev + 1) % 5);
+    };
+    
+    const goToPrevBanner = () => {
+        setCurrentBannerIndex((prev) => (prev - 1 + 5) % 5);
+    };
 
     // Touch handlers for swipeable banner
     const minSwipeDistance = 50;
@@ -560,8 +561,32 @@ const HomePage = () => {
                             );
                         })()}
                         
+                        {/* Left Arrow */}
+                        <motion.button
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.9 }}
+                            onClick={goToPrevBanner}
+                            className="absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-white rounded-full p-2 shadow-lg"
+                        >
+                            <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                            </svg>
+                        </motion.button>
+                        
+                        {/* Right Arrow */}
+                        <motion.button
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.9 }}
+                            onClick={goToNextBanner}
+                            className="absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-white rounded-full p-2 shadow-lg"
+                        >
+                            <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                            </svg>
+                        </motion.button>
+                        
                         {/* Banner Indicators */}
-                        <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 flex space-x-2">
+                        <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 flex space-x-2 z-10">
                             {[0, 1, 2, 3, 4].map((index) => (
                                 <button
                                         key={index} 
@@ -1003,14 +1028,6 @@ const HomePage = () => {
                                     className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
                                 >
                                     <SearchIcon />
-                                </button>
-                                <button 
-                                    onClick={() => {
-                                        alert('Notifications feature coming soon!');
-                                    }}
-                                    className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
-                                >
-                                    <BellIcon />
                                 </button>
                                 <div className="flex items-center gap-3">
                                     <button 

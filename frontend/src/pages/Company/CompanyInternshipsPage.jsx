@@ -652,8 +652,8 @@ const CompanyInternshipsPage = () => {
                             Logout
                         </button>
                     </div>
+                    </div>
                 </div>
-            </div>
 
             {/* Tab Navigation */}
             <div className="bg-gradient-to-br from-orange-50 to-orange-100/30 border-b border-gray-200">

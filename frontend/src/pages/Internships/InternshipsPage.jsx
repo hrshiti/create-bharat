@@ -27,6 +27,19 @@ const InternshipsPage = () => {
   const [activeCardIndex, setActiveCardIndex] = useState(0);
   const [activeRecommendedIndex, setActiveRecommendedIndex] = useState(0);
   const [activePlacementIndex, setActivePlacementIndex] = useState(0);
+  const [savedIds, setSavedIds] = useState(new Set());
+  
+  const toggleSave = (internshipId) => {
+    setSavedIds(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(internshipId)) {
+        newSet.delete(internshipId);
+      } else {
+        newSet.add(internshipId);
+      }
+      return newSet;
+    });
+  };
   
   // Filter states
   const [isFilterOpen, setIsFilterOpen] = useState(false);
@@ -492,10 +505,37 @@ const InternshipsPage = () => {
                     key={internship.id}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
                     whileHover={{ scale: 1.02, y: -4 }}
-                    className="bg-gray-50 rounded-xl p-6 border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer"
+                    className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg border border-gray-200 transition-all duration-300 relative"
                   >
+                    {/* Save Button */}
+                    <motion.button
+                      whileHover={{ scale: 1.2 }}
+                      whileTap={{ scale: 0.9 }}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        toggleSave(internship.id);
+                      }}
+                      className="absolute top-4 right-4 p-2 rounded-full transition-colors z-10"
+                    >
+                      {savedIds.has(internship.id) ? (
+                        <motion.div
+                          initial={{ scale: 0 }}
+                          animate={{ scale: 1 }}
+                          className="w-10 h-10 bg-red-500 rounded-full flex items-center justify-center shadow-md"
+                        >
+                          <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" />
+                          </svg>
+                        </motion.div>
+                      ) : (
+                        <div className="w-10 h-10 border-2 border-gray-300 rounded-full flex items-center justify-center hover:border-red-500 transition-colors bg-white">
+                          <svg className="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                          </svg>
+                        </div>
+                      )}
+                    </motion.button>
                     <div className="flex items-start justify-between mb-4">
                       <div className="flex-1">
                         <h3 className="font-bold text-gray-900 text-lg mb-1">{internship.company}</h3>
@@ -734,13 +774,42 @@ const InternshipsPage = () => {
                       </span>
                     </div>
                   </div>
-                  <motion.div 
-                    whileHover={{ rotate: 360, scale: 1.1 }}
-                    transition={{ duration: 0.6 }}
-                    className={`w-10 h-10 bg-gradient-to-br ${internship.color} rounded-lg flex items-center justify-center text-lg shadow-sm flex-shrink-0`}
-                  >
-                    {internship.icon}
-                  </motion.div>
+                  <div className="flex items-center gap-2">
+                    <motion.div 
+                      whileHover={{ rotate: 360, scale: 1.1 }}
+                      transition={{ duration: 0.6 }}
+                      className={`w-10 h-10 bg-gradient-to-br ${internship.color} rounded-lg flex items-center justify-center text-lg shadow-sm flex-shrink-0`}
+                    >
+                      {internship.icon}
+                    </motion.div>
+                    <motion.button
+                      whileHover={{ scale: 1.2 }}
+                      whileTap={{ scale: 0.9 }}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        toggleSave(internship.id);
+                      }}
+                      className="p-2 rounded-full transition-colors z-10"
+                    >
+                      {savedIds.has(internship.id) ? (
+                        <motion.div
+                          initial={{ scale: 0 }}
+                          animate={{ scale: 1 }}
+                          className="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center"
+                        >
+                          <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" />
+                          </svg>
+                        </motion.div>
+                      ) : (
+                        <div className="w-8 h-8 border-2 border-white rounded-full flex items-center justify-center hover:border-red-300 transition-colors">
+                          <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                          </svg>
+                        </div>
+                      )}
+                    </motion.button>
+                  </div>
                 </div>
 
                 {/* Job Title */}

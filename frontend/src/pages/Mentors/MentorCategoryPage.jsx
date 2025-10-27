@@ -1,14 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import logo from '../../assets/logo.png';
-
-// Icons
-const MenuIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-  </svg>
-);
 
 const ArrowLeftIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -18,334 +10,184 @@ const ArrowLeftIcon = () => (
 
 const MentorCategoryPage = () => {
   const navigate = useNavigate();
-  const [userType, setUserType] = useState(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [loginType, setLoginType] = useState('user');
+  const [phone, setPhone] = useState('');
+  const [otp, setOtp] = useState('');
+  const [step, setStep] = useState('phone');
+  const [isLoading, setIsLoading] = useState(false);
 
-  // Handle login
-  const handleLogin = (type) => {
-    setUserType(type);
-    setIsLoggedIn(true);
+  const handleSendOTP = (e) => {
+    e.preventDefault();
+    setIsLoading(true);
     
-    if (type === 'admin') {
-      // Redirect to admin dashboard
-      navigate('/mentors/dashboard');
-    } else if (type === 'mentor') {
-      // Redirect to mentor profile
-      navigate('/mentors/profile');
-    }
-    // For 'user', stay on the same page to browse mentors
+    setTimeout(() => {
+      setIsLoading(false);
+      setStep('otp');
+      alert(`OTP sent to ${phone}`);
+    }, 2000);
   };
 
-  // Handle logout
-  const handleLogout = () => {
-    setUserType(null);
-    setIsLoggedIn(false);
-  };
-
-  // Handle admin redirect
-  useEffect(() => {
-    if (isLoggedIn && userType === 'admin') {
-      const timer = setTimeout(() => {
-        navigate('/mentors/dashboard', { replace: true });
-      }, 1500);
-
-      return () => clearTimeout(timer);
-  }
-  }, [isLoggedIn, userType, navigate]);
-
-  // Render login page
-  const renderLoginPage = () => {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-orange-50 to-orange-100 flex items-center justify-center p-4">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5 }}
-          className="bg-white rounded-2xl shadow-xl p-8 w-full max-w-md"
-        >
-          <div className="text-center mb-8">
-            <div className="w-20 h-20 bg-gradient-to-r from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
-              <span className="text-4xl">👥</span>
-            </div>
-            <h2 className="text-2xl font-bold text-gray-800 mb-2">Welcome to Mentorship</h2>
-            <p className="text-gray-600">Choose how you'd like to access the platform</p>
-          </div>
-
-                    <div className="space-y-4">
-                        <motion.button
-                            whileHover={{ scale: 1.02 }}
-                            whileTap={{ scale: 0.98 }}
-                            onClick={() => handleLogin('user')}
-                            className="w-full p-4 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center space-x-3"
-                        >
-                            <span className="text-2xl">👤</span>
-                            <span>Login as User</span>
-                        </motion.button>
-
-                        <motion.button
-                            whileHover={{ scale: 1.02 }}
-                            whileTap={{ scale: 0.98 }}
-                            onClick={() => handleLogin('mentor')}
-                            className="w-full p-4 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center space-x-3"
-                        >
-                            <span className="text-2xl">🎓</span>
-                            <span>Login as Mentor</span>
-                        </motion.button>
-                    </div>
-
-          <div className="mt-6 text-center">
-            <p className="text-sm text-gray-500">
-              By continuing, you agree to our terms of service
-            </p>
-          </div>
-        </motion.div>
-      </div>
-    );
-  };
-
-  // Render admin redirect loading
-  const renderAdminRedirect = () => {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-orange-50 to-orange-100 flex items-center justify-center">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="bg-white rounded-2xl shadow-xl p-8 text-center"
-        >
-          <div className="w-16 h-16 bg-gradient-to-r from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
-            <span className="text-3xl">👨‍💼</span>
-          </div>
-          <h2 className="text-xl font-bold text-gray-800 mb-2">Redirecting to Admin Panel</h2>
-          <p className="text-gray-600 mb-4">Please wait while we redirect you...</p>
-          <div className="flex justify-center">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500"></div>
-          </div>
-        </motion.div>
-      </div>
-    );
-  };
-
-  // Show login page if not logged in
-  if (!isLoggedIn) {
-    return renderLoginPage();
-  }
-
-  // Show admin redirect if admin
-  if (userType === 'admin') {
-    return renderAdminRedirect();
-  }
-
-  const categories = [
-    {
-      id: 'business',
-      name: 'Business',
-      icon: '💼',
-      description: 'Get guidance on starting and scaling your business',
-      color: 'from-blue-500 to-cyan-500',
-      mentors: 25
-    },
-    {
-      id: 'technology',
-      name: 'Technology',
-      icon: '💻',
-      description: 'Learn coding, software development, and tech skills',
-      color: 'from-green-500 to-emerald-500',
-      mentors: 18
-    },
-    {
-      id: 'career',
-      name: 'Career',
-      icon: '🎯',
-      description: 'Career planning, resume building, and job search strategies',
-      color: 'from-purple-500 to-violet-500',
-      mentors: 22
-    },
-    {
-      id: 'finance',
-      name: 'Finance',
-      icon: '💰',
-      description: 'Personal finance, investment strategies, and wealth building',
-      color: 'from-orange-500 to-red-500',
-      mentors: 15
-    },
-    {
-      id: 'marketing',
-      name: 'Marketing',
-      icon: '📈',
-      description: 'Digital marketing, branding, and sales strategies',
-      color: 'from-pink-500 to-rose-500',
-      mentors: 20
-    },
-    {
-      id: 'personal',
-      name: 'Personal',
-      icon: '🧠',
-      description: 'Life coaching, productivity, and personal growth',
-      color: 'from-indigo-500 to-blue-500',
-      mentors: 16
-    },
-    {
-      id: 'design',
-      name: 'Design',
-      icon: '🎨',
-      description: 'UI/UX design, graphic design, and creative skills',
-      color: 'from-pink-500 to-purple-500',
-      mentors: 12
-    },
-    {
-      id: 'data',
-      name: 'Data Science',
-      icon: '📊',
-      description: 'Data analysis, machine learning, and analytics',
-      color: 'from-blue-500 to-indigo-500',
-      mentors: 14
-    },
-    {
-      id: 'health',
-      name: 'Health',
-      icon: '🏥',
-      description: 'Healthcare, wellness, and medical guidance',
-      color: 'from-green-500 to-teal-500',
-      mentors: 18
-    }
-  ];
-
-  // Animation variants
-  const fadeInUp = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { 
-      opacity: 1, 
-      y: 0,
-      transition: { duration: 0.6, ease: "easeOut" }
-    }
-  };
-
-  const staggerContainer = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1
+  const handleVerifyOTP = (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    
+    setTimeout(() => {
+      if (loginType === 'mentor') {
+        localStorage.setItem('userType', 'mentor');
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('isMentor', 'true');
+        navigate('/mentors/profile');
+      } else {
+        localStorage.setItem('userType', 'user');
+        localStorage.setItem('isLoggedIn', 'true');
+        navigate('/mentors/listing');
       }
-    }
+      setIsLoading(false);
+    }, 1000);
   };
 
-  const scaleIn = {
-    hidden: { opacity: 0, scale: 0.8 },
-    visible: { 
-      opacity: 1, 
-      scale: 1,
-      transition: { duration: 0.5, ease: "easeOut" }
-    }
+  const handleBack = () => {
+    setStep('phone');
+    setOtp('');
   };
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Header */}
-      <motion.header
-        initial={{ opacity: 0, y: -20 }}
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-orange-900 to-slate-900 flex items-center justify-center p-4">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="bg-gradient-to-r from-orange-500 to-orange-600 sticky top-0 z-50"
+        className="w-full max-w-sm"
       >
-        <div className="px-4 py-4">
-          <div className="flex items-center justify-between">
-            <Link to="/" className="text-white">
-              <ArrowLeftIcon />
-            </Link>
-            <h1 className="text-white text-lg font-medium">
-              {userType === 'mentor' ? 'Mentor Dashboard' : 'Mentorship Categories'}
-            </h1>
-            <div className="flex items-center space-x-2">
-              {userType === 'mentor' && (
-                <Link
-                  to="/mentors/profile"
-                  className="p-2 hover:bg-white/20 rounded-lg transition-colors"
-                  title="Profile"
-                >
-                  <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                  </svg>
-                </Link>
-              )}
-              <button
-                onClick={handleLogout}
-                className="p-2 hover:bg-white/20 rounded-lg transition-colors"
-                title="Logout"
-              >
-                <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                </svg>
-              </button>
+        <div className="bg-white rounded-3xl shadow-2xl p-8">
+          <div className="text-center mb-8">
+            <div className="w-20 h-20 bg-gradient-to-r from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+              <span className="text-4xl">🎓</span>
             </div>
+            <h1 className="text-3xl font-bold text-gray-800 mb-2">
+              {step === 'phone' ? 'Welcome Back' : 'Verify OTP'}
+            </h1>
+            <p className="text-gray-600 text-sm">
+              {step === 'phone' ? 'Sign in to access mentorship' : 'Enter the 6-digit code'}
+            </p>
+          </div>
+
+          {/* Login Type Selection */}
+          {step === 'phone' && (
+            <div className="mb-6">
+              <div className="flex bg-gray-100 rounded-xl p-1">
+                <button
+                  type="button"
+                  onClick={() => setLoginType('user')}
+                  className={`flex-1 py-3 px-4 rounded-lg text-sm font-medium transition-all duration-200 ${
+                    loginType === 'user'
+                      ? 'bg-white text-orange-600 shadow-sm'
+                      : 'text-gray-600 hover:text-gray-800'
+                  }`}
+                >
+                  👤 User
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setLoginType('mentor')}
+                  className={`flex-1 py-3 px-4 rounded-lg text-sm font-medium transition-all duration-200 ${
+                    loginType === 'mentor'
+                      ? 'bg-white text-orange-600 shadow-sm'
+                      : 'text-gray-600 hover:text-gray-800'
+                  }`}
+                >
+                  🎓 Mentor
+                </button>
+              </div>
+            </div>
+          )}
+
+          <form onSubmit={step === 'phone' ? handleSendOTP : handleVerifyOTP} className="space-y-6">
+            {step === 'phone' ? (
+              <div>
+                <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
+                  Phone Number
+                </label>
+                <div className="flex items-center">
+                  <span className="px-4 py-3 bg-gray-100 border-2 border-r-0 border-gray-300 rounded-l-xl text-sm font-medium text-gray-700">
+                    +91
+                  </span>
+                  <input
+                    type="tel"
+                    id="phone"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    required
+                    maxLength="10"
+                    pattern="[0-9]{10}"
+                    className="flex-1 px-4 py-3 border-2 border-gray-300 rounded-r-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300 text-lg tracking-wider"
+                    placeholder="9876543210"
+                  />
+                </div>
+              </div>
+            ) : (
+              <div>
+                <label htmlFor="otp" className="block text-sm font-medium text-gray-700 mb-2">
+                  Enter OTP
+                </label>
+                <input
+                  type="text"
+                  id="otp"
+                  value={otp}
+                  onChange={(e) => setOtp(e.target.value)}
+                  required
+                  maxLength="6"
+                  pattern="[0-9]{6}"
+                  className="w-full px-4 py-4 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300 text-2xl tracking-[0.5em] text-center font-semibold"
+                  placeholder="000000"
+                />
+                <p className="mt-2 text-xs text-gray-500 text-center">
+                  OTP sent to +91 {phone}
+                </p>
+              </div>
+            )}
+
+            <motion.button
+              type="submit"
+              disabled={isLoading || (step === 'phone' ? phone.length !== 10 : otp.length !== 6)}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              className="w-full bg-gradient-to-r from-orange-500 to-orange-600 text-white py-4 px-4 rounded-xl font-semibold hover:from-orange-600 hover:to-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
+            >
+              {isLoading ? (
+                <span className="flex items-center justify-center">
+                  <svg className="animate-spin h-5 w-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  {step === 'phone' ? 'Sending OTP...' : 'Verifying...'}
+                </span>
+              ) : (
+                step === 'phone' ? 'Send OTP' : 'Verify & Login'
+              )}
+            </motion.button>
+
+            {step === 'otp' && (
+              <motion.button
+                type="button"
+                onClick={handleBack}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="w-full text-gray-600 hover:text-gray-800 text-sm font-medium"
+              >
+                ← Change Phone Number
+              </motion.button>
+            )}
+          </form>
+
+          <div className="mt-6 text-center">
+            <Link to="/" className="text-gray-600 hover:text-orange-500 text-sm font-medium flex items-center justify-center">
+              <ArrowLeftIcon />
+              <span className="ml-2">Back to Home</span>
+            </Link>
           </div>
         </div>
-      </motion.header>
-
-      {/* Main Content */}
-      <div className="bg-white rounded-t-3xl -mt-2 relative z-10 min-h-screen">
-        <div className="p-4">
-          {/* Categories Grid - 3 columns */}
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={staggerContainer}
-            className="grid grid-cols-3 gap-4"
-          >
-            {categories.map((category, index) => (
-              <motion.div
-                key={category.id}
-                variants={scaleIn}
-              >
-                <Link to={`/mentors/category/${category.id}`} className="group">
-                  <motion.div 
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    transition={{ type: "spring", stiffness: 300 }}
-                    className="bg-gray-50 rounded-lg p-4 text-center cursor-pointer border-2 border-gray-300 shadow-lg hover:shadow-xl transition-all duration-300"
-                  >
-                    {/* Category Icon */}
-                    <div className="flex justify-center mb-3">
-                      <div className="w-12 h-12 flex items-center justify-center text-2xl text-[#D4AF37]">
-                        {category.icon}
-                      </div>
-                    </div>
-
-                    {/* Category Name */}
-                    <h3 className="text-sm font-medium text-gray-900 text-center leading-tight">
-                      {category.name}
-                    </h3>
-                  </motion.div>
-                </Link>
-              </motion.div>
-            ))}
-          </motion.div>
-
-          {/* Bottom CTA */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.8 }}
-            className="mt-8 text-center"
-          >
-            {userType === 'mentor' ? (
-              <Link 
-                to="/mentors/profile"
-                className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-medium rounded-lg hover:from-orange-600 hover:to-orange-700 transition-all duration-300 shadow-lg hover:shadow-xl"
-              >
-                Manage My Profile
-              </Link>
-            ) : (
-              <Link 
-                to="/mentors/become-mentor"
-                className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-medium rounded-lg hover:from-orange-600 hover:to-orange-700 transition-all duration-300 shadow-lg hover:shadow-xl"
-              >
-                Become a Mentor
-              </Link>
-            )}
-          </motion.div>
-        </div>
-      </div>
+      </motion.div>
     </div>
   );
 };

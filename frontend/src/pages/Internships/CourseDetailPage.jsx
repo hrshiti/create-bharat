@@ -227,7 +227,7 @@ const CourseDetailPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-orange-50 to-indigo-100 pb-20 overflow-y-auto">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-orange-50 to-indigo-100 pb-32">
       {/* Header */}
       <motion.header 
         initial={{ opacity: 0, y: -20 }}
