@@ -1,5 +1,6 @@
 // Generate 6-digit OTP
 const generateOTP = () => {
+  // Generate random 6-digit OTP
   return Math.floor(100000 + Math.random() * 900000).toString();
 };
 
@@ -8,7 +9,7 @@ const isOTPExpired = (createdAt, expiryMinutes = 10) => {
   const now = new Date();
   const expiryTime = new Date(createdAt);
   expiryTime.setMinutes(expiryTime.getMinutes() + expiryMinutes);
-  
+
   return now > expiryTime;
 };
 

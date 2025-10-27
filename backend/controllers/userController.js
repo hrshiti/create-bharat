@@ -3,7 +3,7 @@ const User = require('../models/User');
 const Otp = require('../models/Otp');
 const generateToken = require('../utils/generateToken');
 const { generateOTP, isOTPExpired } = require('../utils/otpGenerator');
-const { sendOTP } = require('../utils/smsService');
+const { sendOTP, formatPhoneNumber } = require('../utils/smsService');
 
 // @desc    Register user
 // @route   POST /api/users/register
@@ -57,16 +57,20 @@ const registerUser = async (req, res) => {
       // Generate OTP
       const otp = generateOTP();
 
+      // Format phone number for SMSIndiaHub (should be with country code)
+      const formattedPhone = formatPhoneNumber(phone);
+
       // Save OTP
       await Otp.create({
-        phone,
+        phone: formattedPhone,
         otp,
         purpose: 'register',
         expiresAt: new Date(Date.now() + 10 * 60 * 1000) // 10 minutes
       });
 
       // Send OTP via SMS
-      const smsResult = await sendOTP(phone, otp);
+      console.log(`[REGISTER] Sending OTP to ${formattedPhone}`);
+      const smsResult = await sendOTP(formattedPhone, otp);
 
       if (!smsResult.success) {
         console.error('SMS sending failed:', smsResult.error);
@@ -159,16 +163,20 @@ const loginUser = async (req, res) => {
       // Generate OTP
       const otp = generateOTP();
 
-      // Save OTP
+      // Format phone number for SMSIndiaHub (should be with country code)
+      const formattedPhone = formatPhoneNumber(phone);
+
+      // Save OTP with formatted phone
       await Otp.create({
-        phone,
+        phone: formattedPhone,
         otp,
         purpose: 'login',
         expiresAt: new Date(Date.now() + 10 * 60 * 1000) // 10 minutes
       });
 
       // Send OTP via SMS
-      const smsResult = await sendOTP(phone, otp);
+      console.log(`[LOGIN] Sending OTP to ${formattedPhone}`);
+      const smsResult = await sendOTP(formattedPhone, otp);
 
       if (!smsResult.success) {
         console.error('SMS sending failed:', smsResult.error);
@@ -432,9 +440,12 @@ const verifyOTP = async (req, res) => {
       });
     }
 
+    // Format phone number for lookup
+    const formattedPhone = formatPhoneNumber(phone);
+
     // Find OTP in database
     const otpRecord = await Otp.findOne({
-      phone,
+      phone: formattedPhone,
       otp,
       purpose,
       verified: false
@@ -460,7 +471,7 @@ const verifyOTP = async (req, res) => {
     await otpRecord.save();
 
     if (purpose === 'register') {
-      // For registration - user should already exist
+      // For registration - user should already exist (check original phone format)
       const user = await User.findOne({ phone, role: 'user' });
 
       if (!user) {
@@ -486,7 +497,7 @@ const verifyOTP = async (req, res) => {
     }
 
     if (purpose === 'login') {
-      // For login - find user and return token
+      // For login - find user and return token (check original phone format)
       const user = await User.findOne({ phone, role: 'user' });
 
       if (!user) {
@@ -571,19 +582,23 @@ const resendOTP = async (req, res) => {
     // Generate new OTP
     const otp = generateOTP();
 
-    // Delete old OTPs for this phone and purpose
-    await Otp.deleteMany({ phone, purpose });
+    // Format phone number for SMSIndiaHub (should be with country code)
+    const formattedPhone = formatPhoneNumber(phone);
 
-    // Save new OTP
+    // Delete old OTPs for this phone and purpose
+    await Otp.deleteMany({ phone: formattedPhone, purpose });
+
+    // Save new OTP with formatted phone
     await Otp.create({
-      phone,
+      phone: formattedPhone,
       otp,
       purpose,
       expiresAt: new Date(Date.now() + 10 * 60 * 1000) // 10 minutes
     });
 
     // Send OTP via SMS
-    const smsResult = await sendOTP(phone, otp);
+    console.log(`[RESEND] Sending OTP to ${formattedPhone}`);
+    const smsResult = await sendOTP(formattedPhone, otp);
 
     if (!smsResult.success) {
       console.error('SMS sending failed:', smsResult.error);

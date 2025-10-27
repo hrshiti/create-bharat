@@ -28,9 +28,9 @@ export const internships = [
     popular: true,
     urgent: false,
     remote: true,
-    
+
     description: 'Join our dynamic team as a Web Development Intern and gain hands-on experience in building modern web applications. You will work on real-world projects using cutting-edge technologies and collaborate with experienced developers.',
-    
+
     responsibilities: [
       'Develop and maintain web applications using React.js and Node.js',
       'Collaborate with the design team to implement UI/UX designs',
@@ -39,7 +39,7 @@ export const internships = [
       'Debug and troubleshoot application issues',
       'Learn and implement best practices in web development',
     ],
-    
+
     requirements: [
       'Currently pursuing or recently completed B.Tech/BCA/MCA in Computer Science or related field',
       'Basic understanding of HTML, CSS, and JavaScript',
@@ -48,7 +48,7 @@ export const internships = [
       'Ability to work in a team environment',
       'Excellent communication skills',
     ],
-    
+
     skills: [
       'HTML/CSS',
       'JavaScript',
@@ -59,7 +59,7 @@ export const internships = [
       'Responsive Design',
       'Problem Solving',
     ],
-    
+
     perks: [
       'Certificate of completion',
       'Letter of recommendation for top performers',
@@ -69,9 +69,9 @@ export const internships = [
       'Potential for full-time offer',
       'Work from home',
     ],
-    
+
     aboutCompany: 'TechSolutions is a leading IT services company specializing in web and mobile application development. We work with clients across various industries to deliver innovative digital solutions.',
-    
+
     applicationProcess: [
       'Submit your resume and portfolio through our application portal',
       'Initial screening by HR team (2-3 days)',
@@ -80,9 +80,9 @@ export const internships = [
       'HR round and final discussion',
       'Offer letter (if selected)',
     ],
-    
+
     applicationLink: 'https://techsolutions.com/careers/apply',
-    
+
     color: 'from-blue-500 to-cyan-500',
     icon: '💻',
   },
@@ -103,9 +103,9 @@ export const internships = [
     popular: false,
     urgent: false,
     remote: false,
-    
+
     description: 'We are looking for a creative and passionate UI/UX Design Intern to join our design team. You will work on exciting projects for various clients and learn from experienced designers.',
-    
+
     responsibilities: [
       'Create wireframes, mockups, and prototypes for web and mobile applications',
       'Conduct user research and usability testing',
@@ -114,7 +114,7 @@ export const internships = [
       'Present design concepts to clients and team members',
       'Stay updated with latest design trends and tools',
     ],
-    
+
     requirements: [
       'Currently pursuing or completed degree in Design, Fine Arts, or related field',
       'Portfolio showcasing UI/UX design work',
@@ -123,7 +123,7 @@ export const internships = [
       'Creative thinking and attention to detail',
       'Good communication and presentation skills',
     ],
-    
+
     skills: [
       'Figma',
       'Adobe XD',
@@ -134,7 +134,7 @@ export const internships = [
       'Visual Design',
       'Design Systems',
     ],
-    
+
     perks: [
       'Work on real client projects',
       'Certificate and recommendation letter',
@@ -144,9 +144,9 @@ export const internships = [
       'Portfolio building support',
       'Office snacks and amenities',
     ],
-    
+
     aboutCompany: 'CreativeStudio is a boutique design agency focused on creating beautiful and functional digital experiences. We work with startups and established brands to bring their visions to life.',
-    
+
     applicationProcess: [
       'Submit your resume along with portfolio link',
       'Portfolio review by design team (3-5 days)',
@@ -155,9 +155,9 @@ export const internships = [
       'Final discussion with Creative Director',
       'Offer letter',
     ],
-    
+
     applicationLink: 'https://creativestudio.com/careers',
-    
+
     color: 'from-purple-500 to-pink-500',
     icon: '🎨',
   },
@@ -178,9 +178,9 @@ export const internships = [
     popular: true,
     urgent: true,
     remote: false,
-    
+
     description: 'Join our marketing team and learn the ins and outs of digital marketing. You will work on social media campaigns, content creation, and analytics for various brands.',
-    
+
     responsibilities: [
       'Manage social media accounts and create engaging content',
       'Assist in planning and executing digital marketing campaigns',
@@ -189,7 +189,7 @@ export const internships = [
       'Monitor and report on campaign performance using analytics tools',
       'Support SEO and SEM initiatives',
     ],
-    
+
     requirements: [
       'Currently pursuing or completed degree in Marketing, Communications, or related field',
       'Strong written and verbal communication skills',
@@ -198,7 +198,7 @@ export const internships = [
       'Creative mindset and ability to think out of the box',
       'Analytical skills to interpret data',
     ],
-    
+
     skills: [
       'Social Media Marketing',
       'Content Writing',
@@ -209,7 +209,7 @@ export const internships = [
       'Market Research',
       'Communication',
     ],
-    
+
     perks: [
       'Hands-on experience with multiple brands',
       'Certificate of internship',
@@ -218,9 +218,9 @@ export const internships = [
       'Learning sessions on latest marketing trends',
       'Potential for pre-placement offer',
     ],
-    
+
     aboutCompany: 'BrandBoost is a full-service digital marketing agency helping businesses grow their online presence through innovative marketing strategies and campaigns.',
-    
+
     applicationProcess: [
       'Apply with resume and cover letter',
       'Initial screening call',
@@ -229,9 +229,9 @@ export const internships = [
       'Final round with CEO',
       'Offer letter',
     ],
-    
+
     applicationLink: 'https://brandboost.com/careers/internship',
-    
+
     color: 'from-orange-500 to-red-500',
     icon: '📢',
   },
@@ -252,9 +252,9 @@ export const internships = [
     popular: false,
     urgent: false,
     remote: true,
-    
+
     description: 'Gain practical experience in financial analysis and investment research. Work with our team of financial experts on real projects involving financial modeling, data analysis, and market research.',
-    
+
     responsibilities: [
       'Assist in financial modeling and data analysis',
       'Conduct market research and industry analysis',
@@ -263,7 +263,7 @@ export const internships = [
       'Monitor financial markets and economic trends',
       'Help maintain financial databases and tools',
     ],
-    
+
     requirements: [
       'Currently pursuing or completed degree in Finance, Accounting, Economics, or related field',
       'Strong analytical and numerical skills',
@@ -272,7 +272,7 @@ export const internships = [
       'Attention to detail and accuracy',
       'Good research and presentation skills',
     ],
-    
+
     skills: [
       'MS Excel',
       'Financial Modeling',
@@ -283,7 +283,7 @@ export const internships = [
       'PowerPoint',
       'Analytical Thinking',
     ],
-    
+
     perks: [
       'Mentorship from experienced financial analysts',
       'Certificate and letter of recommendation',
@@ -292,9 +292,9 @@ export const internships = [
       'Industry networking opportunities',
       'Potential for full-time conversion',
     ],
-    
+
     aboutCompany: 'FinCorp Solutions is a financial services firm providing investment research, advisory, and wealth management services to institutional and retail clients.',
-    
+
     applicationProcess: [
       'Submit resume and academic transcripts',
       'Aptitude test (quantitative and analytical)',
@@ -303,9 +303,9 @@ export const internships = [
       'HR discussion',
       'Offer letter',
     ],
-    
+
     applicationLink: 'https://fincorp.com/careers/internships',
-    
+
     color: 'from-green-500 to-emerald-500',
     icon: '💰',
   },
@@ -326,9 +326,9 @@ export const internships = [
     popular: false,
     urgent: false,
     remote: false,
-    
+
     description: 'Join our law firm as a Legal Research Intern and gain exposure to various areas of law. Assist lawyers with legal research, drafting, and case preparation.',
-    
+
     responsibilities: [
       'Conduct legal research on various topics',
       'Draft legal documents and memorandums',
@@ -337,7 +337,7 @@ export const internships = [
       'Attend court proceedings (when permitted)',
       'Maintain case files and legal databases',
     ],
-    
+
     requirements: [
       'Currently pursuing LLB or LLM degree',
       'Strong legal research and writing skills',
@@ -346,7 +346,7 @@ export const internships = [
       'Attention to detail',
       'Ability to handle confidential information',
     ],
-    
+
     skills: [
       'Legal Research',
       'Legal Writing',
@@ -357,7 +357,7 @@ export const internships = [
       'Critical Thinking',
       'Documentation',
     ],
-    
+
     perks: [
       'Practical legal experience',
       'Certificate of internship',
@@ -366,9 +366,9 @@ export const internships = [
       'Networking in legal community',
       'Stipend certificate for college',
     ],
-    
+
     aboutCompany: 'Supreme Law Associates is a full-service law firm with expertise in corporate law, litigation, intellectual property, and regulatory compliance.',
-    
+
     applicationProcess: [
       'Submit resume and cover letter',
       'Legal writing test',
@@ -376,9 +376,9 @@ export const internships = [
       'Background verification',
       'Offer letter',
     ],
-    
+
     applicationLink: 'https://supremelaw.com/internships',
-    
+
     color: 'from-indigo-500 to-violet-500',
     icon: '⚖️',
   },
@@ -399,9 +399,9 @@ export const internships = [
     popular: true,
     urgent: true,
     remote: true,
-    
+
     description: 'We are looking for creative content writers to create engaging articles, blogs, and social media content. Perfect opportunity for aspiring writers to build their portfolio.',
-    
+
     responsibilities: [
       'Write articles, blogs, and website content',
       'Create social media posts and captions',
@@ -410,7 +410,7 @@ export const internships = [
       'Collaborate with marketing and design teams',
       'Optimize content for SEO',
     ],
-    
+
     requirements: [
       'Currently pursuing or completed degree in Journalism, English, Communications, or related field',
       'Excellent writing and grammar skills',
@@ -419,7 +419,7 @@ export const internships = [
       'Ability to meet deadlines',
       'Portfolio of writing samples',
     ],
-    
+
     skills: [
       'Content Writing',
       'Creative Writing',
@@ -430,7 +430,7 @@ export const internships = [
       'Social Media',
       'WordPress',
     ],
-    
+
     perks: [
       'Build professional writing portfolio',
       'Certificate and bylines',
@@ -439,9 +439,9 @@ export const internships = [
       'Writing workshops and training',
       'Performance-based bonuses',
     ],
-    
+
     aboutCompany: 'MediaHouse Publications is a digital media company creating content across various platforms including blogs, websites, and social media for clients worldwide.',
-    
+
     applicationProcess: [
       'Submit resume and writing samples',
       'Writing test assignment',
@@ -449,9 +449,9 @@ export const internships = [
       'Trial period (1 week)',
       'Confirmation letter',
     ],
-    
+
     applicationLink: 'https://mediahouse.com/write-for-us',
-    
+
     color: 'from-rose-500 to-pink-500',
     icon: '✍️',
   },
@@ -472,9 +472,9 @@ export const internships = [
     popular: true,
     urgent: false,
     remote: false,
-    
+
     description: 'Join our AI/ML team to work on cutting-edge data science projects. Gain hands-on experience with machine learning, data analysis, and AI model development.',
-    
+
     responsibilities: [
       'Develop and train machine learning models',
       'Analyze large datasets and extract insights',
@@ -483,7 +483,7 @@ export const internships = [
       'Assist in AI/ML research projects',
       'Document findings and present results',
     ],
-    
+
     requirements: [
       'Currently pursuing or completed degree in Computer Science, Data Science, Statistics, or related field',
       'Knowledge of Python and data science libraries',
@@ -492,7 +492,7 @@ export const internships = [
       'Strong analytical and problem-solving skills',
       'Passion for AI and emerging technologies',
     ],
-    
+
     skills: [
       'Python',
       'Machine Learning',
@@ -503,7 +503,7 @@ export const internships = [
       'Statistics',
       'Jupyter Notebook',
     ],
-    
+
     perks: [
       'Work on AI/ML research projects',
       'Certificate and recommendation letter',
@@ -513,9 +513,9 @@ export const internships = [
       'High potential for PPO',
       'Hybrid work model',
     ],
-    
+
     aboutCompany: 'AI Labs India is a research and development company focused on artificial intelligence, machine learning, and data science solutions for various industries.',
-    
+
     applicationProcess: [
       'Submit resume and GitHub profile',
       'Online coding and ML test',
@@ -524,9 +524,9 @@ export const internships = [
       'HR round',
       'Offer letter',
     ],
-    
+
     applicationLink: 'https://ailabs.in/careers/internships',
-    
+
     color: 'from-cyan-500 to-blue-500',
     icon: '🤖',
   },
@@ -547,9 +547,9 @@ export const internships = [
     popular: false,
     urgent: false,
     remote: false,
-    
+
     description: 'Learn about HR operations, recruitment, employee engagement, and organizational development. Great opportunity to start your career in Human Resources.',
-    
+
     responsibilities: [
       'Assist in recruitment and onboarding processes',
       'Screen resumes and schedule interviews',
@@ -558,7 +558,7 @@ export const internships = [
       'Help organize training and development programs',
       'Assist in HR policy documentation',
     ],
-    
+
     requirements: [
       'Currently pursuing or completed MBA in HR, BBA, or related field',
       'Good communication and interpersonal skills',
@@ -567,7 +567,7 @@ export const internships = [
       'Discretion in handling confidential information',
       'Positive attitude and willingness to learn',
     ],
-    
+
     skills: [
       'Recruitment',
       'MS Office',
@@ -578,7 +578,7 @@ export const internships = [
       'Documentation',
       'Time Management',
     ],
-    
+
     perks: [
       'Hands-on HR experience',
       'Certificate of internship',
@@ -587,9 +587,9 @@ export const internships = [
       'Exposure to various HR functions',
       'Potential for full-time role',
     ],
-    
+
     aboutCompany: 'PeopleFirst HR Solutions is a leading HR consulting and staffing company helping organizations build strong teams and improve workplace culture.',
-    
+
     applicationProcess: [
       'Submit resume and cover letter',
       'HR aptitude test',
@@ -598,9 +598,9 @@ export const internships = [
       'Final HR round',
       'Offer letter',
     ],
-    
+
     applicationLink: 'https://peoplefirst.com/careers/internship',
-    
+
     color: 'from-amber-500 to-orange-500',
     icon: '👥',
   },
