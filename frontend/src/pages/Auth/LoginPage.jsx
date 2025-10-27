@@ -9,6 +9,7 @@ const LoginPage = () => {
         password: ''
     });
     const [isLoading, setIsLoading] = useState(false);
+    const [loginType, setLoginType] = useState('user'); // 'user' or 'admin'
     const navigate = useNavigate();
     const { login } = useUser();
 
@@ -25,31 +26,42 @@ const LoginPage = () => {
         
         // Simulate API call
         setTimeout(() => {
-            // Fetch user data from localStorage or API
-            // For demo purposes, we'll use localStorage to check if user exists
-            const existingUser = localStorage.getItem('userData');
-            
-            if (existingUser) {
-                // User already has account data
-                const userData = JSON.parse(existingUser);
-                // Just set logged in status
+            // Admin login
+            if (loginType === 'admin' && formData.email === 'admin@createbharat.com' && formData.password === 'admin123') {
+                localStorage.setItem('userType', 'admin');
+                localStorage.setItem('isAdmin', 'true');
                 localStorage.setItem('isLoggedIn', 'true');
-                localStorage.setItem('userEmail', formData.email);
-            } else {
-                // Create new user data from login
-                const userData = {
-                    name: formData.email.split('@')[0], // Use email username as name
-                    firstName: formData.email.split('@')[0],
-                    lastName: '',
-                    email: formData.email,
-                    phone: '', // Can be added later
-                    address: '' // Can be added later
-                };
-                login(userData);
+                localStorage.setItem('adminEmail', formData.email);
+                navigate('/admin/dashboard');
+            }
+            // User login
+            else {
+                // Fetch user data from localStorage or API
+                // For demo purposes, we'll use localStorage to check if user exists
+                const existingUser = localStorage.getItem('userData');
+                
+                if (existingUser) {
+                    // User already has account data
+                    const userData = JSON.parse(existingUser);
+                    // Just set logged in status
+                    localStorage.setItem('isLoggedIn', 'true');
+                    localStorage.setItem('userEmail', formData.email);
+                } else {
+                    // Create new user data from login
+                    const userData = {
+                        name: formData.email.split('@')[0], // Use email username as name
+                        firstName: formData.email.split('@')[0],
+                        lastName: '',
+                        email: formData.email,
+                        phone: '', // Can be added later
+                        address: '' // Can be added later
+                    };
+                    login(userData);
+                }
+                navigate('/');
             }
             
             setIsLoading(false);
-            navigate('/');
         }, 1000);
     };
 
@@ -67,6 +79,34 @@ const LoginPage = () => {
                     <div className="text-center mb-8">
                         <h1 className="text-3xl font-bold text-gray-800 mb-2">Welcome Back</h1>
                         <p className="text-gray-600">Sign in to your account</p>
+                    </div>
+
+                    {/* Login Type Selection */}
+                    <div className="mb-6">
+                        <div className="flex bg-gray-100 rounded-xl p-1">
+                            <button
+                                type="button"
+                                onClick={() => setLoginType('user')}
+                                className={`flex-1 py-2 px-4 rounded-lg text-sm font-medium transition-all duration-200 ${
+                                    loginType === 'user'
+                                        ? 'bg-white text-orange-600 shadow-sm'
+                                        : 'text-gray-600 hover:text-gray-800'
+                                }`}
+                            >
+                                👤 User Login
+                            </button>
+                            <button
+                                type="button"
+                                onClick={() => setLoginType('admin')}
+                                className={`flex-1 py-2 px-4 rounded-lg text-sm font-medium transition-all duration-200 ${
+                                    loginType === 'admin'
+                                        ? 'bg-white text-orange-600 shadow-sm'
+                                        : 'text-gray-600 hover:text-gray-800'
+                                }`}
+                            >
+                                👨‍💼 Admin Login
+                            </button>
+                        </div>
                     </div>
 
                     {/* Form */}

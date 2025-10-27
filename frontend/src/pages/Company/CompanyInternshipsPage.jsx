@@ -595,91 +595,88 @@ const CompanyInternshipsPage = () => {
 
     return (
         <div className="min-h-screen bg-gray-50">
-            {/* Header - Mobile */}
-            <motion.div
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="md:hidden bg-white shadow-sm border-b border-gray-200"
-            >
-                <div className="px-4 py-4">
-                    <div className="flex items-center justify-between">
-                        <h1 className="text-2xl font-bold text-gray-800">Company Dashboard</h1>
-                        <Link
-                            to="/"
-                            className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+            {/* Mobile Header */}
+            <div className="md:hidden bg-gradient-to-r from-orange-500 to-orange-600 text-white p-4 sticky top-0 z-40">
+                <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-3">
+                        <button
+                            onClick={() => navigate('/')}
+                            className="p-2 hover:bg-white/20 rounded-lg transition-colors"
                         >
-                            <svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                            <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                             </svg>
-                        </Link>
+                        </button>
+                        <h1 className="text-xl font-bold">Company Dashboard</h1>
                     </div>
+                    <button
+                        onClick={() => {
+                            localStorage.removeItem('userType');
+                            localStorage.removeItem('isLoggedIn');
+                            localStorage.removeItem('companyName');
+                            localStorage.removeItem('companyEmail');
+                            navigate('/');
+                        }}
+                        className="px-3 py-1 bg-white/20 text-white rounded-lg hover:bg-white/30 transition-colors font-semibold backdrop-blur-sm"
+                    >
+                        Edit
+                    </button>
                 </div>
-            </motion.div>
+            </div>
 
-            {/* Header - Desktop */}
-            <motion.div
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="hidden md:block bg-gradient-to-r from-orange-500 to-orange-600 shadow-lg sticky top-0 z-50"
-            >
-                <div className="max-w-7xl mx-auto px-8 py-5">
-                    <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-4">
-                            <div className="w-14 h-14 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center shadow-lg">
-                                <span className="text-3xl">🏢</span>
-                            </div>
-                            <div>
-                                <h1 className="text-2xl font-bold text-white">{companyName}</h1>
-                                <p className="text-orange-100 text-sm mt-0.5">{companyEmail}</p>
-                            </div>
-                        </div>
-                        <div className="flex items-center gap-3">
-                            <button
-                                onClick={() => {
-                                    localStorage.removeItem('userType');
-                                    localStorage.removeItem('isLoggedIn');
-                                    localStorage.removeItem('companyName');
-                                    localStorage.removeItem('companyEmail');
-                                    navigate('/');
-                                }}
-                                className="px-5 py-2.5 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white font-medium rounded-lg transition-all duration-200 flex items-center gap-2 border border-white/30"
-                            >
-                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                                </svg>
-                                Logout
-                            </button>
-                        </div>
+            {/* Desktop Header */}
+            <div className="hidden md:block bg-gradient-to-r from-orange-500 to-orange-600 text-white p-6">
+                <div className="max-w-7xl mx-auto flex items-center justify-between">
+                    <div className="flex items-center space-x-4">
+                        <button
+                            onClick={() => navigate('/')}
+                            className="p-2 hover:bg-white/20 rounded-lg transition-colors"
+                        >
+                            <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                            </svg>
+                        </button>
+                        <h1 className="text-2xl font-bold">Company Dashboard</h1>
+                    </div>
+                    <div className="flex items-center space-x-3">
+                        <button
+                            onClick={() => {
+                                localStorage.removeItem('userType');
+                                localStorage.removeItem('isLoggedIn');
+                                localStorage.removeItem('companyName');
+                                localStorage.removeItem('companyEmail');
+                                navigate('/');
+                            }}
+                            className="px-4 py-2 bg-white/20 backdrop-blur-sm text-white rounded-lg hover:bg-white/30 transition-colors font-semibold"
+                        >
+                            Logout
+                        </button>
                     </div>
                 </div>
-            </motion.div>
+            </div>
 
             {/* Tab Navigation */}
-            <div className="bg-white border-b border-gray-200 md:sticky md:top-[73px] z-40 shadow-sm">
-                <div className="px-2 md:px-8 max-w-7xl mx-auto">
-                    <div className="flex space-x-1 md:space-x-2 overflow-x-auto scrollbar-hide py-1">
+            <div className="bg-gradient-to-br from-orange-50 to-orange-100/30 border-b border-gray-200">
+                <div className="px-4 md:px-6 max-w-7xl mx-auto">
+                    <div className="flex space-x-2 overflow-x-auto scrollbar-hide py-2 md:py-3">
                         {tabs.map((tab, index) => (
                             <motion.button
                                 key={tab.id}
                                 onClick={() => setActiveTab(tab.id)}
-                                className={`relative py-2.5 md:py-4 text-xs md:text-sm font-semibold rounded-lg transition-all duration-300 whitespace-nowrap px-3 md:px-5 ${
+                                className={`relative py-2.5 md:py-3 text-xs md:text-sm font-semibold rounded-xl transition-all duration-300 whitespace-nowrap px-4 md:px-5 ${
                                     activeTab === tab.id
                                         ? 'text-white'
-                                        : 'text-gray-600 hover:text-gray-800'
+                                        : 'text-gray-800'
                                 }`}
                                 initial={{ opacity: 0, y: -10 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: index * 0.1 }}
-                                whileHover={{ 
-                                    y: -1,
-                                    transition: { duration: 0.2 }
-                                }}
                                 whileTap={{ scale: 0.98 }}
                             >
                                 {/* Active Tab Background */}
                                 {activeTab === tab.id && (
                                     <motion.div
-                                        className="absolute inset-0 bg-gradient-to-r from-orange-500 to-orange-600 rounded-lg shadow-md"
+                                        className="absolute inset-0 bg-gradient-to-r from-orange-500 to-orange-600 rounded-xl shadow-md"
                                         layoutId="activeTab"
                                         initial={false}
                                         transition={{
@@ -691,18 +688,9 @@ const CompanyInternshipsPage = () => {
                                 )}
                                 
                                 {/* Tab Content */}
-                                <span className="relative z-10 px-2">
+                                <span className="relative z-10 block">
                                     {tab.name}
                                 </span>
-                                
-                                {/* Subtle hover effect */}
-                                {activeTab !== tab.id && (
-                                    <motion.div
-                                        className="absolute inset-0 bg-gray-100 rounded-lg opacity-0"
-                                        whileHover={{ opacity: 1 }}
-                                        transition={{ duration: 0.2 }}
-                                    />
-                                )}
                             </motion.button>
                         ))}
                     </div>
@@ -710,7 +698,7 @@ const CompanyInternshipsPage = () => {
             </div>
 
             {/* Content */}
-            <div className="p-4 md:p-8 max-w-7xl mx-auto">
+            <div className="p-4 md:p-6 max-w-7xl mx-auto pb-20 md:pb-6">
                 {activeTab === 'dashboard' && renderDashboard()}
                 {activeTab === 'post' && renderPostJob()}
                 {activeTab === 'applications' && renderApplications()}

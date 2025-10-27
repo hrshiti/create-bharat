@@ -27,6 +27,7 @@ const ProfilePage = () => {
         address: ''
     });
     const [userLoading, setUserLoading] = useState(true);
+    const [loginType, setLoginType] = useState('user');
     
     // Load user data from localStorage when component mounts
     useEffect(() => {
@@ -51,6 +52,127 @@ const ProfilePage = () => {
         
         loadUserData();
     }, []);
+    
+    // Check if user is not logged in
+    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true' || localStorage.getItem('userData');
+    if (!isLoggedIn) {
+        return (
+            <div className="min-h-screen bg-gradient-to-br from-orange-50 via-blue-50/30 to-slate-50 flex items-center justify-center p-4">
+                <div className="bg-white rounded-3xl shadow-2xl p-6 w-full max-w-sm">
+                    {/* Header */}
+                    <div className="text-center mb-6">
+                        <div className="w-16 h-16 bg-gradient-to-r from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                            <span className="text-3xl">👤</span>
+                        </div>
+                        <h1 className="text-2xl font-bold text-gray-800 mb-2">Welcome to CreateBharat</h1>
+                        <p className="text-gray-600 text-sm">Sign in to access all features</p>
+                    </div>
+
+                    {/* Login Type Selection */}
+                    <div className="mb-6">
+                        <div className="flex bg-gray-100 rounded-xl p-1">
+                            <button
+                                type="button"
+                                onClick={() => setLoginType('user')}
+                                className={`flex-1 py-2 px-4 rounded-lg text-sm font-medium transition-all duration-200 ${
+                                    loginType === 'user'
+                                        ? 'bg-white text-orange-600 shadow-sm'
+                                        : 'text-gray-600 hover:text-gray-800'
+                                }`}
+                            >
+                                👤 User Login
+                            </button>
+                            <button
+                                type="button"
+                                onClick={() => setLoginType('admin')}
+                                className={`flex-1 py-2 px-4 rounded-lg text-sm font-medium transition-all duration-200 ${
+                                    loginType === 'admin'
+                                        ? 'bg-white text-orange-600 shadow-sm'
+                                        : 'text-gray-600 hover:text-gray-800'
+                                }`}
+                            >
+                                👨‍💼 Admin Login
+                            </button>
+                        </div>
+                    </div>
+
+
+                    {/* Login Form */}
+                    <form onSubmit={(e) => {
+                        e.preventDefault();
+                        const email = e.target.email.value;
+                        const password = e.target.password.value;
+                        
+                        // Admin login
+                        if (loginType === 'admin' && email === 'admin@createbharat.com' && password === 'admin123') {
+                            localStorage.setItem('userType', 'admin');
+                            localStorage.setItem('isAdmin', 'true');
+                            localStorage.setItem('isLoggedIn', 'true');
+                            localStorage.setItem('adminEmail', email);
+                            window.location.reload();
+                        }
+                        // User login
+                        else {
+                            const userData = {
+                                name: email.split('@')[0],
+                                firstName: email.split('@')[0],
+                                lastName: '',
+                                email: email,
+                                phone: '',
+                                address: ''
+                            };
+                            localStorage.setItem('userData', JSON.stringify(userData));
+                            localStorage.setItem('isLoggedIn', 'true');
+                            localStorage.setItem('userEmail', email);
+                            localStorage.setItem('userType', 'user');
+                            window.location.reload();
+                        }
+                    }} className="space-y-4">
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                            <input
+                                type="email"
+                                name="email"
+                                required
+                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none transition"
+                                placeholder="Enter your email"
+                            />
+                        </div>
+
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                            <input
+                                type="password"
+                                name="password"
+                                required
+                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none transition"
+                                placeholder="Enter your password"
+                            />
+                        </div>
+
+                        <motion.button
+                            type="submit"
+                            whileHover={{ scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
+                            className="w-full bg-gradient-to-r from-orange-500 to-orange-600 text-white py-3 rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
+                        >
+                            Sign In
+                        </motion.button>
+                    </form>
+
+                    {/* Demo Credentials */}
+                    <div className="mt-4 p-3 bg-gray-50 rounded-lg text-xs text-gray-600">
+                        <p className="font-semibold mb-2">Demo Credentials:</p>
+                        {loginType === 'admin' ? (
+                            <p>Email: admin@createbharat.com<br />Password: admin123</p>
+                        ) : (
+                            <p>Any email and password works for user login</p>
+                        )}
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
     // Determine which page we're coming from to show appropriate bottom navbar
     const getBottomNavbarTabs = () => {
@@ -252,7 +374,6 @@ const ProfilePage = () => {
     }
 
     // Check if user is logged in
-    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
     const userData = localStorage.getItem('userData');
     
     if (!isLoggedIn || !userData) {
