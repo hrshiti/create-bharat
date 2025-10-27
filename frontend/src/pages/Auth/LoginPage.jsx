@@ -15,7 +15,7 @@ const LoginPage = () => {
     const handleSendOTP = (e) => {
         e.preventDefault();
         setIsLoading(true);
-        
+
         // Simulate sending OTP
         setTimeout(() => {
             setIsLoading(false);
@@ -27,7 +27,7 @@ const LoginPage = () => {
     const handleVerifyOTP = (e) => {
         e.preventDefault();
         setIsLoading(true);
-        
+
         // Simulate API call
         setTimeout(() => {
             // Admin login
@@ -41,7 +41,7 @@ const LoginPage = () => {
             // User login
             else {
                 const existingUser = localStorage.getItem('userData');
-                
+
                 if (existingUser) {
                     const userData = JSON.parse(existingUser);
                     localStorage.setItem('isLoggedIn', 'true');
@@ -59,7 +59,7 @@ const LoginPage = () => {
                 }
                 navigate('/');
             }
-            
+
             setIsLoading(false);
         }, 1000);
     };
@@ -99,22 +99,20 @@ const LoginPage = () => {
                                 <button
                                     type="button"
                                     onClick={() => setLoginType('user')}
-                                    className={`flex-1 py-3 px-4 rounded-lg text-sm font-medium transition-all duration-200 ${
-                                        loginType === 'user'
+                                    className={`flex-1 py-3 px-4 rounded-lg text-sm font-medium transition-all duration-200 ${loginType === 'user'
                                             ? 'bg-white text-orange-600 shadow-sm'
                                             : 'text-gray-600 hover:text-gray-800'
-                                    }`}
+                                        }`}
                                 >
                                     👤 User
                                 </button>
                                 <button
                                     type="button"
                                     onClick={() => setLoginType('admin')}
-                                    className={`flex-1 py-3 px-4 rounded-lg text-sm font-medium transition-all duration-200 ${
-                                        loginType === 'admin'
+                                    className={`flex-1 py-3 px-4 rounded-lg text-sm font-medium transition-all duration-200 ${loginType === 'admin'
                                             ? 'bg-white text-orange-600 shadow-sm'
                                             : 'text-gray-600 hover:text-gray-800'
-                                    }`}
+                                        }`}
                                 >
                                     👨‍💼 Admin
                                 </button>
