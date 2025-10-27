@@ -3,30 +3,15 @@ import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const SignupModal = ({ isOpen, onClose, onSwitchToLogin, selectedService }) => {
+    const [step, setStep] = useState('details'); // 'details' or 'otp'
     const [formData, setFormData] = useState({
-        firstName: '',
-        lastName: '',
-        email: '',
-        password: '',
-        confirmPassword: ''
+        username: '',
+        phone: '',
+        email: ''
     });
+    const [otp, setOtp] = useState(['', '', '', '']);
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
-    
-    // Function to save user data
-    const saveUserData = (userData) => {
-        try {
-            localStorage.setItem('userData', JSON.stringify(userData));
-            localStorage.setItem('isLoggedIn', 'true');
-            localStorage.setItem('userEmail', userData.email);
-            localStorage.setItem('userType', 'user');
-            localStorage.setItem('isAdmin', 'false');
-            return true;
-        } catch (error) {
-            console.error('Error saving user data:', error);
-            return false;
-        }
-    };
 
     const handleChange = (e) => {
         setFormData({
@@ -35,42 +20,65 @@ const SignupModal = ({ isOpen, onClose, onSwitchToLogin, selectedService }) => {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSendOTP = (e) => {
         e.preventDefault();
-        
-        // Validate passwords match
-        if (formData.password !== formData.confirmPassword) {
-            alert('Passwords do not match!');
-            return;
-        }
-        
         setIsLoading(true);
         
-        // Simulate API call
         setTimeout(() => {
-            // Create user data
+            setIsLoading(false);
+            setStep('otp');
+            alert(`OTP sent to your phone and email`);
+        }, 2000);
+    };
+
+    const handleVerifyOTP = (e) => {
+        e.preventDefault();
+        setIsLoading(true);
+        
+        setTimeout(() => {
             const userData = {
-                name: `${formData.firstName} ${formData.lastName}`,
-                firstName: formData.firstName,
-                lastName: formData.lastName,
+                name: formData.username,
+                firstName: formData.username,
+                lastName: '',
+                username: formData.username,
                 email: formData.email,
-                phone: '',
+                phone: formData.phone,
                 address: ''
             };
             
-            // Save user data
-            saveUserData(userData);
+            localStorage.setItem('userData', JSON.stringify(userData));
+            localStorage.setItem('isLoggedIn', 'true');
+            localStorage.setItem('userEmail', formData.email);
+            localStorage.setItem('userType', 'user');
+            localStorage.setItem('isAdmin', 'false');
             
             setIsLoading(false);
             onClose();
             
-            // Navigate to the selected service page after successful signup
             if (selectedService) {
                 navigate(selectedService);
             } else {
                 navigate('/');
             }
         }, 1000);
+    };
+
+    const handleOtpChange = (index, value) => {
+        if (!value || /^[0-9]$/.test(value)) {
+            const newOtp = [...otp];
+            newOtp[index] = value;
+            setOtp(newOtp);
+            
+            if (value && index < 3) {
+                document.getElementById(`otp-${index + 1}`)?.focus();
+            }
+        }
+    };
+
+    const handleOtpKeyDown = (index, e) => {
+        if (e.key === 'Backspace' && !otp[index] && index > 0) {
+            document.getElementById(`otp-${index - 1}`)?.focus();
+        }
     };
 
     const handleOverlayClick = (e) => {
@@ -95,11 +103,13 @@ const SignupModal = ({ isOpen, onClose, onSwitchToLogin, selectedService }) => {
                         animate={{ scale: 1, opacity: 1 }}
                         exit={{ scale: 0.9, opacity: 0 }}
                         transition={{ duration: 0.3 }}
-                        className="w-full max-w-md bg-white rounded-2xl shadow-2xl border-2 border-gray-200 p-6 max-h-[90vh] overflow-y-auto"
+                        className="w-full max-w-md bg-white rounded-2xl shadow-2xl p-6 max-h-[90vh] overflow-y-auto"
                     >
                         {/* Header */}
                         <div className="flex items-center justify-between mb-6">
-                            <h2 className="text-2xl font-bold text-gray-800">Create Account</h2>
+                            <h2 className="text-2xl font-bold text-gray-800">
+                                {step === 'details' ? 'Create Account' : 'Verify OTP'}
+                            </h2>
                             <button
                                 onClick={onClose}
                                 className="p-2 hover:bg-gray-100 rounded-full transition-colors duration-200"
@@ -110,130 +120,130 @@ const SignupModal = ({ isOpen, onClose, onSwitchToLogin, selectedService }) => {
                             </button>
                         </div>
 
-                        {/* Form */}
-                        <form onSubmit={handleSubmit} className="space-y-4">
-                            {/* Name Fields */}
-                            <div className="grid grid-cols-2 gap-3">
-                                <div>
-                                    <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-2">
-                                        First Name
-                                    </label>
-                                    <input
-                                        type="text"
-                                        id="firstName"
-                                        name="firstName"
-                                        value={formData.firstName}
-                                        onChange={handleChange}
-                                        required
-                                        className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300"
-                                        placeholder="First name"
-                                    />
+                        {step === 'details' ? (
+                            <>
+                                {/* Form */}
+                                <form onSubmit={handleSendOTP} className="space-y-4">
+                                    <div>
+                                        <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-2">
+                                            Username
+                                        </label>
+                                        <input
+                                            type="text"
+                                            id="username"
+                                            name="username"
+                                            value={formData.username}
+                                            onChange={handleChange}
+                                            required
+                                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all duration-300"
+                                            placeholder="Enter your username"
+                                        />
+                                    </div>
+
+                                    <div>
+                                        <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                                            Email Address
+                                        </label>
+                                        <input
+                                            type="email"
+                                            id="email"
+                                            name="email"
+                                            value={formData.email}
+                                            onChange={handleChange}
+                                            required
+                                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all duration-300"
+                                            placeholder="your@email.com"
+                                        />
+                                    </div>
+
+                                    <div>
+                                        <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
+                                            Phone Number
+                                        </label>
+                                        <input
+                                            type="tel"
+                                            id="phone"
+                                            name="phone"
+                                            value={formData.phone}
+                                            onChange={handleChange}
+                                            required
+                                            maxLength="10"
+                                            pattern="[0-9]{10}"
+                                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all duration-300"
+                                            placeholder="9876543210"
+                                        />
+                                    </div>
+
+                                    <motion.button
+                                        type="submit"
+                                        disabled={isLoading || formData.phone.length !== 10 || !formData.email || !formData.username}
+                                        whileHover={{ scale: 1.02 }}
+                                        whileTap={{ scale: 0.98 }}
+                                        className="w-full bg-orange-500 text-white py-3 rounded-lg font-semibold hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                                    >
+                                        {isLoading ? 'Sending OTP...' : 'Continue'}
+                                    </motion.button>
+                                </form>
+
+                                {/* Login Link */}
+                                <div className="mt-4 text-center">
+                                    <p className="text-gray-600 text-sm">
+                                        Already have an account?{' '}
+                                        <button
+                                            onClick={onSwitchToLogin}
+                                            className="text-orange-600 hover:text-orange-500 font-medium"
+                                        >
+                                            Sign in
+                                        </button>
+                                    </p>
                                 </div>
-                                <div>
-                                    <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-2">
-                                        Last Name
-                                    </label>
-                                    <input
-                                        type="text"
-                                        id="lastName"
-                                        name="lastName"
-                                        value={formData.lastName}
-                                        onChange={handleChange}
-                                        required
-                                        className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300"
-                                        placeholder="Last name"
-                                    />
-                                </div>
-                            </div>
+                            </>
+                        ) : (
+                            <>
+                                <p className="text-gray-600 text-sm mb-6">
+                                    We have sent the verification code to your email and phone number.
+                                </p>
 
-                            {/* Email Field */}
-                            <div>
-                                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                                    Email Address
-                                </label>
-                                <input
-                                    type="email"
-                                    id="email"
-                                    name="email"
-                                    value={formData.email}
-                                    onChange={handleChange}
-                                    required
-                                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300"
-                                    placeholder="Enter your email"
-                                />
-                            </div>
+                                <form onSubmit={handleVerifyOTP} className="space-y-6">
+                                    <div className="flex justify-center gap-3">
+                                        {otp.map((digit, index) => (
+                                            <input
+                                                key={index}
+                                                id={`otp-${index}`}
+                                                type="text"
+                                                maxLength="1"
+                                                value={digit}
+                                                onChange={(e) => handleOtpChange(index, e.target.value)}
+                                                onKeyDown={(e) => handleOtpKeyDown(index, e)}
+                                                className="w-14 h-14 md:w-16 md:h-16 text-center text-2xl font-bold border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all duration-300"
+                                                autoFocus={index === 0}
+                                            />
+                                        ))}
+                                    </div>
 
-                            {/* Password Field */}
-                            <div>
-                                <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
-                                    Password
-                                </label>
-                                <input
-                                    type="password"
-                                    id="password"
-                                    name="password"
-                                    value={formData.password}
-                                    onChange={handleChange}
-                                    required
-                                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300"
-                                    placeholder="Create a password"
-                                />
-                            </div>
+                                    <motion.button
+                                        type="submit"
+                                        disabled={isLoading || otp.some(d => !d)}
+                                        whileHover={{ scale: 1.02 }}
+                                        whileTap={{ scale: 0.98 }}
+                                        className="w-full bg-orange-500 text-white py-3 rounded-lg font-semibold hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                                    >
+                                        {isLoading ? 'Creating Account...' : 'Confirm'}
+                                    </motion.button>
 
-                            {/* Confirm Password Field */}
-                            <div>
-                                <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-2">
-                                    Confirm Password
-                                </label>
-                                <input
-                                    type="password"
-                                    id="confirmPassword"
-                                    name="confirmPassword"
-                                    value={formData.confirmPassword}
-                                    onChange={handleChange}
-                                    required
-                                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300"
-                                    placeholder="Confirm your password"
-                                />
-                            </div>
-
-                            {/* Terms and Conditions */}
-                            <div className="flex items-center">
-                                <input
-                                    type="checkbox"
-                                    id="terms"
-                                    required
-                                    className="h-4 w-4 text-orange-600 focus:ring-orange-500 border-gray-300 rounded"
-                                />
-                                <label htmlFor="terms" className="ml-2 block text-sm text-gray-700">
-                                    I agree to the Terms and Conditions
-                                </label>
-                            </div>
-
-                            {/* Submit Button */}
-                            <motion.button
-                                type="submit"
-                                disabled={isLoading}
-                                whileHover={{ scale: 1.02 }}
-                                whileTap={{ scale: 0.98 }}
-                                className="w-full bg-gradient-to-r from-orange-500 to-orange-600 text-white py-3 px-4 rounded-xl font-medium hover:from-orange-600 hover:to-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
-                            >
-                                {isLoading ? 'Creating Account...' : 'Create Account'}
-                            </motion.button>
-                        </form>
-
-                        {/* Login Link */}
-                        <div className="mt-4 text-center">
-                            <p className="text-gray-600 text-sm">
-                                Already have an account?{' '}
-                                <button
-                                    onClick={onSwitchToLogin}
-                                    className="text-orange-600 hover:text-orange-500 font-medium"
-                                >
-                                    Sign in
-                                </button>
-                            </p>
-                        </div>
+                                    <button
+                                        type="button"
+                                        onClick={() => {
+                                            setStep('details');
+                                            setOtp(['', '', '', '']);
+                                        }}
+                                        className="w-full text-gray-600 hover:text-gray-800 text-sm font-medium"
+                                    >
+                                        ← Back to Details
+                                    </button>
+                                </form>
+                            </>
+                        )}
                     </motion.div>
                 </motion.div>
             )}
