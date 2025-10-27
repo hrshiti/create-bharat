@@ -63,15 +63,15 @@ const SignupPage = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-900 via-orange-900 to-slate-900 flex items-center justify-center p-4">
+        <div className="min-h-screen bg-gradient-to-br from-slate-900 via-orange-900 to-slate-900 flex items-center justify-center p-4 md:p-6">
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
-                className="w-full max-w-sm"
+                className="w-full max-w-sm md:max-w-md"
             >
                 {/* Signup Form */}
-                <div className="bg-white rounded-3xl shadow-2xl p-8">
+                <div className="bg-white rounded-2xl md:rounded-3xl shadow-2xl p-6 md:p-8">
                     {/* Header */}
                     <div className="text-center mb-8">
                         <div className="w-20 h-20 bg-gradient-to-r from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
@@ -125,7 +125,7 @@ const SignupPage = () => {
                                     Phone Number
                                 </label>
                                 <div className="flex items-center">
-                                    <span className="px-4 py-3 bg-gray-100 border-2 border-r-0 border-gray-300 rounded-l-xl text-sm font-medium text-gray-700">
+                                    <span className="px-3 py-3 bg-gray-100 border-2 border-r-0 border-gray-300 rounded-l-xl text-sm font-medium text-gray-700 whitespace-nowrap">
                                         +91
                                     </span>
                                     <input
@@ -137,7 +137,7 @@ const SignupPage = () => {
                                         required
                                         maxLength="10"
                                         pattern="[0-9]{10}"
-                                        className="flex-1 px-4 py-3 border-2 border-gray-300 rounded-r-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300 text-lg tracking-wider"
+                                        className="flex-1 min-w-0 px-3 md:px-4 py-3 border-2 border-gray-300 rounded-r-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300 text-base md:text-lg tracking-wider"
                                         placeholder="9876543210"
                                     />
                                 </div>
@@ -179,7 +179,7 @@ const SignupPage = () => {
                                     required
                                     maxLength="6"
                                     pattern="[0-9]{6}"
-                                    className="w-full px-4 py-4 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300 text-2xl tracking-[0.5em] text-center font-semibold"
+                                    className="w-full px-3 md:px-4 py-4 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300 text-xl md:text-2xl tracking-[0.3em] md:tracking-[0.5em] text-center font-semibold"
                                     placeholder="000000"
                                 />
                                 <p className="mt-2 text-xs text-gray-500 text-center">
